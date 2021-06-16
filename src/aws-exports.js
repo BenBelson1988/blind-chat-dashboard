@@ -5,7 +5,7 @@ const awsmobile = {
     aws_project_region: "us-east-1",
     aws_cognito_region: "us-east-1",
     aws_user_pools_id: "us-east-1_jyeinWyES",
-    aws_user_pools_web_client_id: "4gdcvjvl6ea2b5k5smgaidfaks",
+    aws_user_pools_web_client_id: "16178mmj8usu38tbpo09hp7ch8",
     aws_appsync_graphqlEndpoint:
         "https://jpcd26uj6vdmtnxtiky5hwq7ze.appsync-api.us-east-1.amazonaws.com/graphql",
     aws_appsync_region: "us-east-1",
@@ -14,7 +14,7 @@ const awsmobile = {
         identityPoolRegion: "us-east-1",
         userPoolId: "us-east-1_jyeinWyES",
         region: "us-east-1",
-        userPoolWebClientId: "4gdcvjvl6ea2b5k5smgaidfaks",
+        userPoolWebClientId: "16178mmj8usu38tbpo09hp7ch8",
 
     },
     API: {
