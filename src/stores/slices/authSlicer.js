@@ -24,6 +24,23 @@ export const signInAction = createAsyncThunk(
     }
 )
 
+export const signUpAction = createAsyncThunk(
+    "auth/signup",
+    async ({email,password})=>{
+        try {
+            const user = await Auth.signUp({
+                username:email, // Required, the username
+                password // Optional, the password
+                // ['52'], // Optional, an array of key-value pairs which can contain any key and will be passed to your Lambda trigger as-is.
+            })
+            return user;
+        } catch(err) {
+            console.log(err)
+        }
+    }
+)
+
+
 export const fetchUserDetailsAction = createAsyncThunk(
     "auth/fetchUser",
     async ()=>{
@@ -44,6 +61,9 @@ const authSlicer = createSlice({
     initialState,
     extraReducers:{
         [signInAction.fulfilled]:(state, {payload})=>{
+            Object.assign(state,payload)
+        },
+        [signUpAction.fulfilled]:(state, {payload})=>{
             Object.assign(state,payload)
         },
         [fetchUserDetailsAction.fulfilled]:(state, {payload})=>{

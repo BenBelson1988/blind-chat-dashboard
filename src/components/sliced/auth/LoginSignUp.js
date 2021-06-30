@@ -1,4 +1,4 @@
-import {fetchUserDetailsAction, signInAction} from "../../../stores/slices/authSlicer";
+import {fetchUserDetailsAction, signInAction, signUpAction} from "../../../stores/slices/authSlicer";
 import {Auth} from "aws-amplify";
 import React, {useCallback, useEffect} from "react";
 import {useDispatch} from "react-redux";
@@ -36,9 +36,9 @@ export default ()=>{
     return <div className="App">
         <header className="App-header">
             <Button onClick={()=>{
-                dispatch(signInAction({
-                    username:'+972525420114',//'fd7b46e5-0ff0-42c7-be8b-e984c0c6c90b',
-                    password:'1234567',
+                dispatch(signUpAction({
+                    email:"belson1988@gmail.com",
+                    password:"1234567"
                 }))
             }}>Sign In</Button>
         </header>
