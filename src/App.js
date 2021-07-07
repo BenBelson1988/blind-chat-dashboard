@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import Amplify, { Auth ,Hub} from 'aws-amplify';
+import Amplify, {Auth, Hub, loadingLogo} from 'aws-amplify';
 import awsconfig from './aws-exports';
 import thunk from "redux-thunk";
 import authSlicer, {signInAction} from "./stores/slices/authSlicer"
@@ -8,6 +8,7 @@ import {Provider, useDispatch} from "react-redux";
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import {composeWithDevTools} from "redux-devtools-extension";
 import LoginSignUp from "./components/sliced/auth/LoginSignUp";
+
 
 
 Amplify.configure(awsconfig);
@@ -41,6 +42,6 @@ function App(props) {
             <LoginSignUp />
         </Provider>
     );
-}
+};
 
-export default App
+export default App;

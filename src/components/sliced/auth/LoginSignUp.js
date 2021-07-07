@@ -4,9 +4,16 @@ import React, {useCallback, useEffect} from "react";
 import {useDispatch} from "react-redux";
 import styled from "styled-components";
 import {useSelector} from "react-redux";
+import logo from "../../../logo.svg";
 
 const Button = styled.button`
+  font-size: large;
   padding: 10px;
+  border-radius: 20px;
+  background-image: linear-gradient(#179FA6, #F46C96);
+  &:hover {
+    background-image: linear-gradient(#116e72, #79334e);
+  }
 `;
 
 function checkUser() {
@@ -35,6 +42,7 @@ export default ()=>{
 
     return <div className="App">
         <header className="App-header">
+             <img src={logo} alt="Logo" className={'App-logo'}/>
             <Button onClick={()=>{
                 dispatch(signUpAction({
                     email:"belson1988@gmail.com",
