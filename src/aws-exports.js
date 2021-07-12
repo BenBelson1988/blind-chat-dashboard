@@ -4,7 +4,7 @@ import { Auth } from "aws-amplify";
 const awsmobile = {
     aws_project_region: "us-east-1",
     aws_cognito_region: "us-east-1",
-    aws_user_pools_id: "us-east-1_jyeinWyES",
+    aws_user_pools_id: "us-east-1_dxJywqGN5",
     aws_user_pools_web_client_id: "16178mmj8usu38tbpo09hp7ch8",
     aws_appsync_graphqlEndpoint:
         "https://jpcd26uj6vdmtnxtiky5hwq7ze.appsync-api.us-east-1.amazonaws.com/graphql",
@@ -12,7 +12,7 @@ const awsmobile = {
     aws_appsync_authenticationType: "AMAZON_COGNITO_USER_POOLS",
     Auth: {
         identityPoolRegion: "us-east-1",
-        userPoolId: "us-east-1_jyeinWyES",
+        userPoolId: "us-east-1_dxJywqGN5",
         region: "us-east-1",
         userPoolWebClientId: "16178mmj8usu38tbpo09hp7ch8",
 
