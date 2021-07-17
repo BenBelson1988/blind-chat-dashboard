@@ -1,0 +1,24 @@
+.input {
+  width: 70%;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: black;
+  color: #179fa6;
+  margin: 10px;
+  border: 1px solid white;
+}
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.246);
+}
+::placeholder {
+  color: white;
+}
+h1 {
+  font-size: 50px;
+  background: -webkit-linear-gradient(#179fa6, #f46c96);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  flex-wrap: nowrap;
+}
