@@ -11,18 +11,9 @@ import { useSelector } from "react-redux";
 import logo from "../../../logo.svg";
 import "./UI/LoginSignUp.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { propStyle } from "aws-amplify-react";
 
-const Button = styled.button`
-  font-size: large;
-  padding: 10px;
-  margin: 20px;
-  border-radius: 20px;
-  background-image: linear-gradient(#179fa6, #f46c96);
-  &:hover {
-    background-image: linear-gradient(#116e72, #79334e);
-  }
-  border: none;
-`;
 const Div = styled.div`
   display: flex;
   flex-wrap: nowrap;
@@ -41,7 +32,7 @@ function signOut() {
     .catch((err) => console.log(err));
 }
 
-export default () => {
+export default (LoginSignUp) => {
   const [enteredEmail, setEnteredEmial] = useState("");
   const [enterEmailisValid, setEnterEmailisValid] = useState(false);
   const [enteredPass, setEnteredPass] = useState("");
@@ -138,7 +129,8 @@ export default () => {
         />
         {!enterPassisValid && <p>{errorMsg2}</p>}
         <Div>
-          <Button
+          <button
+            className="button-signin"
             disabled={true}
             onClick={() => {
               dispatch(
@@ -150,20 +142,23 @@ export default () => {
             }}
           >
             Sign Up
-          </Button>
-          <Button
-            disabled={!formIsValid}
-            onClick={() => {
-              dispatch(
-                signInAction({
-                  email: enteredEmail, //email: "belson1988@gmail.com",
-                  password: enteredPass, // password: "1234567",
-                })
-              );
-            }}
-          >
-            Sign In
-          </Button>
+          </button>
+          <Link to="/Home">
+            <button
+              className="button-signin"
+              disabled={!formIsValid}
+              onClick={() => {
+                dispatch(
+                  signInAction({
+                    email: enteredEmail, //email: "belson1988@gmail.com",
+                    password: enteredPass, // password: "1234567",
+                  })
+                );
+              }}
+            >
+              Sign In
+            </button>
+          </Link>
         </Div>
       </form>
     </div>

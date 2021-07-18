@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, Component } from "react";
 import "./App.css";
 import Amplify, { Auth, Hub, loadingLogo } from "aws-amplify";
 import awsconfig from "./aws-exports";
@@ -8,6 +8,13 @@ import { Provider, useDispatch } from "react-redux";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import LoginSignUp from "./components/sliced/auth/LoginSignUp";
+import Home from "./components/sliced/auth/Home";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 
 Amplify.configure(awsconfig);
 
@@ -37,9 +44,21 @@ function App(props) {
   return (
     <Provider store={store}>
       <div className="App">
-        <header className="App-header">
-          <LoginSignUp />
-        </header>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Redirect to="/LogIn" />
+            </Route>
+            <Route exact path="/LogIn">
+              <header className="App-header">
+                <LoginSignUp />
+              </header>
+            </Route>
+            <Route exact path="/Home">
+              <Home />
+            </Route>
+          </Switch>
+        </Router>
       </div>
     </Provider>
   );
