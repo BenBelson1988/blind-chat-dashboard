@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, Component } from "react";
+import React, { useCallback, useEffect, useState, Component } from "react";
 import "./App.css";
 import Amplify, { Auth, Hub, loadingLogo } from "aws-amplify";
 import awsconfig from "./aws-exports";
@@ -14,6 +14,7 @@ import {
   Redirect,
   Route,
   Switch,
+  useHistory,
 } from "react-router-dom";
 
 Amplify.configure(awsconfig);
@@ -28,12 +29,14 @@ const store = createStore(
 
 function App(props) {
   // in useEffect, we create the listener
+
   useEffect(() => {
     Hub.listen("auth", (data) => {
       const { payload } = data;
       console.log("A new auth event has happened: ", data);
       if (payload.event === "signIn") {
         console.log("a user has signed in!");
+        console.log(payload.data.username);
       }
       if (payload.event === "signOut") {
         console.log("a user has signed out!");
@@ -54,9 +57,11 @@ function App(props) {
                 <LoginSignUp />
               </header>
             </Route>
+            (
             <Route exact path="/Home">
               <Home />
             </Route>
+            )
           </Switch>
         </Router>
       </div>

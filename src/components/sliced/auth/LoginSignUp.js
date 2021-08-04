@@ -143,7 +143,7 @@ export default (LoginSignUp) => {
           >
             Sign Up
           </button>
-          <Link to="/Home">
+          
             <button
               className="button-signin"
               disabled={!formIsValid}
@@ -158,7 +158,7 @@ export default (LoginSignUp) => {
             >
               Sign In
             </button>
-          </Link>
+          
         </Div>
       </form>
     </div>
