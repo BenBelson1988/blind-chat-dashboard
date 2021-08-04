@@ -6,7 +6,7 @@ import { me } from "../graphqloperations/queries/me";
 const initialState = {
   username: null,
   password: null,
-  token: null,
+  userDataKey: null,
 };
 export const signInAction = createAsyncThunk(
   "auth/login",
@@ -24,6 +24,7 @@ export const signInAction = createAsyncThunk(
     }
   }
 );
+
 
 export const signUpAction = createAsyncThunk(
   "auth/signup",
@@ -58,6 +59,11 @@ export const fetchUserDetailsAction = createAsyncThunk(
 const authSlicer = createSlice({
   name: "auth",
   initialState,
+  reducers:{
+    signout(){
+      return initialState;
+    }
+  },
   extraReducers: {
     [signInAction.fulfilled]: (state, { payload }) => {
       Object.assign(state, payload);
@@ -71,4 +77,5 @@ const authSlicer = createSlice({
   },
 });
 
+export const {signout} = authSlicer.actions;
 export default authSlicer.reducer;

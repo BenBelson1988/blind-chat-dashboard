@@ -1,3 +1,8 @@
+import React from 'react';
+import {useDispatch} from "react-redux";
+import {signout} from "../../../stores/slices/authSlicer";
+
 export default () => {
-  return <h1>home</h1>;
+  const dispatch = useDispatch()
+  return <button onClick={()=>dispatch(signout())}>SIGN OUT</button>;
 };
