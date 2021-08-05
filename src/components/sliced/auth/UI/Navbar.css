@@ -1,0 +1,24 @@
+.Navbar_sticky {
+  height: 60px;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  background: rgb(23, 159, 166);
+  background: linear-gradient(
+    0deg,
+    rgba(244, 108, 150, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+
+.li {
+  align-items: center;
+}
+
+.Link {
+  display: inline;
+  margin-right: 50px;
+  font-size: 25px;
+  color: white;
+  text-decoration: none;
+}

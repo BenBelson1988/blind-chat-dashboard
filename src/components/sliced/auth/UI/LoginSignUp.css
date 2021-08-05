@@ -1,5 +1,5 @@
 .input {
-  width: 70%;
+  width: 90%;
   padding: 10px;
   border-radius: 20px;
   background-color: black;
@@ -23,7 +23,7 @@ h1 {
   flex-wrap: nowrap;
 }
 
-.button-signin {
+.button_signin {
   font-size: large;
   padding: 10px;
   margin: 20px;
@@ -32,6 +32,18 @@ h1 {
 
   border: none;
 }
-.button-signin:hover {
+.button_signin:hover {
   background-image: linear-gradient(#116e72, #79334e);
+}
+
+.form {
+  width: 30%;
+}
+
+.grid {
+  display: inline-grid;
+  grid-template-columns: 60% 40%;
+}
+.Blind_chat_image {
+  width: 20%;
 }

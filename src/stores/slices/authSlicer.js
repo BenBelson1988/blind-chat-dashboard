@@ -25,7 +25,6 @@ export const signInAction = createAsyncThunk(
   }
 );
 
-
 export const signUpAction = createAsyncThunk(
   "auth/signup",
   async ({ email, password }) => {
@@ -50,6 +49,7 @@ export const fetchUserDetailsAction = createAsyncThunk(
         data: { me: data },
       } = await API.graphql(graphqlOperation(me));
       return data;
+      console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -59,10 +59,11 @@ export const fetchUserDetailsAction = createAsyncThunk(
 const authSlicer = createSlice({
   name: "auth",
   initialState,
-  reducers:{
-    signout(){
+  reducers: {
+    signOut() {
+      Auth.signOut();
       return initialState;
-    }
+    },
   },
   extraReducers: {
     [signInAction.fulfilled]: (state, { payload }) => {
@@ -77,5 +78,5 @@ const authSlicer = createSlice({
   },
 });
 
-export const {signout} = authSlicer.actions;
+export const { signOut } = authSlicer.actions;
 export default authSlicer.reducer;
