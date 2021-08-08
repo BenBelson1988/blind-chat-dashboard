@@ -28,7 +28,8 @@ export default () => {
       </button>
       <div className={"grid"}>
         <div className={"home_left"}>
-          <h2>App Stats</h2>
+          <h2 className={"left_head"}>App Stats</h2>
+          <h2 className={"left_head"}>Questions</h2>
         </div>
         <div className={"home_middle"}>{appStats}</div>
       </div>
