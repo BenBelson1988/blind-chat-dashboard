@@ -13,7 +13,6 @@ import "./UI/LoginSignUp.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { propStyle } from "aws-amplify-react";
-import Blind_chat_app from "../../../Blind_chat_app.png";
 
 const Div = styled.div`
   display: flex;
@@ -95,15 +94,15 @@ export default () => {
   }, [enteredEmail]);
 
   const dispatch = useDispatch();
- // const [userId] = useSelector(({ auth }) => {
+  // const [userId] = useSelector(({ auth }) => {
   //  return [auth.attributes?.sub];
- // });
+  // });
 
   //useEffect(() => {
   //  if (userId) {
-   //   dispatch(fetchUserDetailsAction());
-   // }
- // }, [userId]);
+  //   dispatch(fetchUserDetailsAction());
+  // }
+  // }, [userId]);
 
   return (
     <div
@@ -170,7 +169,6 @@ export default () => {
           </button>
         </Div>
       </form>
-      <image src={Blind_chat_app} className={"Blind_chat_image"} />
     </div>
   );
 };

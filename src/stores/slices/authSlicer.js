@@ -49,7 +49,6 @@ export const fetchUserDetailsAction = createAsyncThunk(
         data: { me: data },
       } = await API.graphql(graphqlOperation(me));
       return data;
-      console.log(data);
     } catch (err) {
       console.log(err);
     }

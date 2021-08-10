@@ -21,7 +21,7 @@
 
 .grid {
   display: inline-grid;
-  grid-template-columns: 15% 70%;
+  grid-template-columns: 13% 70%;
 }
 
 .home_middle {
@@ -32,11 +32,30 @@
 
 .home_left {
   align-items: flex-start;
+  margin-left: 10px;
 }
 
-.left_head {
+.left_bar {
+  text-align: center;
   padding-bottom: 15px;
   padding-top: 15px;
-  background-color: #179fa621;
-  margin: 3px;
+  margin-top: 15px;
+  vertical-align: middle;
+  line-height: 60px;
+  background-image: linear-gradient(#116f723a, #3f3f3f98);
+  border-radius: 5px;
+  -moz-box-shadow: 2px 2px 2px 2px rgba(47, 47, 47, 0.13);
+  -webkit-box-shadow: 2px 2px 2px 2px rgba(47, 47, 47, 0.13);
+  box-shadow: 2px 2px 2px 2px rgba(47, 47, 47, 0.13);
+  font-size: 25px;
+  font-weight: bold;
+}
+.left_bar:hover {
+  background-image: linear-gradient(#116f720c, #00000098);
+  cursor: pointer;
+}
+
+.name {
+  text-align: left;
+  font-size: 30px;
 }
