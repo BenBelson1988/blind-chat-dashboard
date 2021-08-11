@@ -22,12 +22,16 @@
 .grid {
   display: inline-grid;
   grid-template-columns: 13% 70%;
+  height: 500px;
 }
 
 .home_middle {
   justify-content: center;
   margin-right: 100px;
   margin-left: 100px;
+  display: inline-grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  height: 50px;
 }
 
 .home_left {
@@ -58,4 +62,20 @@
 .name {
   text-align: left;
   font-size: 30px;
+}
+
+.question-type {
+  background-image: linear-gradient(#116f723a, #3f3f3f98);
+  line-height: 50px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  border-radius: 5px;
+}
+
+.question-type:hover {
+  cursor: pointer;
+  background-image: linear-gradient(#116f720c, #00000098);
 }

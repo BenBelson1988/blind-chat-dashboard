@@ -17,3 +17,10 @@
   color: white;
   text-decoration: none;
 }
+
+.logo {
+  height: 15vmin;
+  overflow: hidden;
+  position: absolute;
+  display: none;
+}

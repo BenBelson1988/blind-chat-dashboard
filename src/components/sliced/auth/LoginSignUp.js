@@ -1,4 +1,4 @@
-import {
+import authSlicer, {
   fetchUserDetailsAction,
   signInAction,
   signUpAction,
@@ -13,6 +13,7 @@ import "./UI/LoginSignUp.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { propStyle } from "aws-amplify-react";
+import Loader from "./Loader";
 
 const Div = styled.div`
   display: flex;
@@ -40,6 +41,7 @@ export default () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [errorMsg2, setErrorMsg2] = useState("");
   const [formIsValid, setFormIsValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
@@ -93,16 +95,19 @@ export default () => {
     } else setEnterEmailisValid(true);
   }, [enteredEmail]);
 
+  const loginFunc = async () => {
+    setIsLoading(true);
+    await dispatch(
+      signInAction({
+        email: enteredEmail, //email: "belson1988@gmail.com",
+        password: enteredPass, // password: "1234567",
+      })
+    );
+    setIsLoading(false);
+    setEnterPassisValid(false);
+    setErrorMsg2("Incorrect username or password");
+  };
   const dispatch = useDispatch();
-  // const [userId] = useSelector(({ auth }) => {
-  //  return [auth.attributes?.sub];
-  // });
-
-  //useEffect(() => {
-  //  if (userId) {
-  //   dispatch(fetchUserDetailsAction());
-  // }
-  // }, [userId]);
 
   return (
     <div
@@ -117,6 +122,7 @@ export default () => {
     >
       <img src={logo} alt="Logo" className={"App-logo"} />
       <h1>Welcome to BlindChat Admin Dash</h1>
+
       <form className={"form"} onSubmit={formSubmissionHandler}>
         <input
           type="text"
@@ -156,19 +162,13 @@ export default () => {
           <button
             className="button_signin"
             disabled={!formIsValid}
-            onClick={() => {
-              dispatch(
-                signInAction({
-                  email: enteredEmail, //email: "belson1988@gmail.com",
-                  password: enteredPass, // password: "1234567",
-                })
-              );
-            }}
+            onClick={loginFunc}
           >
             Sign In
           </button>
         </Div>
       </form>
+      {isLoading && <Loader />}
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Amplify, { Auth, Hub } from "aws-amplify";
 import { API, graphqlOperation } from "aws-amplify";
 import { me } from "../graphqloperations/queries/me";
+import { getQuestions } from "../graphqloperations/queries/getQuestions";
 
 const initialState = {
   username: null,
@@ -17,10 +18,10 @@ export const signInAction = createAsyncThunk(
         password, // '1234567', // Optional, the password
         // ['52'], // Optional, an array of key-value pairs which can contain any key and will be passed to your Lambda trigger as-is.
       });
-      console.log(user);
       return user;
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
+      return err.message;
     }
   }
 );
@@ -55,6 +56,20 @@ export const fetchUserDetailsAction = createAsyncThunk(
   }
 );
 
+export const getQuestionList = createAsyncThunk(
+  "auth/getQuestions",
+  async () => {
+    try {
+      const {
+        data: { getQuestions: data },
+      } = await API.graphql(graphqlOperation(getQuestions));
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 const authSlicer = createSlice({
   name: "auth",
   initialState,
@@ -72,6 +87,9 @@ const authSlicer = createSlice({
       Object.assign(state, payload);
     },
     [fetchUserDetailsAction.fulfilled]: (state, { payload }) => {
+      Object.assign(state, payload);
+    },
+    [getQuestionList.fulfilled]: (state, { payload }) => {
       Object.assign(state, payload);
     },
   },
