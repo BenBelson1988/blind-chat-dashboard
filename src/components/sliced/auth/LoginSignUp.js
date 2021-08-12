@@ -13,7 +13,7 @@ import "./UI/LoginSignUp.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { propStyle } from "aws-amplify-react";
-import Loader from "./Loader";
+import Loader from "./common/Loader";
 
 const Div = styled.div`
   display: flex;

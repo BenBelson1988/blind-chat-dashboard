@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Amplify, { Auth, Hub } from "aws-amplify";
 import { API, graphqlOperation } from "aws-amplify";
 import { me } from "../graphqloperations/queries/me";
-import { getQuestions } from "../graphqloperations/queries/getQuestions";
 
 const initialState = {
   username: null,
@@ -57,20 +56,6 @@ export const fetchUserDetailsAction = createAsyncThunk(
   }
 );
 
-export const getQuestionList = createAsyncThunk(
-  "auth/getQuestions",
-  async () => {
-    try {
-      const {
-        data: { getQuestions: data },
-      } = await API.graphql(graphqlOperation(getQuestions));
-      return data;
-    } catch (err) {
-      console.log(err);
-    }
-  }
-);
-
 const authSlicer = createSlice({
   name: "auth",
   initialState,
@@ -79,6 +64,10 @@ const authSlicer = createSlice({
       Auth.signOut();
       return initialState;
     },
+    setActiveUser(state, {payload}){
+      const username = payload['cognito:username'];
+      Object.assign(state, {...payload,username});
+    }
   },
   extraReducers: {
     [signInAction.fulfilled]: (state, { payload }) => {
@@ -90,11 +79,9 @@ const authSlicer = createSlice({
     [fetchUserDetailsAction.fulfilled]: (state, { payload }) => {
       Object.assign(state, payload);
     },
-    [getQuestionList.fulfilled]: (state, { payload }) => {
-      Object.assign(state, payload);
-    },
+
   },
 });
 
-export const { signOut } = authSlicer.actions;
+export const { signOut ,setActiveUser} = authSlicer.actions;
 export default authSlicer.reducer;

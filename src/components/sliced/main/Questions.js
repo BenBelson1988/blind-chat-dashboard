@@ -1,18 +1,14 @@
-import { react } from "@babel/types";
-import { homedir } from "os";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import authSlicer, {
   fetchUserDetailsAction,
-  getQuestionList,
   signOut,
 } from "../../../stores/slices/authSlicer";
-import "./UI/Home.css";
-import Navbar from "../auth/Navbar";
+import "../auth/UI/Home.css";
 import { useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { UsernameAttributes } from "aws-amplify-react";
-import Question from "./Question";
+import Question from "../auth/Question";
 
 export default () => {
   const username = useSelector(({ auth }) => auth.username);
@@ -31,7 +27,7 @@ export default () => {
 
   const testFunc = async () => {
     setappStatsClicked(false);
-    questionsTest = await dispatch(getQuestionList());
+    // questionsTest = await dispatch(getQuestionList());
     setQuestionClicked(true);
     console.log(questionsTest.payload.items);
     setAppstats(JSON.stringify(questionsTest.payload.items[0].body));
@@ -45,7 +41,6 @@ export default () => {
 
   return (
     <React.Fragment>
-      <Navbar />
       <h3 className={"name"}>Hi, {activeUser}</h3>
       <div className={"grid"}>
         <div className={"home_left"}>
@@ -58,6 +53,7 @@ export default () => {
         </div>
         {questionsClicked && (
           <div className={"home_middle"}>
+            {/* <QuestionTypeBtn title={"Basic"} />*/}
             <div className={"question-type"}>Basic</div>
             <div className={"question-type"}>Traits</div>
             <div className={"question-type"}>Swippable</div>

@@ -1,5 +1,5 @@
-import "./UI/Loader.css";
-import logo from "../../../logo.svg";
+import "../UI/Loader.css";
+import logo from "../../../../logo.svg";
 
 export default () => {
   return (

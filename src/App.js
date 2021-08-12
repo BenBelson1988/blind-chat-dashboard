@@ -3,7 +3,7 @@ import "./App.css";
 import Amplify, {Auth, Hub, loadingLogo} from "aws-amplify";
 import awsconfig from "./aws-exports";
 import thunk from "redux-thunk";
-import authSlicer, {signInAction} from "./stores/slices/authSlicer";
+import authSlicer, {setActiveUser, signInAction} from "./stores/slices/authSlicer";
 import {Provider, useDispatch} from "react-redux";
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import {composeWithDevTools} from "redux-devtools-extension";
@@ -31,6 +31,7 @@ function App(props) {
     return (
         <Provider store={store}>
             <div className="App">
+
                 <Router>
                     <Main />
                 </Router>
