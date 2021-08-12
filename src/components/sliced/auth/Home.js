@@ -12,7 +12,7 @@ import Navbar from "../auth/Navbar";
 import { useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { UsernameAttributes } from "aws-amplify-react";
-import Questions from "./Questions";
+import Question from "./Question";
 
 export default () => {
   const username = useSelector(({ auth }) => auth.username);
@@ -62,7 +62,7 @@ export default () => {
             <div className={"question-type"}>Traits</div>
             <div className={"question-type"}>Swippable</div>
             <div className={"question-type"}>Games</div>
-            <Questions title={"lalalalalalala"} />
+            <Question title={"lalalalalalala"} />
           </div>
         )}
         {appStatsClicked && (
