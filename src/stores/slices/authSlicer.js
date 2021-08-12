@@ -38,6 +38,7 @@ export const signUpAction = createAsyncThunk(
       return user;
     } catch (err) {
       console.log(err);
+      return err.message;
     }
   }
 );

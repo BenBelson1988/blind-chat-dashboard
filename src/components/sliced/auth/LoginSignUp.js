@@ -42,6 +42,8 @@ export default () => {
   const [errorMsg2, setErrorMsg2] = useState("");
   const [formIsValid, setFormIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  let errmsg = null;
+  let signupmsg = null;
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
@@ -95,17 +97,33 @@ export default () => {
     } else setEnterEmailisValid(true);
   }, [enteredEmail]);
 
-  const loginFunc = async () => {
+  const signUpFunc = async () => {
     setIsLoading(true);
-    await dispatch(
-      signInAction({
-        email: enteredEmail, //email: "belson1988@gmail.com",
-        password: enteredPass, // password: "1234567",
+    signupmsg = await dispatch(
+      signUpAction({
+        email: enteredEmail,
+        password: enteredPass,
       })
     );
     setIsLoading(false);
     setEnterPassisValid(false);
-    setErrorMsg2("Incorrect username or password");
+    if (signupmsg.payload.userConfirmed)
+      setErrorMsg2("Signed up successfully, wait for Or to approve you =]");
+    else setErrorMsg2(signupmsg.payload);
+    //setErrorMsg2(signupmsg.payload);
+  };
+
+  const loginFunc = async () => {
+    setIsLoading(true);
+    errmsg = await dispatch(
+      signInAction({
+        email: enteredEmail,
+        password: enteredPass,
+      })
+    );
+    setIsLoading(false);
+    setEnterPassisValid(false);
+    setErrorMsg2(errmsg.payload);
   };
   const dispatch = useDispatch();
 
@@ -146,15 +164,8 @@ export default () => {
         <Div>
           <button
             className="button_signin"
-            disabled={true}
-            onClick={() => {
-              dispatch(
-                signUpAction({
-                  email: "belson1988@gmail.com",
-                  password: "1234567",
-                })
-              );
-            }}
+            disabled={!formIsValid}
+            onClick={signUpFunc}
           >
             Sign Up
           </button>

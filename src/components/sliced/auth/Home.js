@@ -12,6 +12,7 @@ import Navbar from "../auth/Navbar";
 import { useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { UsernameAttributes } from "aws-amplify-react";
+import Questions from "./Questions";
 
 export default () => {
   const username = useSelector(({ auth }) => auth.username);
@@ -20,28 +21,20 @@ export default () => {
   const [activeUser, setActiveUser] = useState("");
   const [questionsClicked, setQuestionClicked] = useState(false);
   const [appStatsClicked, setappStatsClicked] = useState(true);
-  let me = null;
-  let questions = null;
+  let questionsTest = null;
   let appStatsString = null;
 
   useEffect(() => {
     if (username == "951efce6-bc4b-4cb4-98ac-3b2cbd1a3958")
       setActiveUser("Ben");
-    console.log(username);
   }, [username]);
-
-  /* useEffect(() => {
-    me = dispatch(fetchUserDetailsAction());
-    console.log(me);
-    setAppstats("test");
-  }, [me]);*/
 
   const testFunc = async () => {
     setappStatsClicked(false);
+    questionsTest = await dispatch(getQuestionList());
     setQuestionClicked(true);
-    questions = await dispatch(getQuestionList());
-    console.log(questions);
-    setAppstats(JSON.stringify(questions.payload.items[0].body));
+    console.log(questionsTest.payload.items);
+    setAppstats(JSON.stringify(questionsTest.payload.items[0].body));
   };
 
   const appStatsFunc = async () => {
@@ -69,6 +62,7 @@ export default () => {
             <div className={"question-type"}>Traits</div>
             <div className={"question-type"}>Swippable</div>
             <div className={"question-type"}>Games</div>
+            <Questions title={"lalalalalalala"} />
           </div>
         )}
         {appStatsClicked && (
@@ -80,7 +74,12 @@ export default () => {
           </div>
         )}
       </div>
-      <button className={"button_signout"} onClick={() => dispatch(signOut())}>
+      <button
+        className={"button_signout"}
+        onClick={() => {
+          dispatch(signOut());
+        }}
+      >
         Sign out
       </button>
     </React.Fragment>
