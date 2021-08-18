@@ -14,10 +14,7 @@ export default () => {
   const dispatch = useDispatch();
   useEffect(() => {
     Auth.currentSession().then(({ idToken: { payload } }) => {
-      //debugger
       dispatch(setActiveUser(payload));
-      // console.log(payload);
-      // debugger;
     });
   }, []);
 

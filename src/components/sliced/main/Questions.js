@@ -14,6 +14,8 @@ import QuestionsList from "./QuestionsList";
 export default () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const activeQuestiontype = useQueryParams().type;
+  console.log(activeQuestiontype);
 
   useEffect(() => {
     history.push({
@@ -40,7 +42,9 @@ export default () => {
     >
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div
-          className={"question-type"}
+          className={`question-type ${
+            activeQuestiontype === "basic" ? "active" : ""
+          }`}
           onClick={() => {
             history.push({
               search: "?type=basic",
@@ -50,7 +54,9 @@ export default () => {
           Basic
         </div>
         <div
-          className={"question-type"}
+          className={`question-type ${
+            activeQuestiontype === "traits" ? "active" : ""
+          }`}
           onClick={() => {
             history.push({
               search: "?type=traits",
@@ -60,7 +66,9 @@ export default () => {
           Traits
         </div>
         <div
-          className={"question-type"}
+          className={`question-type ${
+            activeQuestiontype === "swippable" ? "active" : ""
+          }`}
           onClick={() => {
             history.push({
               search: "?type=swippable",
@@ -70,7 +78,9 @@ export default () => {
           Swippable
         </div>
         <div
-          className={"question-type"}
+          className={`question-type ${
+            activeQuestiontype === "games" ? "active" : ""
+          }`}
           onClick={() => {
             history.push({
               search: "?type=games",

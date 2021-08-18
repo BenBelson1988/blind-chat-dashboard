@@ -21,7 +21,6 @@ export const getQuestionListByType = createAsyncThunk(
           getQuestions: { items: data },
         },
       } = await API.graphql(graphqlOperation(getQuestionsByType, { type }));
-      debugger;
       return { questions: data, type };
     } catch (err) {
       console.log(err);
@@ -37,7 +36,6 @@ const questionsSlicer = createSlice({
       state,
       { payload: { type, questions } }
     ) => {
-      debugger;
       state[type] = questions;
     },
   },

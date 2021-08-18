@@ -7,7 +7,6 @@ export default () => {
 
   useEffect(() => {
     const searchArrey = location.search.substring(1).split("&");
-    debugger;
     const params = searchArrey.reduce((acc, str) => {
       const [key, value] = str.split("=");
       return { ...acc, [key]: value };
