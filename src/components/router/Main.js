@@ -1,6 +1,6 @@
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import LoginSignUp from "../sliced/auth/LoginSignUp";
-import Navbar from "../sliced/auth/Navbar";
+import Navbar from "../sliced/auth/common/Navbar";
 import RouteGuard from "./RouteGuard";
 import Home from "../router/Home";
 import React, { useEffect } from "react";

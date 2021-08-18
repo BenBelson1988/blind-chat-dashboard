@@ -1,43 +1,43 @@
-import React, {useCallback, useEffect, useState, Component} from "react";
+import React, { useCallback, useEffect, useState, Component } from "react";
 import "./App.css";
-import Amplify, {Auth, Hub, loadingLogo} from "aws-amplify";
+import Amplify, { Auth, Hub, loadingLogo } from "aws-amplify";
 import awsconfig from "./aws-exports";
 import thunk from "redux-thunk";
-import authSlicer, {setActiveUser, signInAction} from "./stores/slices/authSlicer";
-import {Provider, useDispatch} from "react-redux";
-import {applyMiddleware, combineReducers, createStore} from "redux";
-import {composeWithDevTools} from "redux-devtools-extension";
+import authSlicer, {
+  setActiveUser,
+  signInAction,
+} from "./stores/slices/authSlicer";
+import { Provider, useDispatch } from "react-redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-import {
-    BrowserRouter as Router,
-
-} from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import Main from "./components/router/Main";
+import questionsSlicer from "./stores/slices/questionsSlicer";
 
 Amplify.configure(awsconfig);
 
 const rootReducer = combineReducers({
-    auth: authSlicer,
+  auth: authSlicer,
+  questions: questionsSlicer,
 });
 const store = createStore(
-    rootReducer,
-    composeWithDevTools(applyMiddleware(thunk))
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
 function App(props) {
-    // in useEffect, we create the listener
+  // in useEffect, we create the listener
 
-
-    return (
-        <Provider store={store}>
-            <div className="App">
-
-                <Router>
-                    <Main />
-                </Router>
-            </div>
-        </Provider>
-    );
+  return (
+    <Provider store={store}>
+      <div className="App">
+        <Router>
+          <Main />
+        </Router>
+      </div>
+    </Provider>
+  );
 }
 
 export default App;

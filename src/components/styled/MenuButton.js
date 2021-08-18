@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export default styled.div`
   text-align: center;
-  margin:15px;
+  margin: 15px;
   padding-bottom: 15px;
   padding-top: 15px;
   vertical-align: middle;
@@ -14,10 +14,11 @@ export default styled.div`
   box-shadow: 2px 2px 2px 2px rgba(47, 47, 47, 0.13);
   font-size: 25px;
   font-weight: bold;
-  &:hover{
-      background-image: linear-gradient(#116f720c, #00000098);
-      cursor: pointer;
-   }
-}
-
-    `
+  &:hover {
+    background-image: linear-gradient(#116f720c, #00000098);
+    cursor: pointer;
+  }
+  &.active {
+    background-image: linear-gradient(#116f720c, #00000098);
+  }
+`;
