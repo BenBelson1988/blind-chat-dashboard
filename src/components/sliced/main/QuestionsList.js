@@ -5,12 +5,11 @@ import Question from "./Question";
 export default () => {
   const queryParams = useQueryParams();
   const questionsType = queryParams["type"];
-  debugger;
   const questions = useSelector(({ questions }) => {
     return questions[questionsType] || [];
   });
 
-  return questions.map((question) => {
-    return <Question {...question} />;
+  return questions.map((question, index) => {
+    return <Question index={index} {...question} />;
   });
 };
