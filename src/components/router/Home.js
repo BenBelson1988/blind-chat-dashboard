@@ -25,7 +25,6 @@ export default () => {
   const username = useSelector(({ auth }) => auth.username);
   const [activeUser, setActiveUser] = useState("");
   const currentTab = useCurrentTab();
-  console.log(currentTab);
 
   useEffect(() => {
     if (username == "951efce6-bc4b-4cb4-98ac-3b2cbd1a3958")

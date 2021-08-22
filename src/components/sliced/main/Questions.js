@@ -15,7 +15,6 @@ export default () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const activeQuestiontype = useQueryParams().type;
-  console.log(activeQuestiontype);
 
   useEffect(() => {
     history.push({
