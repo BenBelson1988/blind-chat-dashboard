@@ -68,10 +68,25 @@ export default (props) => {
               >
                 {answer.iceBreaker}
               </p>
-              <h6>Effect-</h6>
-              <p>
-                {answer.effects[0].feature} - {answer.effects[0].value}
-              </p>
+              <h6
+                style={{
+                  margin: "0",
+                  padding: "0",
+                }}
+              >
+                Effects-
+              </h6>
+              {answer.effects.map((effect) => {
+                return (
+                  <p
+                    style={{
+                      fontSize: "10px",
+                    }}
+                  >
+                    {effect.feature} - {effect.value}
+                  </p>
+                );
+              })}
             </div>
           );
         })}
