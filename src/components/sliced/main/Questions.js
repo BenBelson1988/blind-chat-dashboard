@@ -10,6 +10,7 @@ import questionsSlicer, {
 import { useHistory, useLocation } from "react-router-dom";
 import useQueryParams from "../../../customHooks/useQueryParams";
 import QuestionsList from "./QuestionsList";
+import CustomLoader from "../auth/common/CustomLoader";
 
 export default () => {
   const dispatch = useDispatch();
@@ -89,7 +90,6 @@ export default () => {
           Games
         </div>
       </div>
-
       <QuestionsList />
     </div>
   );

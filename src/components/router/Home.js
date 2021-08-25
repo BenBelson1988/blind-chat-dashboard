@@ -33,7 +33,7 @@ export default () => {
 
   const history = useHistory();
   return (
-    <React.Fragment>
+    <div style={{ position: "relative" }}>
       <h3 className={"name"}>Hi, {activeUser}</h3>
       <div style={{ display: "flex", flexDirections: "row" }}>
         <MenuContainer>
@@ -72,6 +72,6 @@ export default () => {
       >
         Sign out
       </button>
-    </React.Fragment>
+    </div>
   );
 };
