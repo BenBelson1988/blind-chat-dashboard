@@ -11,11 +11,11 @@ export default (props) => {
   const [expand, setExpand] = useState("More details");
   const [isEdit, setEdit] = useState(false);
   const [editText, setEditText] = useState("Edit Question");
+  const [answersTest, setAnswersTest] = useState(props.answers);
   useEffect(() => {}, [isOpen, isEdit]);
 
   const titleInputRef = useRef(props.body);
   const answersObject = useRef(props.answers);
-  console.log(answersObject);
 
   const toggleOpendiv = () => {
     setSinOpen(!isOpen);
