@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { selectInput } from "aws-amplify";
+import { Label } from "aws-amplify-react";
+import { useEffect, useState, useRef } from "react";
 import ExpandButton from "../../styled/ExpandButton";
 import MenuButton from "../../styled/MenuButton";
 import QuestionInput from "../../styled/QuestionInput";
-import EditQuestion from "./EditQuestion";
 
 export default (props) => {
   console.log(props);
@@ -10,8 +11,11 @@ export default (props) => {
   const [expand, setExpand] = useState("More details");
   const [isEdit, setEdit] = useState(false);
   const [editText, setEditText] = useState("Edit Question");
-  const [title, setTitle] = useState(props.body);
   useEffect(() => {}, [isOpen, isEdit]);
+
+  const titleInputRef = useRef(props.body);
+  const answersObject = useRef(props.answers);
+  console.log(answersObject);
 
   const toggleOpendiv = () => {
     setSinOpen(!isOpen);
@@ -25,12 +29,13 @@ export default (props) => {
       : setEditText("Edit Question");
   };
 
-  const handleChange = (e, value) => {
+  const updateCurrentRef = (e, value) => {
     if (value === "title") {
-      setTitle(e.target.value);
-      console.log(title);
+      titleInputRef.current.value = e.target.value;
+      console.log(titleInputRef.current.value);
     }
   };
+  const testFunc = (ansIndex, effIndex) => {};
   return (
     <div
       style={{
@@ -43,14 +48,133 @@ export default (props) => {
       }}
     >
       {isEdit && (
-        <div>
+        <div
+          style={{
+            direction: "flex",
+            flexDirection: "column",
+          }}
+        >
           <label>Question: </label>
+
           <QuestionInput
+            style={{ width: "50%" }}
             type="text"
-            value={title}
-            name="test"
-            onInput={(e) => handleChange(e, "title")}
+            ref={titleInputRef}
+            defaultValue={props.body}
+            onInput={(e) => updateCurrentRef(e, "title")}
           ></QuestionInput>
+          <h3 style={{ color: "lightgray", marginBottom: "5px" }}>Answers</h3>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            {props.answers.map((answer, answerIndex) => {
+              return (
+                <div>
+                  <label>{answerIndex + 1}.</label>
+                  <QuestionInput
+                    style={{ marginRight: "20px" }}
+                    type="text"
+                    defaultValue={answer.body}
+                  ></QuestionInput>
+                  {answer.iceBreaker === "" ? (
+                    ""
+                  ) : (
+                    <>
+                      <h5 style={{ color: "white", marginBottom: "-5px" }}>
+                        Ice Breaker-
+                      </h5>
+
+                      <QuestionInput
+                        type="text"
+                        defaultValue={answer.iceBreaker}
+                        style={{
+                          color: "lightgray",
+                          fontSize: "13px",
+                          paddingRight: "10px",
+                          paddingLeft: "10px",
+                        }}
+                      ></QuestionInput>
+                    </>
+                  )}
+                  <h5 style={{ marginBottom: "5px", marginTop: "5px" }}>
+                    Effects
+                  </h5>
+                  {answer.effects.map((effect, effectIndex) => {
+                    return (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            marginBottom: "5px",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <select
+                            defaultValue={effect.feature}
+                            style={{
+                              backgroundColor: "black",
+                              color: "white",
+                              borderRadius: "15px",
+                              height: "25px",
+                              marginRight: "20px",
+                              width: "100px",
+                            }}
+                          >
+                            <option>Forgivingness</option>
+                            <option>Altruism</option>
+                            <option>Inquisitiveness</option>
+                            <option>Unconventionality</option>
+                            <option>Sport</option>
+                            <option>Familial</option>
+                            <option>Religion</option>
+                            <option>Diligence</option>
+                            <option>Flexibility</option>
+                            <option>Liveliness</option>
+                          </select>
+                          <QuestionInput
+                            style={{
+                              width: "50px",
+                              margin: "0",
+                            }}
+                            step="0.05"
+                            min="0.1"
+                            max="1"
+                            type="number"
+                            defaultValue={effect.value}
+                          ></QuestionInput>
+                        </div>
+                      </div>
+                    );
+                  })}
+                  <ExpandButton
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      borderRadius: "15px",
+                      width: "30px",
+                      height: "25px",
+                    }}
+                    onClick={() => {
+                      testFunc(answerIndex);
+                    }}
+                  >
+                    +
+                  </ExpandButton>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
       {!isEdit && (
@@ -118,20 +242,23 @@ export default (props) => {
                       {answer.iceBreaker === "" ? (
                         ""
                       ) : (
-                        <h5 style={{ color: "white", marginBottom: "-5px" }}>
-                          Ice Breaker-
-                        </h5>
+                        <>
+                          <h5 style={{ color: "white", marginBottom: "-5px" }}>
+                            Ice Breaker-
+                          </h5>
+
+                          <p
+                            style={{
+                              color: "lightgray",
+                              fontSize: "13px",
+                              paddingRight: "10px",
+                              paddingLeft: "10px",
+                            }}
+                          >
+                            {answer.iceBreaker}
+                          </p>
+                        </>
                       )}
-                      <p
-                        style={{
-                          color: "lightgray",
-                          fontSize: "13px",
-                          paddingRight: "10px",
-                          paddingLeft: "10px",
-                        }}
-                      >
-                        {answer.iceBreaker}
-                      </p>
                       <h5
                         style={{
                           margin: "0",
