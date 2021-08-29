@@ -16,7 +16,7 @@ export default () => {
   }, [questions]);
 
   if (isLoading && questionsType !== "games") {
-    return <CustomLoader />;
+    return <CustomLoader title="Fecthing questions" />;
   }
   return questions.map((question, index) => {
     return <Question index={index} {...question} />;

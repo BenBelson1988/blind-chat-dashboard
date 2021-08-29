@@ -1,12 +1,12 @@
-.loader-logo {
-  height: 20vmin;
+.loader-logo-sec {
+  height: 25vmin;
   pointer-events: none;
   z-index: 999;
-  margin: auto;
+  margin-top: -50px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .loader-logo {
+  .loader-logo-sec {
     animation: App-logo-spin infinite 0.5s linear;
   }
 }
