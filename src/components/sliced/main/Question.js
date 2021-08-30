@@ -12,10 +12,11 @@ export default (props) => {
   const [isEdit, setEdit] = useState(false);
   const [editText, setEditText] = useState("Edit Question");
   const [answersTest, setAnswersTest] = useState(props.answers);
-  useEffect(() => {}, [isOpen, isEdit]);
 
   const titleInputRef = useRef(props.body);
   const answersObject = useRef(props.answers);
+
+  useEffect(() => {}, [isOpen, isEdit]);
 
   const toggleOpendiv = () => {
     setSinOpen(!isOpen);
@@ -35,7 +36,11 @@ export default (props) => {
       console.log(titleInputRef.current.value);
     }
   };
-  const testFunc = (ansIndex, effIndex) => {};
+  const testFunc = (ansIndex) => {
+    var test = props.answers[ansIndex].effects;
+    var newtest = [...test, { feature: "Please Choose value", value: 0.1 }];
+    console.log(newtest);
+  };
   return (
     <div
       style={{
@@ -103,7 +108,7 @@ export default (props) => {
                   <h5 style={{ marginBottom: "5px", marginTop: "5px" }}>
                     Effects
                   </h5>
-                  {answer.effects.map((effect, effectIndex) => {
+                  {answer.effects.map((effect) => {
                     return (
                       <div
                         style={{
