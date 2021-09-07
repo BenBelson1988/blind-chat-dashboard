@@ -20,8 +20,15 @@ export const getQuestionsByType = /* GraphQL */ `
   }
 `;
 
-export const answerQuestion = /* GraphQL */ `
-  mutation answerQuestion($answerId: ID!, $questionId: ID!) {
-    answerQuestion(input: { answerId: $answerId, questionId: $questionId })
+export const putQuestion = /* GraphQL */ `
+  mutation updateQuestion(
+    $id: ID!
+    $body: String
+    $domain: Domain
+    $answers: [AnswersInput]
+  ) {
+    updateQuestion(
+      input: { id: $id, body: $body, domain: $domain, answers: $answers }
+    )
   }
 `;

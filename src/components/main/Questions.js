@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "../auth/UI/Home.css";
+import "../sliced/auth/UI/Home.css";
 import { useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { UsernameAttributes } from "aws-amplify-react";
 import questionsSlicer, {
   getQuestionListByType,
-} from "../../../stores/slices/questionsSlicer";
+} from "../../stores/slices/questionsSlicer";
 import { useHistory, useLocation } from "react-router-dom";
-import useQueryParams from "../../../customHooks/useQueryParams";
+import useQueryParams from "../../customHooks/useQueryParams";
 import QuestionsList from "./QuestionsList";
-import CustomLoader from "../auth/common/CustomLoader";
+import CustomLoader from "../sliced/auth/common/CustomLoader";
 
 export default () => {
   const dispatch = useDispatch();

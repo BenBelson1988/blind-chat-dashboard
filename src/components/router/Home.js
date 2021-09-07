@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import Questions from "../sliced/main/Questions";
-import Stats from "../sliced/main/Stats";
+import Questions from "../main/Questions";
+import Stats from "../main/Stats";
 import styled from "styled-components";
 import MenuButton from "../styled/MenuButton";
 import { useHistory } from "react-router";
@@ -27,7 +27,7 @@ export default () => {
   const currentTab = useCurrentTab();
 
   useEffect(() => {
-    if (username == "951efce6-bc4b-4cb4-98ac-3b2cbd1a3958")
+    if (username == "346383f4-d451-4af8-b6fa-24bdb1160cff")
       setActiveUser("Ben");
   }, [username]);
 

@@ -1,9 +1,9 @@
 import { selectInput } from "aws-amplify";
 import { Label } from "aws-amplify-react";
 import { useEffect, useState, useRef } from "react";
-import ExpandButton from "../../styled/ExpandButton";
-import MenuButton from "../../styled/MenuButton";
-import QuestionInput from "../../styled/QuestionInput";
+import ExpandButton from "../styled/ExpandButton";
+import MenuButton from "../styled/MenuButton";
+import QuestionInput from "../styled/QuestionInput";
 
 export default (props) => {
   console.log(props);
@@ -15,7 +15,7 @@ export default (props) => {
 
   const titleInputRef = useRef(props.body);
   const answersObject = useRef(props.answers);
-
+  console.log();
   useEffect(() => {}, [isOpen, isEdit]);
 
   const toggleOpendiv = () => {
@@ -37,9 +37,12 @@ export default (props) => {
     }
   };
   const testFunc = (ansIndex) => {
-    var test = props.answers[ansIndex].effects;
-    var newtest = [...test, { feature: "Please Choose value", value: 0.1 }];
-    console.log(newtest);
+    Object.assign(
+      (answersObject.current[ansIndex].effects = [
+        ...answersObject.current,
+        { feature: "Please Choose value", value: 0.1 },
+      ])
+    );
   };
   return (
     <div
@@ -76,7 +79,7 @@ export default (props) => {
               justifyContent: "center",
             }}
           >
-            {props.answers.map((answer, answerIndex) => {
+            {answersObject.current.map((answer, answerIndex) => {
               return (
                 <div>
                   <label>{answerIndex + 1}.</label>
@@ -294,18 +297,37 @@ export default (props) => {
       )}
       <div
         style={{
-          direction: "flex",
+          display: "flex",
           flexDirection: "row",
-          textAlign: "end",
+          justifyContent: "flex-end",
+          marginTop: "15px",
         }}
       >
+        {isEdit && (
+          <ExpandButton
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              borderRadius: "10px",
+              margin: "10px",
+              padding: "10px",
+              color: "white",
+              backgroundImage:
+                " linear-gradient(135deg, rgba(0,45,50,1) 0%, rgba(0,0,0,0.865983893557423) 95%)",
+              border: "none",
+              boxShadow: "0px 0px 0px 1px #7e7c7c",
+            }}
+          >
+            Save question
+          </ExpandButton>
+        )}
         <ExpandButton
           onClick={togleEdit}
           style={{
             fontSize: "15px",
             fontWeight: "bold",
             borderRadius: "10px",
-            margin: "20px",
+            margin: "10px",
             padding: "10px",
             color: "white",
             backgroundImage:

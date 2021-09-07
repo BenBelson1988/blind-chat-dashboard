@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import useQueryParams from "../../../customHooks/useQueryParams";
-import CustomLoader from "../auth/common/CustomLoader";
+import useQueryParams from "../../customHooks/useQueryParams";
+import CustomLoader from "../sliced/auth/common/CustomLoader";
 import Question from "./Question";
 
 export default () => {
