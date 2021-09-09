@@ -3,6 +3,7 @@ import { API, Auth, graphqlOperation } from "aws-amplify";
 import {
   getQuestions,
   getQuestionsByType,
+  putQuestion,
 } from "../graphqloperations/queries/getQuestions";
 
 const initialState = {
@@ -28,12 +29,12 @@ export const getQuestionListByType = createAsyncThunk(
   }
 );
 
-export const putQuestion = createAsyncThunk(
+export const putQuestionfunc = createAsyncThunk(
   "questions/putQuestion",
-  async (id, answers, body,type) => {
+  async (id, answers, body, domain) => {
     try {
-      API.graphql(graphqlOperation(putQuestionGraphQL, { type }));
-      return { id, answers, body,type };
+      API.graphql(graphqlOperation(putQuestion, { id, body, domain, answers }));
+      return { id, answers, body, domain };
     } catch (err) {
       console.log(err);
     }
@@ -44,11 +45,13 @@ export const questionsSlicer = createSlice({
   name: "questions",
   initialState,
   extraReducers: {
-    [putQuestion.fulfilled]:(state,{
-      payload:{id, answers, body,type}
-    })=>{
-      state[type][id]
-    }
+    /*
+    [putQuestionfunc.fulfilled]: (
+      state,
+      { payload: { id, answers, body, type } }
+    ) => {
+      state[type][id];
+    },*/
 
     [getQuestionListByType.fulfilled]: (
       state,
