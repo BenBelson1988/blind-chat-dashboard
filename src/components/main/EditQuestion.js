@@ -13,6 +13,7 @@ export default (props) => {
   const idRef = useRef(props.id);
   const domainRef = useRef(props.domain);
   const answersRef = useRef(props.answers);
+  console.log(props.answers);
   console.log(answersRef.current);
   console.log(idRef.current);
   const testFunc = () => {};
@@ -47,7 +48,7 @@ export default (props) => {
           justifyContent: "center",
         }}
       >
-        {props.answers.map((answer, answerIndex) => {
+        {answersRef.current.map((answer, answerIndex) => {
           return (
             <div>
               <label>{answerIndex + 1}.</label>
@@ -131,9 +132,10 @@ export default (props) => {
                   </div>
                 );
               })}
+              <h6 style={{ margin: "0px", paddingTop: "10px" }}>Add effect</h6>
               <ExpandButton
                 style={{
-                  height: "33px",
+                  height: "30px",
                 }}
                 onClick={() => {
                   testFunc(answerIndex);
@@ -144,6 +146,18 @@ export default (props) => {
             </div>
           );
         })}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+          }}
+        >
+          <h6 style={{ margin: "0px" }}>Add answer</h6>
+          <ExpandButton style={{ height: "40px", width: "40px" }}>
+            +
+          </ExpandButton>
+        </div>
       </div>
       <div
         style={{
