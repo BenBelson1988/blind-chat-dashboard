@@ -5,16 +5,16 @@ import { useDispatch } from "react-redux";
 import questionsSlicer, {
   putQuestionfunc,
 } from "../../stores/slices/questionsSlicer";
+import useQueryParams from "../../customHooks/useQueryParams";
 
 export default (props) => {
+  const queryParams = useQueryParams();
   const dispatch = useDispatch();
-
+  const questionsType = queryParams["type"];
   const questionRef = useRef(props.body);
   const idRef = useRef(props.id);
   const domainRef = useRef(props.domain);
   const answersRef = useRef(props.answers);
-  console.log(answersRef.current);
-  console.log(idRef.current);
   const testFunc = () => {};
 
   const updateCurrentRef = (e, value) => {
@@ -47,7 +47,7 @@ export default (props) => {
           justifyContent: "center",
         }}
       >
-        {props.answers.map((answer, answerIndex) => {
+        {answersRef.current.map((answer, answerIndex) => {
           return (
             <div>
               <label>{answerIndex + 1}.</label>
@@ -131,9 +131,10 @@ export default (props) => {
                   </div>
                 );
               })}
+              <h6 style={{ margin: "0px", paddingTop: "10px" }}>Add effect</h6>
               <ExpandButton
                 style={{
-                  height: "33px",
+                  height: "30px",
                 }}
                 onClick={() => {
                   testFunc(answerIndex);
@@ -144,6 +145,18 @@ export default (props) => {
             </div>
           );
         })}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+          }}
+        >
+          <h6 style={{ margin: "0px" }}>Add answer</h6>
+          <ExpandButton style={{ height: "40px", width: "40px" }}>
+            +
+          </ExpandButton>
+        </div>
       </div>
       <div
         style={{
@@ -155,12 +168,14 @@ export default (props) => {
       >
         <ExpandButton
           onClick={() => {
+            debugger;
             dispatch(
               putQuestionfunc(
                 idRef.current,
-                questionRef.current,
-                domainRef.current,
-                answersRef.current
+                questionRef.current.value,
+                questionsType
+                // domainRef.current,
+                // answersRef.current
               )
             );
           }}

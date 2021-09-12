@@ -31,10 +31,12 @@ export const getQuestionListByType = createAsyncThunk(
 
 export const putQuestionfunc = createAsyncThunk(
   "questions/putQuestion",
-  async (id, answers, body, domain) => {
+  async (id, body, type) => {
     try {
-      API.graphql(graphqlOperation(putQuestion, { id, body, domain, answers }));
-      return { id, answers, body, domain };
+      const input = { id, body /* domain, answers*/ };
+      console.log("input", input);
+      API.graphql(graphqlOperation(putQuestion, input));
+      return { id, body, type };
     } catch (err) {
       console.log(err);
     }
@@ -45,10 +47,9 @@ export const questionsSlicer = createSlice({
   name: "questions",
   initialState,
   extraReducers: {
-    /*
-    [putQuestionfunc.fulfilled]: (
+    /*[putQuestionfunc.fulfilled]: (
       state,
-      { payload: { id, answers, body, type } }
+      { payload: { id, body, type } }
     ) => {
       state[type][id];
     },*/
