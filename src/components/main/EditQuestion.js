@@ -1,31 +1,63 @@
 import QuestionInput from "../styled/QuestionInput";
 import ExpandButton from "../styled/ExpandButton";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import questionsSlicer, {
-  putQuestionfunc,
-} from "../../stores/slices/questionsSlicer";
+import { putQuestionfunc } from "../../stores/slices/questionsSlicer";
 import useQueryParams from "../../customHooks/useQueryParams";
+import { useHistory } from "react-router";
 
 export default (props) => {
+  const history = useHistory();
   const queryParams = useQueryParams();
   const dispatch = useDispatch();
   const questionsType = queryParams["type"];
   const questionRef = useRef(props.body);
   const idRef = useRef(props.id);
   const domainRef = useRef(props.domain);
-  const answersRef = useRef(props.answers);
+  const [answersState, setAnswersState] = useState(props.answers);
 
-  console.log(props.answers);
-  console.log(answersRef.current);
-  console.log(idRef.current);
-
-  const testFunc = () => {};
+  console.log("Answers", answersState);
 
   const updateCurrentRef = (e, value) => {
     if (value === "title") {
       questionRef.current.value = e.target.value;
+      ref.body = questionRef.current.value;
     }
+  };
+
+  const addAnswer = () => {
+    console.log(answersState);
+    setAnswersState((prevState) => [
+      ...prevState,
+      {
+        body: "test",
+        effects: [
+          {
+            feature: "test",
+            value: 0.1,
+          },
+        ],
+        iceBreaker: "test",
+      },
+    ]);
+  };
+
+  const addEffect = (answerIndex) => {
+    /*
+    setAnswersState((prevState) => [...prevState,
+    prevState.map((answertemp,index =>{
+      if(index === answerIndex){
+
+      }
+    })]);
+    debugger;
+  */
+  };
+
+  var ref = {
+    body: "",
+    id: idRef.current,
+    type: questionsType,
   };
 
   return (
@@ -52,7 +84,7 @@ export default (props) => {
           justifyContent: "center",
         }}
       >
-        {answersRef.current.map((answer, answerIndex) => {
+        {answersState.map((answer, answerIndex) => {
           return (
             <div>
               <label>{answerIndex + 1}.</label>
@@ -142,7 +174,7 @@ export default (props) => {
                   height: "30px",
                 }}
                 onClick={() => {
-                  testFunc(answerIndex);
+                  addEffect(answerIndex);
                 }}
               >
                 +
@@ -158,7 +190,10 @@ export default (props) => {
           }}
         >
           <h6 style={{ margin: "0px" }}>Add answer</h6>
-          <ExpandButton style={{ height: "40px", width: "40px" }}>
+          <ExpandButton
+            onClick={() => addAnswer()}
+            style={{ height: "40px", width: "40px" }}
+          >
             +
           </ExpandButton>
         </div>
@@ -174,15 +209,8 @@ export default (props) => {
         <ExpandButton
           onClick={() => {
             debugger;
-            dispatch(
-              putQuestionfunc(
-                idRef.current,
-                questionRef.current.value,
-                questionsType
-                // domainRef.current,
-                // answersRef.current
-              )
-            );
+            dispatch(putQuestionfunc(ref));
+            history.push("/home");
           }}
         >
           Save question
