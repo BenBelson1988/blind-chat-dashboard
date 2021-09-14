@@ -15,6 +15,11 @@ export default (props) => {
   const idRef = useRef(props.id);
   const domainRef = useRef(props.domain);
   const answersRef = useRef(props.answers);
+
+  console.log(props.answers);
+  console.log(answersRef.current);
+  console.log(idRef.current);
+
   const testFunc = () => {};
 
   const updateCurrentRef = (e, value) => {

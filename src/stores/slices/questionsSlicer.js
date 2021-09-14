@@ -12,6 +12,7 @@ const initialState = {
   swippable: [],
   games: [],
 };
+//{ body: "", domain: "", id: "", image: "", answers: [] }
 
 export const getQuestionListByType = createAsyncThunk(
   "questions/getQuestions",
@@ -22,6 +23,7 @@ export const getQuestionListByType = createAsyncThunk(
           getQuestions: { items: data },
         },
       } = await API.graphql(graphqlOperation(getQuestionsByType, { type }));
+
       return { questions: data, type };
     } catch (err) {
       console.log(err);
