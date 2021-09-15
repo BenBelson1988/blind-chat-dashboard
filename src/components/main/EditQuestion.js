@@ -43,15 +43,21 @@ export default (props) => {
   };
 
   const addEffect = (answerIndex) => {
-    /*
-    setAnswersState((prevState) => [...prevState,
-    prevState.map((answertemp,index =>{
-      if(index === answerIndex){
-
+    let newArr = [...answersState];
+    let newArr2 = newArr.map((element, index) => {
+      if (index === answerIndex) {
+        let tempelement = { ...element };
+        let tempEffects = [...element.effects];
+        tempEffects.push({
+          feature: "Forgiveness",
+          value: 0.1,
+        });
+        tempelement.effects = tempEffects;
+        return tempelement;
       }
-    })]);
-    debugger;
-  */
+      return element;
+    });
+    setAnswersState(newArr2);
   };
 
   var ref = {
@@ -67,7 +73,7 @@ export default (props) => {
         flexDirection: "column",
       }}
     >
-      <label>Question: </label>
+      <label style={{ fontWeight: "bolder" }}>Question: </label>
 
       <QuestionInput
         style={{ width: "50%" }}
@@ -76,7 +82,7 @@ export default (props) => {
         defaultValue={props.body}
         onInput={(e) => updateCurrentRef(e, "title")}
       ></QuestionInput>
-      <h3 style={{ color: "lightgray", marginBottom: "5px" }}>Answers</h3>
+      <h3 style={{ color: "lightgray", marginBottom: "15px" }}>Answers</h3>
       <div
         style={{
           display: "flex",
@@ -86,7 +92,12 @@ export default (props) => {
       >
         {answersState.map((answer, answerIndex) => {
           return (
-            <div>
+            <div
+              style={{
+                paddingRight: "10px",
+                paddingLeft: "10px",
+              }}
+            >
               <label>{answerIndex + 1}.</label>
               <QuestionInput
                 style={{ marginRight: "20px" }}
@@ -129,8 +140,21 @@ export default (props) => {
                         flexDirection: "row",
                         marginBottom: "5px",
                         justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
+                      <ExpandButton
+                        style={{
+                          borderRadius: "7px",
+                          width: "5px",
+                          height: "5px",
+                          fontSize: "10px",
+                          lineHeight: "1px",
+                          paddingLeft: "4px",
+                        }}
+                      >
+                        X
+                      </ExpandButton>
                       <select
                         defaultValue={effect.feature}
                         style={{
@@ -172,6 +196,8 @@ export default (props) => {
               <ExpandButton
                 style={{
                   height: "30px",
+                  width: "30px",
+                  padding: "0",
                 }}
                 onClick={() => {
                   addEffect(answerIndex);
