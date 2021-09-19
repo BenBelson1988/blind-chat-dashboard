@@ -18,28 +18,64 @@ export default (props) => {
 
   console.log("Answers", answersState);
 
+  const updateAnswer = (e, answerIndex, title) => {
+    let newArr = [...answersState];
+    let newArr2 = newArr.map((answer, index) => {
+      let tempelement = { ...answer };
+      if (index === answerIndex) {
+        if (title === "body") tempelement.body = e.target.value;
+        if (title === "iceBreaker") tempelement.iceBreaker = e.target.value;
+      }
+      return tempelement;
+    });
+    setAnswersState(newArr2);
+  };
+
   const updateCurrentRef = (e, value) => {
     if (value === "title") {
       questionRef.current.value = e.target.value;
       ref.body = questionRef.current.value;
     }
   };
-
-  const addAnswer = () => {
+  const deleteAnswer = (answerIndex) => {
+    if (answersState.length === 1) return;
+    let newArr = answersState.filter((_, index) => {
+      return index !== answerIndex;
+    });
+    console.log("after delete", newArr);
+    setAnswersState(newArr);
+  };
+  const addAnswer = (quuestiontype) => {
     console.log(answersState);
-    setAnswersState((prevState) => [
-      ...prevState,
-      {
-        body: "test",
-        effects: [
-          {
-            feature: "test",
-            value: 0.1,
-          },
-        ],
-        iceBreaker: "test",
-      },
-    ]);
+    if (questionsType === "basic") {
+      setAnswersState((prevState) => [
+        ...prevState,
+        {
+          body: "Please insert answer",
+          effects: [
+            {
+              feature: "Forgivingness",
+              value: 0.1,
+            },
+          ],
+          iceBreaker: "Please enter iceBreaker",
+        },
+      ]);
+    } else {
+      setAnswersState((prevState) => [
+        ...prevState,
+        {
+          body: "Please insert answer",
+          effects: [
+            {
+              feature: "Forgivingness",
+              value: 0.1,
+            },
+          ],
+          iceBreaker: "",
+        },
+      ]);
+    }
   };
 
   const addEffect = (answerIndex) => {
@@ -52,6 +88,50 @@ export default (props) => {
           feature: "Forgiveness",
           value: 0.1,
         });
+        tempelement.effects = tempEffects;
+        console.log("effects after add:", tempelement.effects);
+        return tempelement;
+      }
+      return element;
+    });
+    setAnswersState(newArr2);
+  };
+
+  const deleteEffect = (answerIndex, effectIndex) => {
+    if (answersState[answerIndex].effects.length === 1) {
+      return;
+    }
+    let newArr = [...answersState];
+    let newArr2 = newArr.map((element, index) => {
+      if (index === answerIndex) {
+        let tempelement = { ...element };
+        let tempEffects = element.effects.filter((_, eindex) => {
+          return eindex !== effectIndex;
+        });
+        console.log("after filter effects: ", tempEffects);
+        tempelement.effects = tempEffects;
+        return tempelement;
+      }
+      return element;
+    });
+    setAnswersState(newArr2);
+  };
+
+  const updateFeature = (e, answerIndex, effectIndex, title) => {
+    let newArr = [...answersState];
+    let newArr2 = newArr.map((element, index) => {
+      if (index === answerIndex) {
+        let tempelement = { ...element };
+        let tempEffects = element.effects.map((effect, eindex) => {
+          if (effectIndex === eindex) {
+            let tempeffect = { ...effect };
+            if (title === "feature") tempeffect.feature = e.target.value;
+            if (title === "value") tempeffect.value = e.target.value;
+            return tempeffect;
+          }
+          return effect;
+        });
+        console.log("after update effects: ", tempEffects);
         tempelement.effects = tempEffects;
         return tempelement;
       }
@@ -82,7 +162,14 @@ export default (props) => {
         defaultValue={props.body}
         onInput={(e) => updateCurrentRef(e, "title")}
       ></QuestionInput>
-      <h3 style={{ color: "lightgray", marginBottom: "15px" }}>Answers</h3>
+      <h2
+        style={{
+          color: "lightgray",
+          marginBottom: "15px",
+        }}
+      >
+        Answers
+      </h2>
       <div
         style={{
           display: "flex",
@@ -98,11 +185,30 @@ export default (props) => {
                 paddingLeft: "10px",
               }}
             >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <h5 style={{ margin: "0px" }}>Delete answer</h5>
+                <ExpandButton
+                  style={{ width: "40px", height: "40px" }}
+                  onClick={() => deleteAnswer(answerIndex)}
+                >
+                  X
+                </ExpandButton>
+              </div>
               <label>{answerIndex + 1}.</label>
               <QuestionInput
                 style={{ marginRight: "20px" }}
                 type="text"
+                key={answer.body}
                 defaultValue={answer.body}
+                onBlur={(e) => {
+                  updateAnswer(e, answerIndex, "body");
+                }}
               ></QuestionInput>
               {answer.iceBreaker === "" ? (
                 ""
@@ -115,6 +221,10 @@ export default (props) => {
                   <QuestionInput
                     type="text"
                     defaultValue={answer.iceBreaker}
+                    key={answer.iceBreaker}
+                    onBlur={(e) => {
+                      updateAnswer(e, answerIndex, "iceBreaker");
+                    }}
                     style={{
                       color: "lightgray",
                       fontSize: "13px",
@@ -125,7 +235,7 @@ export default (props) => {
                 </>
               )}
               <h5 style={{ marginBottom: "5px", marginTop: "5px" }}>Effects</h5>
-              {answer.effects.map((effect) => {
+              {answer.effects.map((effect, effectIndex) => {
                 return (
                   <div
                     style={{
@@ -144,6 +254,9 @@ export default (props) => {
                       }}
                     >
                       <ExpandButton
+                        onClick={() => {
+                          deleteEffect(answerIndex, effectIndex);
+                        }}
                         style={{
                           borderRadius: "7px",
                           width: "5px",
@@ -156,7 +269,11 @@ export default (props) => {
                         X
                       </ExpandButton>
                       <select
+                        onChange={(e) => {
+                          updateFeature(e, answerIndex, effectIndex, "feature");
+                        }}
                         defaultValue={effect.feature}
+                        key={effect.feature}
                         style={{
                           backgroundColor: "black",
                           color: "white",
@@ -185,9 +302,14 @@ export default (props) => {
                         step="0.05"
                         min="0.1"
                         max="1"
-                        type="number"
+                        type="range"
                         defaultValue={effect.value}
+                        key={effect.value}
+                        onChange={(e) => {
+                          updateFeature(e, answerIndex, effectIndex, "value");
+                        }}
                       ></QuestionInput>
+                      <p>{effect.value}</p>
                     </div>
                   </div>
                 );
@@ -217,7 +339,7 @@ export default (props) => {
         >
           <h6 style={{ margin: "0px" }}>Add answer</h6>
           <ExpandButton
-            onClick={() => addAnswer()}
+            onClick={() => addAnswer(questionsType)}
             style={{ height: "40px", width: "40px" }}
           >
             +
