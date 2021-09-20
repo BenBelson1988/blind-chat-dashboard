@@ -46,6 +46,8 @@ export default (props) => {
     setAnswersState(newArr);
   };
   const addAnswer = (quuestiontype) => {
+    let newId =
+      "N" + String(parseInt(answersState[answersState.length - 1].id) + 100);
     console.log(answersState);
     if (questionsType === "basic") {
       setAnswersState((prevState) => [
@@ -59,6 +61,7 @@ export default (props) => {
             },
           ],
           iceBreaker: "Please enter iceBreaker",
+          id: newId,
         },
       ]);
     } else {
@@ -73,6 +76,7 @@ export default (props) => {
             },
           ],
           iceBreaker: "",
+          id: newId,
         },
       ]);
     }
@@ -126,7 +130,8 @@ export default (props) => {
           if (effectIndex === eindex) {
             let tempeffect = { ...effect };
             if (title === "feature") tempeffect.feature = e.target.value;
-            if (title === "value") tempeffect.value = e.target.value;
+            if (title === "value")
+              tempeffect.value = parseFloat(e.target.value);
             return tempeffect;
           }
           return effect;
@@ -141,11 +146,12 @@ export default (props) => {
   };
 
   var ref = {
-    body: "",
+    body: questionRef.current.value,
     id: idRef.current,
     type: questionsType,
+    answers: answersState,
   };
-
+  console.log(ref);
   return (
     <div
       style={{

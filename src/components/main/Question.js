@@ -2,18 +2,25 @@ import { useEffect, useState } from "react";
 import ExpandButton from "../styled/ExpandButton";
 import Answers from "../main/Answers";
 import EditQuestion from "./EditQuestion";
+import useQueryParams from "../../customHooks/useQueryParams";
 
 export default (props) => {
   console.log(props);
-  const [isOpen, setSinOpen] = useState(false);
+  const useParams = useQueryParams();
+  const urlchange = useParams["type"];
+  const [isOpen, setIsOpen] = useState(false);
   const [expand, setExpand] = useState("More details");
   const [isEdit, setEdit] = useState(false);
   const [editText, setEditText] = useState("Edit Question");
 
+  useEffect(() => {
+    setEdit(false);
+    setEditText("Edit Question");
+  }, [urlchange]);
   useEffect(() => {}, [isOpen, isEdit]);
 
   const toggleOpendiv = () => {
-    setSinOpen(!isOpen);
+    setIsOpen(!isOpen);
     setExpand(expand === "More details" ? "Close" : "More details");
   };
 
