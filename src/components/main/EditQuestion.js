@@ -47,11 +47,14 @@ export default (props) => {
   };
   const addAnswer = (quuestiontype) => {
     let newId = "";
-    answersState[answersState.length - 1].id.length === 3
-      ? (newId = String(parseInt(answersState[answersState.length - 1].id) + 1))
-      : (newId = String(
-          parseInt(answersState[answersState.length - 1].id) + 100
-        ));
+    newId =
+      answersState[answersState.length - 1].id.length === 3
+        ? (newId = String(
+            parseInt(answersState[answersState.length - 1].id) + 1
+          ))
+        : (newId = String(
+            parseInt(answersState[answersState.length - 1].id) + 100
+          ));
     console.log(answersState);
     if (questionsType === "basic") {
       setAnswersState((prevState) => [
@@ -66,6 +69,7 @@ export default (props) => {
           ],
           iceBreaker: "Please enter iceBreaker",
           id: newId,
+          count: 0,
         },
       ]);
     } else {
@@ -81,6 +85,7 @@ export default (props) => {
           ],
           iceBreaker: "",
           id: newId,
+          count: 0,
         },
       ]);
     }

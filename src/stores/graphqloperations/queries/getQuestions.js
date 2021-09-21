@@ -14,6 +14,7 @@ export const getQuestionsByType = /* GraphQL */ `
           }
           iceBreaker
           id
+          count
         }
       }
     }
@@ -21,8 +22,8 @@ export const getQuestionsByType = /* GraphQL */ `
 `;
 
 export const putQuestion = /* GraphQL */ `
-  mutation updateQuestion($id: ID!, $body: String) {
-    updateQuestion(input: { id: $id, body: $body }) {
+  mutation updateQuestion($id: ID!, $body: String, $answers: [AnswerInput]) {
+    updateQuestion(input: { id: $id, body: $body, answers: $answers }) {
       id
     }
   }

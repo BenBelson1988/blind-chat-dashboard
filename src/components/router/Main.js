@@ -24,7 +24,6 @@ export default () => {
       history.push("/home");
     }
   }, [username]);
-
   // useEffect(() => {
   //     Hub.listen("auth", (data) => {
   //         const {payload} = data;

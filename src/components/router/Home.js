@@ -8,7 +8,7 @@ import { useHistory } from "react-router";
 import { Auth } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import authSlicer, { signOut } from "../../stores/slices/authSlicer";
+import authSlicer from "../../stores/slices/authSlicer";
 import useCurrentTab from "../../customHooks/useCurrentTab";
 
 const MenuContainer = styled.div`
@@ -64,14 +64,6 @@ export default () => {
           </Switch>
         </div>
       </div>
-      <button
-        className={"button_signout"}
-        onClick={() => {
-          dispatch(signOut());
-        }}
-      >
-        Sign out
-      </button>
     </div>
   );
 };
