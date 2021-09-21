@@ -46,8 +46,12 @@ export default (props) => {
     setAnswersState(newArr);
   };
   const addAnswer = (quuestiontype) => {
-    let newId =
-      "N" + String(parseInt(answersState[answersState.length - 1].id) + 100);
+    let newId = "";
+    answersState[answersState.length - 1].id.length === 3
+      ? (newId = String(parseInt(answersState[answersState.length - 1].id) + 1))
+      : (newId = String(
+          parseInt(answersState[answersState.length - 1].id) + 100
+        ));
     console.log(answersState);
     if (questionsType === "basic") {
       setAnswersState((prevState) => [
