@@ -5,20 +5,42 @@ import { useDispatch } from "react-redux";
 import { putQuestionfunc } from "../../stores/slices/questionsSlicer";
 import useQueryParams from "../../customHooks/useQueryParams";
 import { useHistory } from "react-router";
+import FormError from "../sliced/auth/common/FormError";
 
 export default (props) => {
   const history = useHistory();
   const queryParams = useQueryParams();
   const dispatch = useDispatch();
   const questionsType = queryParams["type"];
-  const questionRef = useRef(props.body);
+  const [questionBody, SetquestionBody] = useState(props.body);
+  const [questionError, setQuestionError] = useState(false);
+  const [answerError, setAnswerError] = useState(false);
+  const [iceBreakerError, setIceBreakerError] = useState(false);
   const idRef = useRef(props.id);
-  const domainRef = useRef(props.domain);
+  const domainRef = useRef(props.domain); // ?
   const [answersState, setAnswersState] = useState(props.answers);
 
   console.log("Answers", answersState);
 
   const updateAnswer = (e, answerIndex, title) => {
+    let flag = false;
+    if (e.target.value === "" && title === "body") {
+      flag = true;
+      setAnswerError(true);
+    } else if (title === "body") setAnswerError(false);
+    if (
+      e.target.value === "" &&
+      title === "iceBreaker" &&
+      questionsType === "basic"
+    ) {
+      setIceBreakerError(true);
+      flag = true;
+    } else setIceBreakerError(false);
+
+    if (flag) {
+      flag = false;
+      return;
+    }
     let newArr = [...answersState];
     let newArr2 = newArr.map((answer, index) => {
       let tempelement = { ...answer };
@@ -31,12 +53,17 @@ export default (props) => {
     setAnswersState(newArr2);
   };
 
-  const updateCurrentRef = (e, value) => {
+  const updateCurrentbody = (e, value) => {
+    if (e.target.value === "") {
+      setQuestionError(true);
+      return;
+    }
+    setQuestionError(false);
     if (value === "title") {
-      questionRef.current.value = e.target.value;
-      ref.body = questionRef.current.value;
+      SetquestionBody(e.target.value);
     }
   };
+
   const deleteAnswer = (answerIndex) => {
     if (answersState.length === 1) return;
     let newArr = answersState.filter((_, index) => {
@@ -154,13 +181,13 @@ export default (props) => {
     setAnswersState(newArr2);
   };
 
-  var ref = {
-    body: questionRef.current.value,
+  var questionAfterEdit = {
+    body: questionBody,
     id: idRef.current,
     type: questionsType,
     answers: answersState,
   };
-  console.log(ref);
+  console.log(questionAfterEdit);
   return (
     <div
       style={{
@@ -173,10 +200,11 @@ export default (props) => {
       <QuestionInput
         style={{ width: "50%" }}
         type="text"
-        ref={questionRef}
-        defaultValue={props.body}
-        onInput={(e) => updateCurrentRef(e, "title")}
+        key={questionBody}
+        defaultValue={questionBody}
+        onBlur={(e) => updateCurrentbody(e, "title")}
       ></QuestionInput>
+      {questionError && <FormError type="Question" />}
       <h2
         style={{
           color: "lightgray",
@@ -185,6 +213,8 @@ export default (props) => {
       >
         Answers
       </h2>
+      {answerError && <FormError type="Answer" />}
+      {iceBreakerError && <FormError type="iceBreaker" />}
       <div
         style={{
           display: "flex",
@@ -225,6 +255,7 @@ export default (props) => {
                   updateAnswer(e, answerIndex, "body");
                 }}
               ></QuestionInput>
+
               {answer.iceBreaker === "" ? (
                 ""
               ) : (
@@ -370,9 +401,10 @@ export default (props) => {
         }}
       >
         <ExpandButton
+          disabled={questionError || answerError || iceBreakerError}
           onClick={() => {
             debugger;
-            dispatch(putQuestionfunc(ref));
+            dispatch(putQuestionfunc(questionAfterEdit));
             history.push("/home");
           }}
         >
