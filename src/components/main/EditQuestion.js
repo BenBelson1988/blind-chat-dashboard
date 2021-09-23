@@ -31,7 +31,7 @@ export default (props) => {
     if (
       e.target.value === "" &&
       title === "iceBreaker" &&
-      questionsType === "basic"
+      questionsType === "basic" //Only Basic question validate if iceBreaker empty because other questions iceBreaker still empty.
     ) {
       setIceBreakerError(true);
       flag = true;
@@ -84,39 +84,22 @@ export default (props) => {
             parseInt(answersState[answersState.length - 1].id) + 100
           ));
     console.log(answersState);
-    if (questionsType === "basic") {
-      setAnswersState((prevState) => [
-        ...prevState,
-        {
-          body: "Please insert answer",
-          effects: [
-            {
-              feature: "Forgivingness",
-              value: 0.1,
-            },
-          ],
-          iceBreaker: "Please enter iceBreaker",
-          id: newId,
-          count: 0,
-        },
-      ]);
-    } else {
-      setAnswersState((prevState) => [
-        ...prevState,
-        {
-          body: "Please insert answer",
-          effects: [
-            {
-              feature: "Forgivingness",
-              value: 0.1,
-            },
-          ],
-          iceBreaker: "",
-          id: newId,
-          count: 0,
-        },
-      ]);
-    }
+
+    setAnswersState((prevState) => [
+      ...prevState,
+      {
+        body: "Please insert answer",
+        effects: [
+          {
+            feature: "Forgivingness",
+            value: 0.1,
+          },
+        ],
+        iceBreaker: "Please enter iceBreaker",
+        id: newId,
+        count: 0,
+      },
+    ]);
   };
 
   const addEffect = (answerIndex) => {
@@ -257,30 +240,27 @@ export default (props) => {
                 }}
               ></QuestionInput>
 
-              {answer.iceBreaker === "" ? (
-                ""
-              ) : (
-                <>
-                  <h5 style={{ color: "white", marginBottom: "-5px" }}>
-                    Ice Breaker-
-                  </h5>
+              <>
+                <h5 style={{ color: "white", marginBottom: "-5px" }}>
+                  Ice Breaker-
+                </h5>
 
-                  <QuestionInput
-                    type="text"
-                    defaultValue={answer.iceBreaker}
-                    key={answer.iceBreaker}
-                    onBlur={(e) => {
-                      updateAnswer(e, answerIndex, "iceBreaker");
-                    }}
-                    style={{
-                      color: "lightgray",
-                      fontSize: "13px",
-                      paddingRight: "10px",
-                      paddingLeft: "10px",
-                    }}
-                  ></QuestionInput>
-                </>
-              )}
+                <QuestionInput
+                  type="text"
+                  defaultValue={answer.iceBreaker}
+                  key={answer.iceBreaker}
+                  onBlur={(e) => {
+                    updateAnswer(e, answerIndex, "iceBreaker");
+                  }}
+                  style={{
+                    color: "lightgray",
+                    fontSize: "13px",
+                    paddingRight: "10px",
+                    paddingLeft: "10px",
+                  }}
+                ></QuestionInput>
+              </>
+
               <h5 style={{ marginBottom: "5px", marginTop: "5px" }}>Effects</h5>
               {answer.effects.map((effect, effectIndex) => {
                 return (

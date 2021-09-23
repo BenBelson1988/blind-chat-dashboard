@@ -19,7 +19,16 @@ export default (props) => {
         boxShadow: " 0 3px 10px rgb(0 0 0 / 0.2)",
       }}
     >
-      <h2>Add new question</h2>
+      <h2
+        style={{
+          backgroundColor: "black",
+          marginBottom: "10px",
+          marginTop: "0",
+          padding: "15px",
+        }}
+      >
+        Add new question
+      </h2>
       <div style={{ marginBottom: "20px" }}>
         <label style={{ fontSize: "20px", marginRight: "10px" }}>
           Choose type
