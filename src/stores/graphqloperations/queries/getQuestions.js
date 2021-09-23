@@ -28,28 +28,3 @@ export const putQuestion = /* GraphQL */ `
     }
   }
 `;
-
-/* domain: $domain, answers: $answers*/
-/* $domain: Domain
-    $answers: [AnswersInput]*/
-/*"Validation error of type UnknownType: Unknown type AnswersInput"*/
-
-// export const updateQuestion = /* GraphQL */ `
-//   mutation UpdateQuestion($input: UpdateQuestionInput!) {
-//     updateQuestion(input: $input) {
-//       id
-//       body
-//       createdAt
-//       answers {
-//         id
-//         body
-//         effects {
-//           feature
-//           value
-//         }
-//         iceBreaker
-//       }
-//       updatedAt
-//     }
-//   }
-// `;

@@ -72,7 +72,8 @@ export default (props) => {
     console.log("after delete", newArr);
     setAnswersState(newArr);
   };
-  const addAnswer = (quuestiontype) => {
+  const addAnswer = () => {
+    if (questionsType === "swippable" && answersState.length === 2) return;
     let newId = "";
     newId =
       answersState[answersState.length - 1].id.length === 3
@@ -385,7 +386,7 @@ export default (props) => {
         >
           <h6 style={{ margin: "0px" }}>Add answer</h6>
           <ExpandButton
-            onClick={() => addAnswer(questionsType)}
+            onClick={() => addAnswer()}
             style={{ height: "40px", width: "40px" }}
           >
             +
