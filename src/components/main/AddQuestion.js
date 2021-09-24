@@ -4,7 +4,7 @@ import QuestionInput from "../styled/QuestionInput";
 import EditQuestion from "./EditQuestion";
 
 export default (props) => {
-  const [QuestionType, setQuestionType] = useState("Basic");
+  const [QuestionType, setQuestionType] = useState("basic");
 
   function getRandomString(length) {
     var randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
