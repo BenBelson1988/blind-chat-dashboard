@@ -11,7 +11,7 @@ export default (props) => {
   const history = useHistory();
   const queryParams = useQueryParams();
   const dispatch = useDispatch();
-  const questionsType = queryParams["type"];
+  var questionsType = queryParams["type"];
   const [questionBody, SetquestionBody] = useState(props.body);
   const [questionError, setQuestionError] = useState(false);
   const [answerError, setAnswerError] = useState(false);
@@ -19,8 +19,9 @@ export default (props) => {
   const idRef = useRef(props.id);
   const domainRef = useRef(props.domain); // ?
   const [answersState, setAnswersState] = useState(props.answers);
-
-  console.log(props);
+  if (props.new) {
+    questionsType = props.type;
+  }
 
   const updateAnswer = (e, answerIndex, title) => {
     let flag = false;
@@ -65,7 +66,7 @@ export default (props) => {
   };
 
   const deleteAnswer = (answerIndex) => {
-    if (answersState.length === 1) return;
+    if (answersState.length === 2) return;
     let newArr = answersState.filter((_, index) => {
       return index !== answerIndex;
     });
@@ -88,7 +89,7 @@ export default (props) => {
     setAnswersState((prevState) => [
       ...prevState,
       {
-        body: "Please insert answer",
+        body: "Please enter answer",
         effects: [
           {
             feature: "Forgivingness",

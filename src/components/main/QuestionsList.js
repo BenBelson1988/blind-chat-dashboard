@@ -18,7 +18,19 @@ export default () => {
   if (isLoading && questionsType !== "games") {
     return <CustomLoader title="Fecthing questions" />;
   }
-  return questions.map((question, index) => {
-    return <Question index={index} {...question} />;
-  });
+  return (
+    <>
+      <h1
+        style={{
+          fontSize: "30px",
+          alignSelf: "center",
+        }}
+      >
+        {questions.length} questions in type {questionsType}.
+      </h1>
+      {questions.map((question, index) => {
+        return <Question index={index} {...question} />;
+      })}
+    </>
+  );
 };

@@ -17,12 +17,12 @@ export default (props) => {
     return result;
   }
   let newQuestion = {
-    body: "",
+    body: "Please enter question",
     id: getRandomString(26),
     domain: "",
     answers: [
       {
-        body: "Please insert answer",
+        body: "Please enter answer",
         effects: [
           {
             feature: "Forgivingness",
@@ -30,6 +30,18 @@ export default (props) => {
           },
         ],
         iceBreaker: "Please enter iceBreaker",
+        id: Math.floor(Math.random(100) * 1000),
+        count: 0,
+      },
+      {
+        body: "Please enter answer 2",
+        effects: [
+          {
+            feature: "Forgivingness",
+            value: 0.1,
+          },
+        ],
+        iceBreaker: "Please enter iceBreaker 2",
         id: Math.floor(Math.random(100) * 1000),
         count: 0,
       },
@@ -81,13 +93,13 @@ export default (props) => {
           }}
         >
           Please select type
-          <option>Basic</option>
-          <option>Traits</option>
-          <option>Swippable</option>
-          <option>Games</option>
+          <option>basic</option>
+          <option>traits</option>
+          <option>swippable</option>
+          <option>games</option>
         </select>
       </div>
-      <EditQuestion new={true} {...newQuestion} />
+      <EditQuestion new={true} type={QuestionType} {...newQuestion} />
       <ExpandButton
         style={{ position: "fixed", left: "95%", top: "0" }}
         onClick={() => {
