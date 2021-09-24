@@ -1,10 +1,42 @@
 import { useState } from "react";
 import ExpandButton from "../styled/ExpandButton";
 import QuestionInput from "../styled/QuestionInput";
+import EditQuestion from "./EditQuestion";
 
 export default (props) => {
   const [QuestionType, setQuestionType] = useState("Basic");
-  const [questionBody, setQuestionBody] = useState("");
+
+  function getRandomString(length) {
+    var randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    var result = "";
+    for (var i = 0; i < length; i++) {
+      result += randomChars.charAt(
+        Math.floor(Math.random() * randomChars.length)
+      );
+    }
+    return result;
+  }
+  let newQuestion = {
+    body: "",
+    id: getRandomString(26),
+    domain: "",
+    answers: [
+      {
+        body: "Please insert answer",
+        effects: [
+          {
+            feature: "Forgivingness",
+            value: 0.1,
+          },
+        ],
+        iceBreaker: "Please enter iceBreaker",
+        id: Math.floor(Math.random(100) * 1000),
+        count: 0,
+      },
+    ],
+  };
+
+  console.log(newQuestion);
   return (
     <div
       style={{
@@ -55,17 +87,7 @@ export default (props) => {
           <option>Games</option>
         </select>
       </div>
-      <label>Question</label>
-      <QuestionInput
-        style={{ width: "300px" }}
-        type="text"
-        key={questionBody}
-        defaultValue={questionBody}
-        onBlur={(e) => {
-          setQuestionBody(e.target.value);
-        }}
-      ></QuestionInput>
-
+      <EditQuestion new={true} {...newQuestion} />
       <ExpandButton
         style={{ position: "fixed", left: "95%", top: "0" }}
         onClick={() => {

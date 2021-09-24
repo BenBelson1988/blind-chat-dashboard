@@ -5,7 +5,6 @@ import EditQuestion from "./EditQuestion";
 import useQueryParams from "../../customHooks/useQueryParams";
 
 export default (props) => {
-  console.log(props);
   const useParams = useQueryParams();
   const urlchange = useParams["type"];
   const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +41,7 @@ export default (props) => {
         position: "relative",
       }}
     >
-      {isEdit && <EditQuestion {...props} />}
+      {isEdit && <EditQuestion new={false} {...props} />}
       {!isEdit && (
         <div>
           <img

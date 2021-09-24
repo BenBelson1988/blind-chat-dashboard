@@ -20,7 +20,7 @@ export default (props) => {
   const domainRef = useRef(props.domain); // ?
   const [answersState, setAnswersState] = useState(props.answers);
 
-  console.log("Answers", answersState);
+  console.log(props);
 
   const updateAnswer = (e, answerIndex, title) => {
     let flag = false;
@@ -385,7 +385,12 @@ export default (props) => {
           disabled={questionError || answerError || iceBreakerError}
           onClick={() => {
             debugger;
-            dispatch(putQuestionfunc(questionAfterEdit));
+            {
+              !props.new && dispatch(putQuestionfunc(questionAfterEdit));
+            }
+            {
+              props.new && console.log("test");
+            }
             history.push("/home");
           }}
         >
