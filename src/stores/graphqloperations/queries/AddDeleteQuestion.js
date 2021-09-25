@@ -28,4 +28,6 @@ export const addQuestion = /* GraphQL */ `
 //     }
 //   }
 
-export const deleteQuestion = /* GraphQL */ ``;
+export const deleteQuestion = /* GraphQL */ `
+mutatation deleteQuestion()
+`;
