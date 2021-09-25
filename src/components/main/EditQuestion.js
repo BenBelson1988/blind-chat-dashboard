@@ -2,7 +2,10 @@ import QuestionInput from "../styled/QuestionInput";
 import ExpandButton from "../styled/ExpandButton";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { putQuestionfunc } from "../../stores/slices/questionsSlicer";
+import {
+  putQuestionfunc,
+  addQuestionfunc,
+} from "../../stores/slices/questionsSlicer";
 import useQueryParams from "../../customHooks/useQueryParams";
 import { useHistory } from "react-router";
 import FormError from "../sliced/auth/common/FormError";
@@ -454,7 +457,7 @@ export default (props) => {
               !props.new && dispatch(putQuestionfunc(questionAfterEdit));
             }
             {
-              props.new && console.log("test");
+              props.new && dispatch(addQuestionfunc(questionAfterEdit));
             }
             history.push("/home");
           }}
