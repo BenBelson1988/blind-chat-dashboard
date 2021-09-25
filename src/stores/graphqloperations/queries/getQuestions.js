@@ -1,9 +1,10 @@
 export const getQuestionsByType = /* GraphQL */ `
   query getQuestions($type: QuestionType!) {
-    getQuestions(type: $type) {
+    getQuestions(type: $type, limit: 100) {
       items {
         body
         domain
+        feature
         id
         imageUrl
         answers {
@@ -22,9 +23,17 @@ export const getQuestionsByType = /* GraphQL */ `
 `;
 
 export const putQuestion = /* GraphQL */ `
-  mutation updateQuestion($id: ID!, $body: String, $answers: [AnswerInput]) {
-    updateQuestion(input: { id: $id, body: $body, answers: $answers }) {
+  mutation updateQuestion(
+    $id: ID!
+    $body: String
+    $feature: String
+    $answers: [AnswerInput]
+  ) {
+    updateQuestion(
+      input: { id: $id, body: $body, feature: $feature, answers: $answers }
+    ) {
       id
     }
   }
 `;
+/*  $domain: Domain */

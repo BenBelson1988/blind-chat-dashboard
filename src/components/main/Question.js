@@ -12,6 +12,7 @@ export default (props) => {
   const [isEdit, setEdit] = useState(false);
   const [editText, setEditText] = useState("Edit Question");
 
+  console.log(props);
   useEffect(() => {
     setEdit(false);
     setEditText("Edit Question");
@@ -55,6 +56,8 @@ export default (props) => {
           <ExpandButton onClick={toggleOpendiv}>{expand}</ExpandButton>
           {isOpen && (
             <div>
+              <h2>Question feature - "{props.feature}"</h2>
+              <h2>Domain - "{props.domain}"</h2>
               <h3 style={{ color: "lightgray", marginBottom: "-5px" }}>
                 Answers
               </h3>

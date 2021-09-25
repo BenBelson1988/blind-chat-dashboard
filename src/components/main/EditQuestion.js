@@ -17,7 +17,8 @@ export default (props) => {
   const [answerError, setAnswerError] = useState(false);
   const [iceBreakerError, setIceBreakerError] = useState(false);
   const idRef = useRef(props.id);
-  const domainRef = useRef(props.domain); // ?
+  const [questionDomian, setQuestionDomain] = useState(props.domain);
+  const [questionFeature, setQuestionfeature] = useState(props.feature);
   const [answersState, setAnswersState] = useState(props.answers);
   if (props.new) {
     questionsType = props.type;
@@ -84,7 +85,6 @@ export default (props) => {
         : (newId = String(
             parseInt(answersState[answersState.length - 1].id) + 100
           ));
-    console.log(answersState);
 
     setAnswersState((prevState) => [
       ...prevState,
@@ -166,21 +166,28 @@ export default (props) => {
     setAnswersState(newArr2);
   };
 
+  const updateDomain = (e) => {
+    setQuestionDomain(e.target.value);
+    console.log("domain updated", questionDomian);
+  };
+
+  const updateQuestionFeature = (e) => {
+    setQuestionfeature(e.target.value);
+    console.log("feature updated", questionFeature);
+  };
+
   var questionAfterEdit = {
     body: questionBody,
     id: idRef.current,
     type: questionsType,
+    domain: questionDomian,
+    feature: questionFeature,
     answers: answersState,
   };
   console.log(questionAfterEdit);
   return (
-    <div
-      style={{
-        direction: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <label style={{ fontWeight: "bolder" }}>Question: </label>
+    <div>
+      <label style={{ fontWeight: "bolder" }}>Question </label>
 
       <QuestionInput
         style={{ width: "50%" }}
@@ -190,6 +197,63 @@ export default (props) => {
         onBlur={(e) => updateCurrentbody(e, "title")}
       ></QuestionInput>
       {questionError && <FormError type="Question" />}
+
+      <div>
+        <label style={{ fontWeight: "bolder" }}>Domain </label>
+        <select
+          onChange={(e) => {
+            updateDomain(e);
+          }}
+          defaultValue={questionDomian}
+          key={questionDomian}
+          style={{
+            backgroundColor: "black",
+            marginRight: "50px",
+            color: "white",
+            borderRadius: "15px",
+            height: "30px",
+            width: "120px",
+          }}
+        >
+          <option>Openness</option>
+          <option>Conscientiousness</option>
+          <option>Extraversion</option>
+          <option>Agreeableness</option>
+          <option>Honesty</option>
+          <option>Emotionality</option>
+          <option>Details</option>
+          <option>Orientations</option>
+        </select>
+        <label style={{ fontWeight: "bolder", marginLeft: "50px" }}>
+          Feature
+        </label>
+        <select
+          onChange={(e) => {
+            updateQuestionFeature(e);
+          }}
+          defaultValue={questionFeature}
+          key={questionFeature}
+          style={{
+            backgroundColor: "black",
+            marginRight: "50px",
+            color: "white",
+            borderRadius: "15px",
+            height: "30px",
+            width: "120px",
+          }}
+        >
+          {" "}
+          <option>Familial</option>
+          <option>Openness</option>
+          <option>Conscientiousness</option>
+          <option>Extraversion</option>
+          <option>Agreeableness</option>
+          <option>Honesty</option>
+          <option>Emotionality</option>
+          <option>Details</option>
+          <option>Orientations</option>
+        </select>
+      </div>
       <h2
         style={{
           color: "lightgray",

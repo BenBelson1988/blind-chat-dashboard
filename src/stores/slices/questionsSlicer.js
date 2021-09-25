@@ -36,11 +36,11 @@ export const putQuestionfunc = createAsyncThunk(
   async (ref) => {
     try {
       const input = ref;
-      const { id, body, type, answers } = ref;
+      const { id, body, type, domain, answers } = ref;
       console.log("answers", answers);
       debugger;
       API.graphql(graphqlOperation(putQuestion, input));
-      return { id, body, type };
+      return { id, body, type, domain };
     } catch (err) {
       console.log(err);
     }
