@@ -23,17 +23,9 @@ export const getQuestionsByType = /* GraphQL */ `
 `;
 
 export const putQuestion = /* GraphQL */ `
-  mutation updateQuestion(
-    $id: ID!
-    $body: String
-    $feature: String
-    $answers: [AnswerInput]
-  ) {
-    updateQuestion(
-      input: { id: $id, body: $body, feature: $feature, answers: $answers }
-    ) {
+  mutation UpdateQuestion($input: UpdateQuestionInput!) {
+    updateQuestion(input: $input) {
       id
     }
   }
 `;
-/*  $domain: Domain */

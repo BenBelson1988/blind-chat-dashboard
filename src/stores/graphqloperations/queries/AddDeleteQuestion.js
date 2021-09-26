@@ -1,22 +1,6 @@
 export const addQuestion = /* GraphQL */ `
-  mutation createQuestion(
-    $id: ID!
-    $body: String!
-    $domain: Domain!
-    $feature: String!
-    $answers: [AnswerInput!]!
-    $type: QuestionType!
-  ) {
-    createQuestion(
-      input: {
-        id: $id
-        body: $body
-        domain: $domian
-        type: $type
-        feature: $feature
-        answers: $answers
-      }
-    ) {
+  mutation createQuestion($input: CreateQuestionInput!) {
+    createQuestion(input: $input) {
       id
     }
   }
