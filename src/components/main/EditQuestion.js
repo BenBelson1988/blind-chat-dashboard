@@ -452,7 +452,6 @@ export default (props) => {
         <ExpandButton
           disabled={questionError || answerError || iceBreakerError}
           onClick={() => {
-            debugger;
             {
               !props.new && dispatch(putQuestionfunc(questionAfterEdit));
             }

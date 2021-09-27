@@ -24,7 +24,6 @@ export const getQuestionListByType = createAsyncThunk(
           getQuestions: { items: data },
         },
       } = await API.graphql(graphqlOperation(getQuestionsByType, { type }));
-
       return { questions: data, type };
     } catch (err) {
       console.log(err);

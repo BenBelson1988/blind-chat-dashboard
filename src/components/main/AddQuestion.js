@@ -18,7 +18,7 @@ export default (props) => {
   }
   let newQuestion = {
     body: "Please enter question",
-    id: getRandomString(26),
+    id: "01" + getRandomString(24),
     domain: "Openness",
     feature: "feature",
     answers: [
