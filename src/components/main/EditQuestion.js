@@ -9,6 +9,7 @@ import {
 import useQueryParams from "../../customHooks/useQueryParams";
 import { useHistory } from "react-router";
 import FormError from "../sliced/auth/common/FormError";
+import DeleteQuestion from "./DeleteQuestion";
 
 export default (props) => {
   const history = useHistory();
@@ -23,6 +24,7 @@ export default (props) => {
   const [questionDomian, setQuestionDomain] = useState(props.domain);
   const [questionFeature, setQuestionfeature] = useState(props.feature);
   const [answersState, setAnswersState] = useState(props.answers);
+  const [deleteQuestion, setDeleteQuestion] = useState(false);
   if (props.new) {
     questionsType = props.type;
   }
@@ -190,6 +192,9 @@ export default (props) => {
   console.log(questionAfterEdit);
   return (
     <div>
+      {deleteQuestion && (
+        <DeleteQuestion {...props} setDeleteQuestion={setDeleteQuestion} />
+      )}
       <label style={{ fontWeight: "bolder" }}>Question </label>
 
       <QuestionInput
@@ -444,9 +449,10 @@ export default (props) => {
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
           justifyContent: "flex-end",
           marginTop: "15px",
+          alignItems: "flex-end",
         }}
       >
         <ExpandButton
@@ -462,6 +468,13 @@ export default (props) => {
           }}
         >
           Save question
+        </ExpandButton>
+        <ExpandButton
+          onClick={() => {
+            setDeleteQuestion(true);
+          }}
+        >
+          Delete question
         </ExpandButton>
       </div>
     </div>

@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API, Auth, graphqlOperation } from "aws-amplify";
-import { addQuestion } from "../graphqloperations/queries/AddDeleteQuestion";
+import {
+  addQuestion,
+  deleteQuestion,
+} from "../graphqloperations/queries/AddDeleteQuestion";
 import {
   getQuestions,
   getQuestionsByType,
@@ -55,6 +58,19 @@ export const addQuestionfunc = createAsyncThunk(
       debugger;
       API.graphql(graphqlOperation(addQuestion, { input }));
       return { id, body, type, domain, feature, answers };
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+export const deleteQuestionfunc = createAsyncThunk(
+  "questions/deleteQuestion",
+  async (id) => {
+    try {
+      debugger;
+      API.graphql(graphqlOperation(deleteQuestion, { id }));
+      return { id };
     } catch (err) {
       console.log(err);
     }
