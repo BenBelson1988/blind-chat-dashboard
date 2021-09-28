@@ -5,7 +5,6 @@ import {
   deleteQuestion,
 } from "../graphqloperations/queries/AddDeleteQuestion";
 import {
-  getQuestions,
   getQuestionsByType,
   putQuestion,
 } from "../graphqloperations/queries/getQuestions";

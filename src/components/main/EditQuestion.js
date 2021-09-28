@@ -181,6 +181,10 @@ export default (props) => {
     console.log("feature updated", questionFeature);
   };
 
+  const test = () => {
+    setDeleteQuestion(false);
+  };
+
   var questionAfterEdit = {
     body: questionBody,
     id: idRef.current,
