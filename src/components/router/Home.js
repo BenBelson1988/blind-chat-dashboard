@@ -52,7 +52,7 @@ export default () => {
             Questions
           </MenuButton>
           <MenuButton
-            className={currentTab === "questions" ? "active" : ""}
+            className={currentTab === "interests" ? "active" : ""}
             onClick={() => history.push("/home/interests")}
           >
             Interests
