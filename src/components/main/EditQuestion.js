@@ -473,14 +473,16 @@ export default (props) => {
         >
           Save question
         </ExpandButton>
-        <ExpandButton
-          onClick={() => {
-            debugger;
-            setDeleteQuestion(true);
-          }}
-        >
-          Delete question
-        </ExpandButton>
+        {!props.new && (
+          <ExpandButton
+            onClick={() => {
+              debugger;
+              setDeleteQuestion(true);
+            }}
+          >
+            Delete question
+          </ExpandButton>
+        )}
       </div>
     </div>
   );
