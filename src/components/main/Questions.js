@@ -54,11 +54,16 @@ export default () => {
         style={{
           display: "flex",
           flexDirection: "column",
-          height: "100%",
           width: "100%",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "row" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
           <div
             className={`question-type ${
               activeQuestiontype === "basic" ? "active" : ""

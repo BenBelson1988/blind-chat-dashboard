@@ -51,7 +51,7 @@ export default () => {
             Questions
           </MenuButton>
         </MenuContainer>
-        <div style={{ paddingLeft: "100px" }}>
+        <div style={{ marginLeft: "100px" }}>
           <Switch>
             <Route exact path="/home">
               <Redirect to={"/home/stats"} />
