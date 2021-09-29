@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import authSlicer from "../../stores/slices/authSlicer";
 import useCurrentTab from "../../customHooks/useCurrentTab";
+import Interests from "../main/Interests";
 
 const MenuContainer = styled.div`
   width: 20vw;
@@ -50,6 +51,12 @@ export default () => {
           >
             Questions
           </MenuButton>
+          <MenuButton
+            className={currentTab === "questions" ? "active" : ""}
+            onClick={() => history.push("/home/interests")}
+          >
+            Interests
+          </MenuButton>
         </MenuContainer>
         <div style={{ marginLeft: "100px" }}>
           <Switch>
@@ -61,6 +68,9 @@ export default () => {
             </Route>
             <Route path="/home/questions">
               <Questions />
+            </Route>
+            <Route path="/home/interests">
+              <Interests />
             </Route>
           </Switch>
         </div>
