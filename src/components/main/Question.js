@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ExpandButton from "../styled/ExpandButton";
 import Answers from "../main/Answers";
 import EditQuestion from "./EditQuestion";
@@ -7,12 +7,25 @@ import useQueryParams from "../../customHooks/useQueryParams";
 export default (props) => {
   const useParams = useQueryParams();
   const urlchange = useParams["type"];
+  const bodyRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [expand, setExpand] = useState("More details");
   const [isEdit, setEdit] = useState(false);
   const [editText, setEditText] = useState("Edit Question");
 
-  console.log(props);
+  useEffect(() => {
+    document.addEventListener("click", HandleClickOutside, true);
+  });
+
+  const HandleClickOutside = (event) => {
+    if (bodyRef.current && !bodyRef.current.contains(event.target)) {
+      setIsOpen(false);
+      setExpand("More details");
+      setEdit(false);
+      setEditText("Edit Question");
+    }
+  };
+
   useEffect(() => {
     setEdit(false);
     setEditText("Edit Question");
@@ -33,6 +46,7 @@ export default (props) => {
 
   return (
     <div
+      ref={bodyRef}
       style={{
         backgroundImage:
           " linear-gradient(135deg, rgba(0,45,50,1) 0%, rgba(0,0,0,0.865983893557423) 95%)",
@@ -42,7 +56,7 @@ export default (props) => {
         position: "relative",
       }}
     >
-      {isEdit && <EditQuestion new={false} {...props} />}
+      {isEdit && <EditQuestion setIsEdit={setEdit} new={false} {...props} />}
       {!isEdit && (
         <div>
           <img

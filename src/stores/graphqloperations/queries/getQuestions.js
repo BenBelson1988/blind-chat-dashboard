@@ -1,6 +1,6 @@
 export const getQuestionsByType = /* GraphQL */ `
-  query getQuestions($type: QuestionType!) {
-    getQuestions(type: $type, limit: 100) {
+  query getQuestionsByType($type: QuestionType!) {
+    getQuestionsByType(type: $type, limit: 25) {
       items {
         body
         domain

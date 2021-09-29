@@ -8,6 +8,8 @@ export const addQuestion = /* GraphQL */ `
 
 export const deleteQuestion = /* GraphQL */ `
   mutation deleteQuestion($id: ID!) {
-    body
+    deleteQuestion(id: $id) {
+      id
+    }
   }
 `;

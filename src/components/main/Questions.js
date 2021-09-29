@@ -19,7 +19,6 @@ export default () => {
   const history = useHistory();
   const activeQuestiontype = useQueryParams().type;
   const [addQuestion, setAddQuestion] = useState(false);
-  
 
   useEffect(() => {
     history.push({
@@ -98,11 +97,11 @@ export default () => {
           </div>
           <div
             className={`question-type ${
-              activeQuestiontype === "games" ? "active" : ""
+              activeQuestiontype === "game" ? "active" : ""
             }`}
             onClick={() => {
               history.push({
-                search: "?type=games",
+                search: "?type=game",
               });
             }}
           >

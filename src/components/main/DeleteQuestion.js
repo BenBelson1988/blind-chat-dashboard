@@ -1,9 +1,11 @@
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import { deleteQuestionfunc } from "../../stores/slices/questionsSlicer";
 import ExpandButton from "../styled/ExpandButton";
 
 export default (props) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const ref = useRef(null);
   const HandleClickOutside = (event) => {
@@ -14,13 +16,6 @@ export default (props) => {
 
   useEffect(() => {
     document.addEventListener("click", HandleClickOutside, true);
-    return () => {
-      document.removeEventListener(
-        "click",
-        props.setDeleteQuestion(false),
-        true
-      );
-    };
   });
   return (
     <div
@@ -33,6 +28,7 @@ export default (props) => {
           " linear-gradient(135deg, rgba(0,45,50,1) 0%, rgba(0,0,0,0.865983893557423) 95%)",
         position: "fixed",
         left: "50%",
+        top: "30%",
         transform: "translate(-50%, 0)",
         boxShadow: " 0 3px 10px rgb(0 0 0 / 0.2)",
       }}
@@ -62,6 +58,7 @@ export default (props) => {
           onClick={() => {
             debugger;
             dispatch(deleteQuestionfunc(props.id));
+            history.push("/home");
           }}
         >
           Yes

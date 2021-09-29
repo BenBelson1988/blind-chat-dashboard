@@ -97,7 +97,7 @@ export default (props) => {
           <option>basic</option>
           <option>traits</option>
           <option>swippable</option>
-          <option>games</option>
+          <option>game</option>
         </select>
       </div>
       <EditQuestion new={true} type={QuestionType} {...newQuestion} />

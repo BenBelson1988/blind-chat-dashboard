@@ -13,9 +13,10 @@ export default () => {
   const [isLoading, setIsloading] = useState(false);
   useEffect(() => {
     questions.length === 0 ? setIsloading(true) : setIsloading(false);
+    console.log(questions);
   }, [questions]);
 
-  if (isLoading && questionsType !== "games") {
+  if (isLoading) {
     return <CustomLoader title="Fecthing questions" />;
   }
   return (

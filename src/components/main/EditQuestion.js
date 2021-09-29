@@ -475,6 +475,7 @@ export default (props) => {
         </ExpandButton>
         <ExpandButton
           onClick={() => {
+            debugger;
             setDeleteQuestion(true);
           }}
         >
