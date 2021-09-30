@@ -82,7 +82,7 @@ export default () => {
             style={{
               display: "flex",
               flexDirection: "row",
-              justifyContent: "space-evenly",
+              justifyContent: "space-between",
             }}
           >
             {resultChunk.map((interest, index2) => {

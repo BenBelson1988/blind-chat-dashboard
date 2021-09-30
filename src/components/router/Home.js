@@ -17,9 +17,7 @@ const MenuContainer = styled.div`
   width: 20vw;
   min-width: 20vw;
   max-width: 20vw;
-
   height: 100%;
-  border-right: 1px solid white;
 `;
 
 export default () => {
