@@ -15,7 +15,6 @@ const initialState = {
   swippable: [],
   games: [],
 };
-//{ body: "", domain: "", id: "", image: "", answers: [] }
 
 export const getQuestionListByType = createAsyncThunk(
   "questions/getQuestions",

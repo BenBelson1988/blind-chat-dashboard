@@ -14,12 +14,14 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { BrowserRouter as Router } from "react-router-dom";
 import Main from "./components/router/Main";
 import questionsSlicer from "./stores/slices/questionsSlicer";
+import interestsSlicer from "./stores/slices/interestsSlicer";
 
 Amplify.configure(awsconfig);
 
 const rootReducer = combineReducers({
   auth: authSlicer,
   questions: questionsSlicer,
+  interests: interestsSlicer,
 });
 const store = createStore(
   rootReducer,

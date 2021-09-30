@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import authSlicer from "../../stores/slices/authSlicer";
 import useCurrentTab from "../../customHooks/useCurrentTab";
-import Interests from "../main/Interests";
+import InterestsList from "../main/InterestsList";
 
 const MenuContainer = styled.div`
   width: 20vw;
@@ -70,7 +70,7 @@ export default () => {
               <Questions />
             </Route>
             <Route path="/home/interests">
-              <Interests />
+              <InterestsList />
             </Route>
           </Switch>
         </div>
