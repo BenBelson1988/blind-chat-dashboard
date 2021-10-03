@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import authSlicer from "../../stores/slices/authSlicer";
 import useCurrentTab from "../../customHooks/useCurrentTab";
 import InterestsList from "../main/InterestsList";
+import { fetchInterests } from "../../stores/slices/interestsSlicer";
 
 const MenuContainer = styled.div`
   width: 20vw;
@@ -28,6 +29,7 @@ export default () => {
 
   useEffect(() => {
     if (username == "belson1988@gmail.com") setActiveUser("Ben");
+    dispatch(fetchInterests());
   }, [username]);
 
   const history = useHistory();

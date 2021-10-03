@@ -21,7 +21,7 @@ Amplify.configure(awsconfig);
 const rootReducer = combineReducers({
   auth: authSlicer,
   questions: questionsSlicer,
-  interests: interestsSlicer,
+  interestsState: interestsSlicer,
 });
 const store = createStore(
   rootReducer,

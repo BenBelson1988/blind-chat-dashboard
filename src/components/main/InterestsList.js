@@ -8,16 +8,18 @@ import Xbutton from "../styled/Xbutton";
 
 export default () => {
   const dispatch = useDispatch();
-  const interestsList = useSelector(({ interests }) => {
-    return interests.interests || [];
+  const interestsList = useSelector(({ interestsState }) => {
+    debugger;
+    return interestsState.interests;
   });
-  const [interestsState, setInterestsState] = useState(interestsList);
+  debugger;
+  const [interestsLocalState, setInterestsLocalState] = useState(interestsList);
   const [edit, SetEdit] = useState(false);
   const [editText, SetEditText] = useState("Edit interests");
   const [EditInterest, setEditInterest] = useState(null);
 
-  var perChunk = 7; // items per chunk
-  var result = interestsState.reduce((resultArray, item, index) => {
+  var perChunk = 5; // items per chunk
+  var result = interestsLocalState.reduce((resultArray, item, index) => {
     const chunkIndex = Math.floor(index / perChunk);
     if (!resultArray[chunkIndex]) {
       resultArray[chunkIndex] = []; // start a new chunk
@@ -25,35 +27,36 @@ export default () => {
     resultArray[chunkIndex].push(item);
     return resultArray;
   }, []);
+
   const toggleEdit = () => {
     SetEdit(!edit);
     if (edit) {
       SetEditText("Edit interests");
       setEditInterest(null);
-      setInterestsState(interestsList);
+      setInterestsLocalState(interestsList);
     } else SetEditText("Cancel editing");
   };
 
   const deleteInterest = (interestindex) => {
-    let newArr = interestsState.filter((_, index) => {
+    let newArr = interestsLocalState.filter((_, index) => {
       return index !== interestindex;
     });
-    setInterestsState(newArr);
+    setInterestsLocalState(newArr);
   };
 
   const editInterestFunc = (e, interestindex) => {
-    let newArr = interestsState.map((interest, index) => {
+    let newArr = interestsLocalState.map((interest, index) => {
       if (index === interestindex) return e.target.value;
       return interest;
     });
     setEditInterest(null);
-    setInterestsState(newArr);
+    setInterestsLocalState(newArr);
   };
 
   const saveInterest = () => {
     setEditInterest(null);
     SetEditText("Edit Interests");
-    dispatch(updateInterests(interestsState));
+    dispatch(updateInterests(interestsLocalState));
   };
 
   return (
@@ -119,7 +122,7 @@ export default () => {
                     alignItems: "center",
                     position: "relative",
                     minHeight: "110px",
-                    minWidth: "120px",
+                    minWidth: "160px",
                   }}
                 >
                   {edit && (
@@ -169,7 +172,7 @@ export default () => {
                   )}
                   {EditInterest === interestIndex && (
                     <QuestionInput
-                      style={{ width: "120px", fontSize: "20px" }}
+                      style={{ width: "200px", fontSize: "15px" }}
                       type="text"
                       key={interest}
                       defaultValue={interest}

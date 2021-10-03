@@ -1,45 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
+import { API } from "@aws-amplify/api";
 const initialState = {
-  interests: [
-    "cats",
-    "dogs",
-    "smoke",
-    "anime",
-    "ben",
-    "ido",
-    "shir",
-    "or",
-    "jessica",
-    "cats",
-    "dogs",
-    "smoke",
-    "anime",
-    "ben",
-    "ido",
-    "shir",
-    "or",
-    "jessica",
-    "cats",
-    "dogs",
-    "smoke",
-    "anime",
-    "ben",
-    "ido",
-    "shir",
-    "or",
-    "jessica",
-  ],
+  interests: ["test"],
 };
 
-export const getInterests = createAsyncThunk(
-  "interests/getInterests",
+export const fetchInterests = createAsyncThunk(
+  "interests/fetchInterests",
   async () => {
     try {
-      const interests = {};
-      // API call Apigateway
-      //https://fcc2qksf1b.execute-api.us-east-1.amazonaws.com/prod/static/app-config
-      return { interests };
+      const { interest: interests } = await API.get(
+        "BlindChatAPIGatewayAPI",
+        "/static/interests",
+        {}
+      );
+      debugger;
+      return interests;
     } catch (err) {
       console.log(err);
     }
@@ -64,11 +39,11 @@ export const InterestsSlicer = createSlice({
   name: "interests",
   initialState,
   extraReducers: {
-    [getInterests.fulfilled]: (state, { payload: { interests } }) => {
-      state[interests] = interests;
+    [fetchInterests.fulfilled]: (state, { payload: interests }) => {
+      state["interests"] = interests;
     },
-    [updateInterests.fulfilled]: (state, { payload: { interests } }) => {
-      state[interests] = interests;
+    [updateInterests.fulfilled]: (state, { payload: interests }) => {
+      state["interests"] = interests;
     },
   },
 });

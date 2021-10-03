@@ -14,3 +14,15 @@ export default styled.button`
     color: black;
   }
 `;
+
+export const Clickable = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const Xbutton = styled(Clickable)`
+  border-radius: 40px;
+  border-style: double;
+  background-color: black;
+`;
