@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { updateInterests } from "../../stores/slices/interestsSlicer";
 import ExpandButton from "../styled/ExpandButton";
+import PointsButton from "../styled/PointsButton";
+import QuestionInput from "../styled/QuestionInput";
+import Xbutton from "../styled/Xbutton";
 
 export default () => {
   const dispatch = useDispatch();
@@ -10,6 +14,8 @@ export default () => {
   const [interestsState, setInterestsState] = useState(interestsList);
   const [edit, SetEdit] = useState(false);
   const [editText, SetEditText] = useState("Edit interests");
+  const [EditInterest, setEditInterest] = useState(null);
+
   var perChunk = 7; // items per chunk
   var result = interestsState.reduce((resultArray, item, index) => {
     const chunkIndex = Math.floor(index / perChunk);
@@ -23,6 +29,7 @@ export default () => {
     SetEdit(!edit);
     if (edit) {
       SetEditText("Edit interests");
+      setEditInterest(null);
       setInterestsState(interestsList);
     } else SetEditText("Cancel editing");
   };
@@ -32,6 +39,21 @@ export default () => {
       return index !== interestindex;
     });
     setInterestsState(newArr);
+  };
+
+  const editInterestFunc = (e, interestindex) => {
+    let newArr = interestsState.map((interest, index) => {
+      if (index === interestindex) return e.target.value;
+      return interest;
+    });
+    setEditInterest(null);
+    setInterestsState(newArr);
+  };
+
+  const saveInterest = () => {
+    setEditInterest(null);
+    SetEditText("Edit Interests");
+    dispatch(updateInterests(interestsState));
   };
 
   return (
@@ -69,7 +91,9 @@ export default () => {
         </ExpandButton>
         {edit && (
           <ExpandButton
-            onClick={() => {}}
+            onClick={() => {
+              saveInterest();
+            }}
             style={{ position: "absolute", left: "70%", top: "15%" }}
           >
             Save interests
@@ -94,41 +118,66 @@ export default () => {
                     flexDirection: "row",
                     alignItems: "center",
                     position: "relative",
+                    minHeight: "110px",
+                    minWidth: "120px",
                   }}
                 >
                   {edit && (
-                    <button
-                      onClick={() => {
-                        deleteInterest(interestIndex);
-                      }}
-                      style={{
-                        backgroundColor: "black",
-                        borderRadius: "40px",
-                        color: "white",
-                        position: "absolute",
-                        left: "100%",
-                        top: "15%",
-                        cursor: "pointer",
-                        borderStyle: "double",
-                      }}
-                    >
-                      x
-                    </button>
+                    <>
+                      <Xbutton
+                        onClick={() => {
+                          deleteInterest(interestIndex);
+                        }}
+                      >
+                        x
+                      </Xbutton>
+                      {EditInterest !== interestIndex && (
+                        <PointsButton
+                          onClick={() => {
+                            setEditInterest(interestIndex);
+                          }}
+                        >
+                          ...
+                        </PointsButton>
+                      )}
+                      {EditInterest === interestIndex && (
+                        <PointsButton
+                          onClick={() => {
+                            setEditInterest(null);
+                          }}
+                        >
+                          ✓
+                        </PointsButton>
+                      )}
+                    </>
                   )}
                   <h3>{interestIndex + 1}. </h3>
-                  <h3
-                    style={{
-                      borderRadius: "30px",
-                      borderStyle: "solid",
-                      borderWidth: "thin",
-                      paddingRight: "20px",
-                      paddingLeft: "20px",
-                      marginLeft: "5px",
-                      lineHeight: "32px",
-                    }}
-                  >
-                    {interest}
-                  </h3>
+                  {EditInterest !== interestIndex && (
+                    <h3
+                      style={{
+                        borderRadius: "30px",
+                        borderStyle: "solid",
+                        borderWidth: "thin",
+                        paddingRight: "20px",
+                        paddingLeft: "20px",
+                        marginLeft: "5px",
+                        lineHeight: "32px",
+                      }}
+                    >
+                      {interest}
+                    </h3>
+                  )}
+                  {EditInterest === interestIndex && (
+                    <QuestionInput
+                      style={{ width: "120px", fontSize: "20px" }}
+                      type="text"
+                      key={interest}
+                      defaultValue={interest}
+                      onBlur={(e) => {
+                        editInterestFunc(e, interestIndex);
+                      }}
+                    ></QuestionInput>
+                  )}
                 </div>
               );
             })}

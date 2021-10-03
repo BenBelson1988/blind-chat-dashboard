@@ -22,13 +22,12 @@ const MenuContainer = styled.div`
 
 export default () => {
   const dispatch = useDispatch();
-  const username = useSelector(({ auth }) => auth.username);
+  const username = useSelector(({ auth }) => auth.email);
   const [activeUser, setActiveUser] = useState("");
   const currentTab = useCurrentTab();
 
   useEffect(() => {
-    if (username == "346383f4-d451-4af8-b6fa-24bdb1160cff")
-      setActiveUser("Ben");
+    if (username == "belson1988@gmail.com") setActiveUser("Ben");
   }, [username]);
 
   const history = useHistory();
