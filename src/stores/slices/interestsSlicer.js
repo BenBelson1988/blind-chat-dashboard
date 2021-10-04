@@ -13,7 +13,6 @@ export const fetchInterests = createAsyncThunk(
         "/static/interests",
         {}
       );
-      debugger;
       return interests;
     } catch (err) {
       console.log(err);
@@ -25,9 +24,11 @@ export const updateInterests = createAsyncThunk(
   "interests/updateInterests",
   async (interests) => {
     try {
-      const { interests } = interests;
-      // API call post http
-      return { interests };
+      API.post("BlindChatAPIGatewayAPI", "/static/interests", {
+        body: JSON.stringify(interests),
+      });
+      debugger;
+      return interests;
     } catch (err) {
       console.log(err);
     }

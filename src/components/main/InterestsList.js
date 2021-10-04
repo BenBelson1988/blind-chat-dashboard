@@ -4,15 +4,14 @@ import { updateInterests } from "../../stores/slices/interestsSlicer";
 import ExpandButton from "../styled/ExpandButton";
 import PointsButton from "../styled/PointsButton";
 import QuestionInput from "../styled/QuestionInput";
+import { XbuttonInterest } from "../styled/Xbutton";
 import Xbutton from "../styled/Xbutton";
 
 export default () => {
   const dispatch = useDispatch();
   const interestsList = useSelector(({ interestsState }) => {
-    debugger;
     return interestsState.interests;
   });
-  debugger;
   const [interestsLocalState, setInterestsLocalState] = useState(interestsList);
   const [edit, SetEdit] = useState(false);
   const [editText, SetEditText] = useState("Edit interests");
@@ -56,6 +55,7 @@ export default () => {
   const saveInterest = () => {
     setEditInterest(null);
     SetEditText("Edit Interests");
+    SetEdit(false);
     dispatch(updateInterests(interestsLocalState));
   };
 
@@ -113,7 +113,7 @@ export default () => {
             }}
           >
             {resultChunk.map((interest, index2) => {
-              var interestIndex = index * 7 + index2;
+              var interestIndex = index * perChunk + index2;
               return (
                 <div
                   style={{
