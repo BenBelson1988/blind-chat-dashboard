@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { deleteQuestionfunc } from "../../stores/slices/questionsSlicer";
 import ExpandButton from "../styled/ExpandButton";
+import FloatingDiv from "../styled/FloatingDiv";
 
 export default (props) => {
   const history = useHistory();
@@ -18,21 +19,7 @@ export default (props) => {
     document.addEventListener("click", HandleClickOutside, true);
   });
   return (
-    <div
-      ref={ref}
-      style={{
-        zIndex: "10",
-        minWidth: "500px",
-        minHeight: "250px",
-        backgroundImage:
-          " linear-gradient(135deg, rgba(0,45,50,1) 0%, rgba(0,0,0,0.865983893557423) 95%)",
-        position: "fixed",
-        left: "50%",
-        top: "30%",
-        transform: "translate(-50%, 0)",
-        boxShadow: " 0 3px 10px rgb(0 0 0 / 0.2)",
-      }}
-    >
+    <FloatingDiv ref={ref}>
       <div
         style={{
           backgroundColor: "black",
@@ -80,6 +67,6 @@ export default (props) => {
       >
         X
       </ExpandButton>
-    </div>
+    </FloatingDiv>
   );
 };

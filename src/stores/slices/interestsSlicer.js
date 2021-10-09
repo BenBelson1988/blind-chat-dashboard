@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API } from "@aws-amplify/api";
 const initialState = {
-  interests: ["test"],
+  interests: [],
 };
 
 export const fetchInterests = createAsyncThunk(
@@ -25,14 +25,12 @@ export const updateInterests = createAsyncThunk(
   async (interests) => {
     try {
       API.post("BlindChatAPIGatewayAPI", "/static/interests", {
-        body: JSON.stringify(interests),
+        body: { interest: interests },
       });
-      debugger;
       return interests;
     } catch (err) {
       console.log(err);
     }
-    debugger;
   }
 );
 

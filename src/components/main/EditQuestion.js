@@ -407,13 +407,13 @@ export default (props) => {
                         min="0.1"
                         max="1"
                         type="range"
-                        defaultValue={effect.value}
-                        key={effect.value}
+                        value={effect.value}
+                        // key={effect.value}
                         onChange={(e) => {
                           updateFeature(e, answerIndex, effectIndex, "value");
                         }}
                       ></QuestionInput>
-                      <p>{effect.value}</p>
+                      <p style={{ minWidth: "30px" }}>{effect.value}</p>
                     </div>
                   </div>
                 );
