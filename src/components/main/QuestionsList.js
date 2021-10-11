@@ -10,28 +10,26 @@ export default () => {
   const questions = useSelector(({ questions }) => {
     return questions[questionsType] || [];
   });
-  const [isLoading, setIsloading] = useState(false);
-  useEffect(() => {
-    questions.length === 0 ? setIsloading(true) : setIsloading(false);
-    console.log(questions);
-  }, [questions]);
 
-  if (isLoading) {
-    return <CustomLoader title="Fecthing questions" />;
-  }
+  const isLoading2 = Object.keys(questions).length === 0;
+
   return (
     <>
-      <h1
-        style={{
-          fontSize: "30px",
-          alignSelf: "center",
-        }}
-      >
-        {questions.length} questions in type {questionsType}.
-      </h1>
-      {questions.map((question, index) => {
-        return <Question index={index} {...question} />;
-      })}
+      {isLoading2 && <CustomLoader title="Fecthing questions" />}
+      {!isLoading2 && (
+        <h1
+          style={{
+            fontSize: "30px",
+            alignSelf: "center",
+          }}
+        >
+          {questions.length} questions in type {questionsType}.
+        </h1>
+      )}
+      {!isLoading2 &&
+        questions.map((question, index) => {
+          return <Question index={index} {...question} />;
+        })}
     </>
   );
 };

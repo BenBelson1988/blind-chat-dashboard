@@ -1,4 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { StatsDiv } from "../styled/Divs";
+import { StatsH2 } from "../styled/Heading";
 
 export default (props) => {
   const data = [
@@ -39,15 +41,9 @@ export default (props) => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-      }}
-    >
-      <h2 style={{ fontSize: "40px" }}>Probability by gender</h2>
-      <ResponsiveContainer width={500} height={300}>
+    <StatsDiv>
+      <StatsH2>Probability by gender</StatsH2>
+      <ResponsiveContainer width={500} height={250}>
         <PieChart>
           <Pie
             data={data}
@@ -69,6 +65,6 @@ export default (props) => {
           </Pie>
         </PieChart>
       </ResponsiveContainer>
-    </div>
+    </StatsDiv>
   );
 };
