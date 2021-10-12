@@ -1,6 +1,5 @@
 import { StatsDiv } from "../styled/Divs";
 import { StatsH2 } from "../styled/Heading";
-import PropTypes from "prop-types";
 import {
   BarChart,
   Bar,
@@ -9,7 +8,6 @@ import {
   YAxis,
   ResponsiveContainer,
   Tooltip,
-  Legend,
 } from "recharts";
 
 const colors = ["#116e72", "#79334e"];
@@ -46,7 +44,7 @@ export default (props) => {
         marginBottom: "50px",
       }}
     >
-      <StatsH2>Interests by popularity</StatsH2>
+      <StatsH2>Interests List by popularity</StatsH2>
       <ResponsiveContainer width={1250} height={400}>
         <BarChart data={data} barGap={1} margin={{ bottom: 50 }}>
           <YAxis />

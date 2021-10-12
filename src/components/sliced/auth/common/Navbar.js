@@ -2,13 +2,22 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import "./Navbar.css";
 import logo from "../../../../logo.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../UI/Home.css";
 import authSlicer, { signOut } from "../../../../stores/slices/authSlicer";
+import { useEffect, useState } from "react";
+import { StatsH2 } from "../../../styled/Heading";
 
 export default () => {
+  const useremail = useSelector(({ auth }) => auth.email);
   const history = useHistory();
   const dispatch = useDispatch();
+  const [activeUser, setActiveUser] = useState("");
+
+  useEffect(() => {
+    if (useremail === "belson1988@gmail.com") setActiveUser("Ben");
+  }, [useremail]);
+
   return (
     <div className={"Navbar_sticky"}>
       <img
@@ -24,6 +33,9 @@ export default () => {
           cursor: "pointer",
         }}
       />
+      <StatsH2 style={{ position: "absolute", left: "200px" }}>
+        Hi, {activeUser}
+      </StatsH2>
       <button
         className={"button_signout"}
         onClick={() => {

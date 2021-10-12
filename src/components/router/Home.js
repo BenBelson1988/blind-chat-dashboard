@@ -24,20 +24,15 @@ const MenuContainer = styled.div`
 
 export default () => {
   const dispatch = useDispatch();
-  const username = useSelector(({ auth }) => auth.email);
-  const [activeUser, setActiveUser] = useState("");
   const currentTab = useCurrentTab();
-
   useEffect(() => {
-    if (username == "belson1988@gmail.com") setActiveUser("Ben");
     dispatch(fetchInterests());
     dispatch(fetchStats());
-  }, [username]);
+  }, []);
 
   const history = useHistory();
   return (
-    <div style={{ position: "relative" }}>
-      <h3 className={"name"}>Hi, {activeUser}</h3>
+    <div style={{ position: "relative", marginTop: "10px" }}>
       <div style={{ display: "flex", flexDirections: "row" }}>
         <MenuContainer>
           <MenuButton

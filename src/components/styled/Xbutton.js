@@ -21,16 +21,17 @@ export const XbuttonInterest = styled(Xbutton)`
   }
   width: 20px;
   line-height: 20px;
-  margin-left: 5px;
 `;
 
 export const DotsButtonInterests = styled(Xbutton)`
   color: white;
   width: 20px;
+  height: 20px;
   &:hover {
     background-color: white;
     color: black;
   }
+  margin-right: 5px;
 `;
 
 export const PlusButtonInterest = styled(Xbutton)`

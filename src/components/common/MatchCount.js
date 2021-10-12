@@ -1,18 +1,19 @@
 import { StatsDiv } from "../styled/Divs";
+
 import {
   BarChart,
   Bar,
   XAxis,
-  YAxis,
   Tooltip,
   ResponsiveContainer,
+  LabelList,
 } from "recharts";
 import { StatsH2 } from "../styled/Heading";
 
 export default (props) => {
-  const data = Object.entries(props.Age).map((e) => ({
-    age: e[0],
-    "Number of users per age": e[1],
+  const data = Object.entries(props.MatchCount).map((e) => ({
+    "number of matches": e[0],
+    "Number of users per match count": e[1],
   }));
 
   const CustomTooltip = ({ active, payload, label }) => {
@@ -21,13 +22,12 @@ export default (props) => {
         <div
           style={{
             backgroundColor: "white",
-            lineHeight: "20px",
+            lineHeight: "30px",
             width: "200px",
             color: "#179fa6",
           }}
         >
-          <p>{`Age ${label}`}</p>
-          <p>{`There are ${payload[0].value} users`}</p>
+          <p>{`${payload[0].value} users have ${label} Macthes`}</p>
         </div>
       );
     }
@@ -37,17 +37,23 @@ export default (props) => {
 
   return (
     <StatsDiv>
-      <StatsH2>Active users per age</StatsH2>
+      <StatsH2>Number of macthes per users </StatsH2>
       <ResponsiveContainer width={700} height={250}>
-        <BarChart data={data} barGap={1} width={700} height={250}>
-          <XAxis dataKey="age" />
-          <YAxis />
+        <BarChart data={data} barGap={1} margin={{ top: 50 }}>
+          <XAxis dataKey="number of matches" fontWeight="Bold" />
           <Tooltip content={<CustomTooltip />} />
           <Bar
-            dataKey="Number of users per age"
-            fill={("#f46c96", "#179fa6")}
+            dataKey="Number of users per match count"
+            fill={"#79334e"}
             animationDuration={2000}
-          />
+            barSize={25}
+          >
+            <LabelList
+              dataKey="Number of users per match count"
+              fill={"white"}
+              position={"top"}
+            />
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </StatsDiv>

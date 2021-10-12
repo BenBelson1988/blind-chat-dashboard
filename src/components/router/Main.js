@@ -19,7 +19,6 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    //debugger
     if (username) {
       history.push("/home");
     }
