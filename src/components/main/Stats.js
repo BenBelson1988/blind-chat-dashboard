@@ -9,6 +9,7 @@ import InterestsChart from "../common/InterestsChart";
 import Users from "../common/Users";
 import FacetsStats from "../common/FacetsStats";
 import StatsFilter from "../common/StatsFilter";
+import { useEffect } from "react";
 
 export default () => {
   const facets = useSelector(({ stats }) => {
@@ -17,7 +18,7 @@ export default () => {
   const facetsStats = useSelector(({ stats }) => {
     return stats.facetsStats;
   });
-  console.log("facetsStats", facetsStats);
+
   const loading = Object.keys(facets).length === 0;
 
   return (
@@ -35,7 +36,9 @@ export default () => {
             <FacetsStats facetsStats={facetsStats} />
           </StatsContainer>
           <StatsContainer>
-            <GenderChart Gender={facets.gender} />
+            {Object.keys(facets.gender).length === 2 && (
+              <GenderChart Gender={facets.gender} />
+            )}
             <AgeChart Age={facets.age} />
           </StatsContainer>
           <StatsContainer>

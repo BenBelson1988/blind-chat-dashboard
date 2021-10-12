@@ -10,7 +10,7 @@ export default (props) => {
     AgeStat: e[0],
     value: e[1],
   }));
-  console.log(agedata);
+
   return (
     <>
       <FacetsStatsDiv>
