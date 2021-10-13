@@ -14,9 +14,10 @@ export default (props) => {
   return (
     <>
       <FacetsStatsDiv>
-        <H4Blue>Age facets</H4Blue>
+        <H4Blue>Age stats</H4Blue>
         <ActiveusersDiv style={{ marginBottom: "15px" }}>
           {agedata.map((ages) => {
+            if (ages.AgeStat === "sum") return;
             return (
               <H4Blue>
                 {ages.AgeStat.toUpperCase()} age: {ages.value}
@@ -26,7 +27,7 @@ export default (props) => {
         </ActiveusersDiv>
       </FacetsStatsDiv>
       <FacetsStatsDiv>
-        <H4Pink>Match facets</H4Pink>
+        <H4Pink>Match stats</H4Pink>
         <ActiveusersDiv style={{ marginBottom: "15px" }}>
           {matchdata.map((ages) => {
             return (

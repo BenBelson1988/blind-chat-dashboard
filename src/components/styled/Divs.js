@@ -2,6 +2,11 @@ import styled from "styled-components";
 
 export const RegularDiv = styled.div``;
 
+export const BlockDiv = styled(RegularDiv)`
+  position: relative;
+  width: 12vw;
+`;
+
 export const ColumnDiv = styled(RegularDiv)`
   display: flex;
   flex-direction: column;
@@ -59,19 +64,18 @@ export const StatsHolder = styled(ColumnDiv)`
   position: relative;
 `;
 
-export const FixedUpLeftDiv = styled(RegularDiv)`
-  position: absolute;
-  left: 50px;
-  top: 60px;
-`;
-
-export const FilterStatsDiv = styled(RowDiv)`
+export const FixedDiv = styled(ColumnDiv)`
+  position: fixed;
+  height: max-content;
   background: rgb(17, 110, 114);
   background: linear-gradient(
     0deg,
     rgba(17, 110, 114, 0.1) 0%,
     rgba(38, 38, 38, 0.5) 100%
   );
-  justify-content: space-evenly;
-  align-items: center;
+  padding-bottom: 20px;
+`;
+
+export const FilterStatsDiv = styled(RowDiv)`
+  justify-content: center;
 `;

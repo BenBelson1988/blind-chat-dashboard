@@ -8,7 +8,7 @@ export default (props) => {
     { name: props.Gender[1], value: props.Gender.Female },
   ];
 
-  const COLORS = ["#f46c96", "#179fa6"];
+  const COLORS = ["#179fa6", "#f46c96"];
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
@@ -42,7 +42,7 @@ export default (props) => {
 
   return (
     <StatsDiv>
-      <StatsH2>Probability by gender</StatsH2>
+      <StatsH2>Distribution by gender</StatsH2>
       <ResponsiveContainer width={500} height={250}>
         <PieChart>
           <Pie

@@ -7,6 +7,7 @@ import "../UI/Home.css";
 import authSlicer, { signOut } from "../../../../stores/slices/authSlicer";
 import { useEffect, useState } from "react";
 import { StatsH2 } from "../../../styled/Heading";
+import { NavbarLogo } from "../../../styled/Logo";
 
 export default () => {
   const useremail = useSelector(({ auth }) => auth.email);
@@ -20,7 +21,7 @@ export default () => {
 
   return (
     <div className={"Navbar_sticky"}>
-      <img
+      <NavbarLogo
         onClick={() => {
           history.push("/home/stats");
         }}

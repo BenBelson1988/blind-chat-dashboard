@@ -16,9 +16,9 @@ import { fetchInterests } from "../../stores/slices/interestsSlicer";
 import { fetchStats } from "../../stores/slices/statsSlicer";
 
 const MenuContainer = styled.div`
-  width: 20vw;
-  min-width: 20vw;
-  max-width: 20vw;
+  width: 13vw;
+  min-width: 13vw;
+  max-width: 13vw;
   height: 100%;
 `;
 
@@ -54,7 +54,7 @@ export default () => {
             Interests
           </MenuButton>
         </MenuContainer>
-        <div style={{ marginLeft: "100px" }}>
+        <div style={{ marginLeft: "20px" }}>
           <Switch>
             <Route exact path="/home">
               <Redirect to={"/home/stats"} />
