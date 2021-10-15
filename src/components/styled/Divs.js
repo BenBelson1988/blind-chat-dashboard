@@ -73,7 +73,9 @@ export const FixedDiv = styled(ColumnDiv)`
     rgba(17, 110, 114, 0.1) 0%,
     rgba(38, 38, 38, 0.5) 100%
   );
+  margin-top: 20px;
   padding-bottom: 20px;
+  z-index: 10;
 `;
 
 export const FilterStatsDiv = styled(RowDiv)`

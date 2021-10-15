@@ -2,12 +2,27 @@ import React, { useCallback, useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import "./multiRangeSlider.css";
 
-const MultiRangeSlider = ({ min, max, onChange }) => {
+const MultiRangeSlider = ({ setRange, min, max, onChange }) => {
   const [minVal, setMinVal] = useState(min);
   const [maxVal, setMaxVal] = useState(max);
   const minValRef = useRef(min);
   const maxValRef = useRef(max);
   const range = useRef(null);
+  const [ticking, setTicking] = useState(false),
+    [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => ticking && setCount(count + 1), 1e3);
+    return () => clearTimeout(timer);
+  });
+
+  useEffect(() => {
+    if (count == 2) {
+      setCount(0);
+      setTicking(false);
+      setRange(minVal, maxVal);
+    }
+  });
 
   // Convert to percentage
   const getPercent = useCallback(
@@ -53,6 +68,10 @@ const MultiRangeSlider = ({ min, max, onChange }) => {
           const value = Math.min(Number(event.target.value), maxVal - 1);
           setMinVal(value);
           minValRef.current = value;
+          setCount(0);
+        }}
+        onMouseUp={(e) => {
+          setTicking(true);
         }}
         className="thumb thumb--left"
         style={{ zIndex: minVal > max - 100 && "5" }}
@@ -63,9 +82,13 @@ const MultiRangeSlider = ({ min, max, onChange }) => {
         max={max}
         value={maxVal}
         onChange={(event) => {
+          setCount(0);
           const value = Math.max(Number(event.target.value), minVal + 1);
           setMaxVal(value);
           maxValRef.current = value;
+        }}
+        onMouseUp={(e) => {
+          setTicking(true);
         }}
         className="thumb thumb--right"
       />

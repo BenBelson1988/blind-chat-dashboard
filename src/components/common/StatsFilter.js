@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { clearInterval } from "timers";
 import { fetchStats } from "../../stores/slices/statsSlicer";
 import { StatsDiv, FilterStatsDiv, FixedDiv } from "../styled/Divs";
 import {
@@ -14,21 +15,27 @@ import { DotsButtonInterests } from "../styled/Xbutton";
 import MultiRangeSlider from "./MultiRangeSlider/MultiRangeSlider";
 
 export default (props) => {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const [isGeneder, setGeneder] = useState({
-    male: "",
-    female: "",
-  });
+  const history = useHistory(),
+    dispatch = useDispatch(),
+    [isGeneder, setGeneder] = useState({
+      male: "",
+      female: "",
+    });
+
   const ageRef = useRef({
     min: props.facetsStats.age.min,
     max: props.facetsStats.age.max,
   });
 
   const setRange = (min, max) => {
-    ageRef.current.min = min;
-    ageRef.current.max = max;
-    console.log(ageRef.current);
+    if (ageRef.current.min !== min || ageRef.current.max !== max) {
+      ageRef.current.min = min;
+      ageRef.current.max = max;
+      history.push({
+        search: "&Age>" + ageRef.current.min,
+      });
+      console.log(ageRef.current);
+    } else return;
   };
 
   useEffect(() => {
@@ -84,9 +91,10 @@ export default (props) => {
       </FilterStatsDiv>
       <H5TopBottom>Age</H5TopBottom>
       <MultiRangeSlider
+        setRange={setRange}
         min={props.facetsStats.age.min}
         max={props.facetsStats.age.max}
-        onChange={({ min, max }) => setRange(min, max)}
+        onChange={({ min, max }) => {}}
       />
     </FixedDiv>
   );
