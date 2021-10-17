@@ -1,79 +1,101 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { clearInterval } from "timers";
 import { fetchStats } from "../../stores/slices/statsSlicer";
-import { StatsDiv, FilterStatsDiv, FixedDiv } from "../styled/Divs";
-import {
-  H3StatsHeading,
-  H4Blue,
-  H4Pink,
-  H5TopBottom,
-  StatsH2,
-} from "../styled/Heading";
+import { FilterStatsDiv, FixedDiv } from "../styled/Divs";
+import { H3StatsHeading, H4Blue, H4Pink, H5TopBottom } from "../styled/Heading";
 import { DotsButtonInterests } from "../styled/Xbutton";
 import MultiRangeSlider from "./MultiRangeSlider/MultiRangeSlider";
 
 export default (props) => {
   const history = useHistory(),
     dispatch = useDispatch(),
-    [isGeneder, setGeneder] = useState({
+    [filterState, setFilterState] = useState({
       male: "",
       female: "",
+      minRange: props.facetsStats.age.min,
+      maxRange: props.facetsStats.age.max,
     });
-
-  const ageRef = useRef({
-    min: props.facetsStats.age.min,
-    max: props.facetsStats.age.max,
-  });
+  const [firstRender, setFirstRender] = useState(true),
+    minMaxref = useRef({
+      min: 0,
+      max: 0,
+    });
+  if (firstRender)
+    minMaxref.current = {
+      min: props.facetsStats.age.min,
+      max: props.facetsStats.age.max,
+    };
 
   const setRange = (min, max) => {
-    if (ageRef.current.min !== min || ageRef.current.max !== max) {
-      ageRef.current.min = min;
-      ageRef.current.max = max;
-      history.push({
-        search: "&Age>" + ageRef.current.min,
+    if (filterState.minRange !== min || filterState.maxRange !== max) {
+      setFilterState({
+        ...filterState,
+        minRange: min,
+        maxRange: max,
       });
-      console.log(ageRef.current);
     } else return;
   };
 
   useEffect(() => {
-    if (isGeneder.male === "✓") {
-      dispatch(fetchStats("gender:Male"));
-      history.push({
-        search: "?gender=Male",
-      });
+    let dynamciallyArr = [];
+
+    if (filterState.minRange !== 21) {
+      setFirstRender(false);
+      //not good ask for shir, need to save min max only from the first stats payload.
+      dynamciallyArr
+        .push("age > " + parseInt(filterState.minRange - 1))
+        .toString();
     }
-    if (isGeneder.female === "✓") {
-      dispatch(fetchStats("gender:Female"));
-      history.push({
-        search: "?gender=Female",
-      });
+    if (filterState.maxRange !== 46) {
+      setFirstRender(false);
+      //not good ask for shir, need to save min max only from the first stats payload.
+      dynamciallyArr.push(
+        "age < " + (parseInt(filterState.maxRange) + 1).toString()
+      );
     }
-  }, [isGeneder]);
+    if (filterState.male === "✓") {
+      setFirstRender(false);
+      dynamciallyArr.push("gender: Male");
+    }
+    if (filterState.female === "✓") {
+      setFirstRender(false);
+      dynamciallyArr.push("gender: Female");
+    }
+    let dynamicallyQuery = "";
+    dynamicallyQuery = dynamciallyArr.map((query, index) => {
+      if (index === 0) return query;
+      else return " AND " + query;
+    });
+    let historyQuery = "";
+    historyQuery = dynamciallyArr.map((query, index) => {
+      if (index === 0) return query;
+      else return "&" + query;
+    });
+    dynamicallyQuery = dynamicallyQuery.toString().replaceAll(",", "");
+    historyQuery = historyQuery
+      .toString()
+      .replaceAll(",", "")
+      .replaceAll(" ", "");
+    history.push({
+      search: "?" + historyQuery,
+    });
+
+    if (!firstRender) dispatch(fetchStats(dynamicallyQuery));
+    else setFirstRender(false);
+  }, [filterState]);
 
   const menHandle = () => {
-    if (isGeneder.male) {
-      setGeneder({
-        male: "",
-        female: "",
-      });
-      dispatch(fetchStats());
-      history.push();
+    if (filterState.male) {
+      setFilterState({ ...filterState, male: "", female: "" });
     } else {
-      setGeneder({
-        male: "✓",
-        female: "",
-      });
+      setFilterState({ ...filterState, male: "✓", female: "" });
     }
   };
   const femaleHandle = () => {
-    if (isGeneder.female) {
-      setGeneder({ male: "", female: "" });
-      dispatch(fetchStats());
-      history.push();
-    } else setGeneder({ male: "", female: "✓" });
+    if (filterState.female) {
+      setFilterState({ ...filterState, male: "", female: "" });
+    } else setFilterState({ ...filterState, male: "", female: "✓" });
   };
 
   return (
@@ -81,19 +103,19 @@ export default (props) => {
       <H3StatsHeading>Filters</H3StatsHeading>
       <FilterStatsDiv>
         <DotsButtonInterests onClick={() => menHandle()}>
-          {isGeneder.male}
+          {filterState.male}
         </DotsButtonInterests>
         <H4Blue>Male</H4Blue>
         <DotsButtonInterests onClick={() => femaleHandle()}>
-          {isGeneder.female}
+          {filterState.female}
         </DotsButtonInterests>
         <H4Pink>Female</H4Pink>
       </FilterStatsDiv>
       <H5TopBottom>Age</H5TopBottom>
       <MultiRangeSlider
         setRange={setRange}
-        min={props.facetsStats.age.min}
-        max={props.facetsStats.age.max}
+        min={minMaxref.current.min} //not good ask for shir, need to save min max only from the first stats payload.
+        max={minMaxref.current.max} //not good ask for shir, need to save min max only from the first stats payload.
         onChange={({ min, max }) => {}}
       />
     </FixedDiv>

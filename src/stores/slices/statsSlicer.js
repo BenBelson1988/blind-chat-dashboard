@@ -12,7 +12,6 @@ export const fetchStats = createAsyncThunk(
     try {
       if (!dynamcially) dynamcially = "";
       else dynamcially = "?query=" + dynamcially;
-      // debugger;
       const stats = await API.get(
         "BlindChatAPIGatewayAPI",
         "/users/stats" + dynamcially,

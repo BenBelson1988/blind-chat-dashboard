@@ -18,7 +18,6 @@ export default () => {
   const facetsStats = useSelector(({ stats }) => {
     return stats.facetsStats;
   });
-
   const loading = Object.keys(facets).length === 0;
 
   return (
