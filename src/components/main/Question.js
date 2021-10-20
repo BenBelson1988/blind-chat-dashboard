@@ -54,7 +54,7 @@ export default (props) => {
         marginTop: "10px",
         borderRadius: "15px",
         position: "relative",
-        minWidth: "1100px",
+        width: "80%",
       }}
     >
       {isEdit && <EditQuestion setIsEdit={setEdit} new={false} {...props} />}

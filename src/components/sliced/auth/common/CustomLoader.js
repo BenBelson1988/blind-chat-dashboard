@@ -10,8 +10,6 @@ export default (props) => {
         height: "400px",
         justifyContent: "center",
         alignItems: "center",
-        backgroundImage:
-          "linear-gradient(135deg, rgba(64,85,83,0.2) 0%, rgba(0,51,54,0.2) 85%)",
       }}
     >
       <p

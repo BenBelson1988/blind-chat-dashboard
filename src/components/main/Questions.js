@@ -13,6 +13,7 @@ import QuestionsList from "./QuestionsList";
 import CustomLoader from "../sliced/auth/common/CustomLoader";
 import ExpandButton from "../styled/ExpandButton";
 import AddQuestion from "./AddQuestion";
+import { ColumnDiv, StatsContainer } from "../styled/Divs";
 
 export default () => {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ export default () => {
           display: "flex",
           flexDirection: "column",
           width: "100%",
+          alignItems: "center",
         }}
       >
         <div
