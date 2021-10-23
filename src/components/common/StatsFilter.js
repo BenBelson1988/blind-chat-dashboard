@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { fetchStats } from "../../stores/slices/statsSlicer";
-import { FilterStatsDiv, FixedDiv } from "../styled/Divs";
+import { FilterStatsDiv, FixedDiv, MapDiv } from "../styled/Divs";
 import { H3StatsHeading, H4Blue, H4Pink, H5TopBottom } from "../styled/Heading";
 import { DotsButtonInterests } from "../styled/Xbutton";
 import MultiRangeSlider from "./MultiRangeSlider/MultiRangeSlider";
+import GoogleMap from "./GoogleMap/GoogleMap";
+import Space from "../styled/Space";
 
 export default (props) => {
   const history = useHistory(),
@@ -15,12 +17,20 @@ export default (props) => {
       female: "",
       minRange: props.facetsStats.age.min,
       maxRange: props.facetsStats.age.max,
+      map: "",
     });
   const [firstRender, setFirstRender] = useState(true),
     minMaxref = useRef({
       min: 0,
       max: 0,
     });
+
+  const [mapState, setMapState] = useState({
+    radius: 20,
+    lat: 32.109333,
+    lng: 34.855499,
+  });
+
   if (firstRender)
     minMaxref.current = {
       min: props.facetsStats.age.min,
@@ -40,14 +50,14 @@ export default (props) => {
   useEffect(() => {
     let dynamciallyArr = [];
 
-    if (filterState.minRange !== 21) {
+    if (filterState.minRange !== minMaxref.current.min) {
       setFirstRender(false);
       //not good ask for shir, need to save min max only from the first stats payload.
       dynamciallyArr
         .push("age > " + parseInt(filterState.minRange - 1))
         .toString();
     }
-    if (filterState.maxRange !== 46) {
+    if (filterState.maxRange !== minMaxref.current.max) {
       setFirstRender(false);
       //not good ask for shir, need to save min max only from the first stats payload.
       dynamciallyArr.push(
@@ -62,6 +72,8 @@ export default (props) => {
       setFirstRender(false);
       dynamciallyArr.push("gender: Female");
     }
+
+    /////
     let dynamicallyQuery = "";
     dynamicallyQuery = dynamciallyArr.map((query, index) => {
       if (index === 0) return query;
@@ -72,11 +84,31 @@ export default (props) => {
       if (index === 0) return query;
       else return "&" + query;
     });
+
     dynamicallyQuery = dynamicallyQuery.toString().replaceAll(",", "");
+
+    if (filterState.map === "✓") {
+      setFirstRender(false);
+      dynamicallyQuery +=
+        "&aroundRadius=" +
+        mapState.radius +
+        "&aroundLatLng=" +
+        mapState.lat +
+        ", " +
+        mapState.lng;
+      historyQuery +=
+        "&aroundRadius=" +
+        mapState.radius +
+        "&aroundLatLng=" +
+        mapState.lat +
+        "_" +
+        mapState.lng;
+    }
     historyQuery = historyQuery
       .toString()
       .replaceAll(",", "")
       .replaceAll(" ", "");
+
     history.push({
       search: "?" + historyQuery,
     });
@@ -98,9 +130,15 @@ export default (props) => {
     } else setFilterState({ ...filterState, male: "", female: "✓" });
   };
 
+  const locationHandler = () => {
+    if (filterState.map) {
+      setFilterState({ ...filterState, map: "" });
+    } else setFilterState({ ...filterState, map: "✓" });
+  };
+
   return (
     <FixedDiv>
-      <H3StatsHeading>Filters</H3StatsHeading>
+      <H3StatsHeading>Stats Filters</H3StatsHeading>
       <FilterStatsDiv>
         <DotsButtonInterests onClick={() => menHandle()}>
           {filterState.male}
@@ -114,10 +152,18 @@ export default (props) => {
       <H5TopBottom>Age</H5TopBottom>
       <MultiRangeSlider
         setRange={setRange}
-        min={minMaxref.current.min} //not good ask for shir, need to save min max only from the first stats payload.
-        max={minMaxref.current.max} //not good ask for shir, need to save min max only from the first stats payload.
+        min={minMaxref.current.min}
+        max={minMaxref.current.max}
         onChange={({ min, max }) => {}}
       />
+      <Space height="20" />
+      <FilterStatsDiv>
+        <DotsButtonInterests onClick={() => locationHandler()}>
+          {filterState.map}
+        </DotsButtonInterests>
+        <H4Blue>Filter by location</H4Blue>
+      </FilterStatsDiv>
+      <GoogleMap setMapState={setMapState} />
     </FixedDiv>
   );
 };

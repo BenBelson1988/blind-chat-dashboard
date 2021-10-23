@@ -2,6 +2,10 @@ import styled from "styled-components";
 
 export const RegularDiv = styled.div``;
 
+export const MapDiv = styled(RegularDiv)`
+  width: 20vw;
+  height: 18vw;
+`;
 export const BlockDiv = styled(RegularDiv)`
   position: relative;
   width: 12vw;
@@ -67,6 +71,7 @@ export const StatsHolder = styled(ColumnDiv)`
 export const FixedDiv = styled(ColumnDiv)`
   position: fixed;
   height: max-content;
+  width: 13vw;
   background: rgb(17, 110, 114);
   background: linear-gradient(
     0deg,
@@ -76,6 +81,7 @@ export const FixedDiv = styled(ColumnDiv)`
   margin-top: 20px;
   padding-bottom: 20px;
   z-index: 10;
+  align-items: center;
 `;
 
 export const FilterStatsDiv = styled(RowDiv)`

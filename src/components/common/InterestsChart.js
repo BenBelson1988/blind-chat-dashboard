@@ -45,8 +45,8 @@ export default (props) => {
       }}
     >
       <StatsH2>Interests List by popularity</StatsH2>
-      <ResponsiveContainer width={1250} height={400}>
-        <BarChart data={data} barGap={1} margin={{ bottom: 50 }}>
+      <ResponsiveContainer width={1250} height={450}>
+        <BarChart data={data} barGap={1} margin={{ bottom: 50, top: 50 }}>
           <YAxis />
           <XAxis
             dataKey="Interests"
