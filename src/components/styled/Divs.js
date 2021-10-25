@@ -64,7 +64,7 @@ export const RowSpaceAroundDiv = styled(RowDiv)`
 `;
 
 export const StatsHolder = styled(ColumnDiv)`
-  width: 1400px;
+  width: max-content;
   position: relative;
 `;
 

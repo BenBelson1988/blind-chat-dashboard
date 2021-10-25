@@ -47,7 +47,7 @@ export default (props) => {
     } else return;
   };
 
-  useEffect(() => {
+  const localFecthStats = () => {
     let dynamciallyArr = [];
 
     if (filterState.minRange !== minMaxref.current.min) {
@@ -115,7 +115,16 @@ export default (props) => {
 
     if (!firstRender) dispatch(fetchStats(dynamicallyQuery));
     else setFirstRender(false);
+  };
+
+  useEffect(() => {
+    localFecthStats();
   }, [filterState]);
+
+  useEffect(() => {
+    if (filterState.map === "✓") localFecthStats();
+    else return;
+  }, [mapState]);
 
   const menHandle = () => {
     if (filterState.male) {

@@ -7,7 +7,6 @@ const containerStyle = {
 };
 
 export default (props) => {
-  console.log("stats Rendered");
   const [mapLocation, setMapLocation] = useState({
     radius: 20,
     lat: 32.109333,
