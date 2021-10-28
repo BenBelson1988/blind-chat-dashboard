@@ -47,26 +47,26 @@ export default (props) => {
       <StatsH2>Interests List by popularity</StatsH2>
       <ResponsiveContainer width={1250} height={450}>
         <BarChart data={data} barGap={1} margin={{ bottom: 50, top: 50 }}>
-          <YAxis />
-          <XAxis
-            dataKey="Interests"
-            fontSize={15}
-            fontWeight="Bold"
-            angle={50}
-            interval={0}
-            fill="white"
-          />
           <Bar
             dataKey="The amount of interest"
             fill="white"
             barSize={10}
-            label={{ position: "top" }}
+            label={{ position: "top", fontWeight: "Bold" }}
             animationDuration={2000}
           >
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={colors[index % 2]} />
             ))}
           </Bar>
+          <YAxis />
+          <XAxis
+            dataKey="Interests"
+            fontSize={14}
+            fontWeight="Bolder"
+            angle={50}
+            interval={0}
+            style={{ fill: "#c9c9c9" }}
+          />
           <Tooltip cursor={false} content={<CustomTooltip />} />
         </BarChart>
       </ResponsiveContainer>

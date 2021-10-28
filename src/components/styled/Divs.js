@@ -2,6 +2,13 @@ import styled from "styled-components";
 
 export const RegularDiv = styled.div``;
 
+export const MarkDiv = styled(RegularDiv)`
+  width: 2.5vw;
+  height: 1.5vh;
+  margin-top: 5px;
+  border-radius: 5px;
+`;
+
 export const MapDiv = styled(RegularDiv)`
   width: 20vw;
   height: 18vw;
@@ -32,12 +39,13 @@ export const StatsDiv = styled(ColumnDiv)`
   padding-right: 20px;
   padding-left: 20px;
   border-radius: 15px;
+  position: relative;
 `;
 
 export const StatsContainer = styled(RegularDiv)`
   display: flex;
   justify-content: space-evenly;
-  width: 1400px;
+  width: 72vw;
 `;
 
 export const ActiveusersDiv = styled(RowDiv)`
@@ -64,7 +72,7 @@ export const RowSpaceAroundDiv = styled(RowDiv)`
 `;
 
 export const StatsHolder = styled(ColumnDiv)`
-  width: max-content;
+  width: 90%;
   position: relative;
 `;
 

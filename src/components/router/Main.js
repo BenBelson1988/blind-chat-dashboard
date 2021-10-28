@@ -23,19 +23,6 @@ export default () => {
       history.push("/home");
     }
   }, [username]);
-  // useEffect(() => {
-  //     Hub.listen("auth", (data) => {
-  //         const {payload} = data;
-  //         console.log("A new auth event has happened: ", data);
-  //         if (payload.event === "signIn") {
-  //             console.log("a user has signed in!");
-  //             console.log(payload.data);
-  //         }
-  //         if (payload.event === "signOut") {
-  //             console.log("a user has signed out!");
-  //         }
-  //     });
-  // }, []);
 
   return (
     <>

@@ -8,11 +8,16 @@ import authSlicer, { signOut } from "../../../../stores/slices/authSlicer";
 import { useEffect, useState } from "react";
 import { StatsH2 } from "../../../styled/Heading";
 import { NavbarLogo } from "../../../styled/Logo";
+import Auth from "@aws-amplify/auth";
 
 export default () => {
-  const useremail = useSelector(({ auth }) => auth.email);
+  const useremail = useSelector(({ auth }) => auth.email) || "";
   const history = useHistory();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(useremail);
+  }, [Auth]);
 
   return (
     <div className={"Navbar_sticky"}>
