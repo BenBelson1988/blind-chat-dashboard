@@ -4,20 +4,43 @@ import MatchCount from "../common/MatchCount";
 import GenderChart from "../common/GenderChart";
 import { BlockDiv, RowDiv, StatsContainer, StatsHolder } from "../styled/Divs";
 import CustomLoader from "../sliced/auth/common/CustomLoader";
-import { Middl1H1 } from "../styled/Heading";
+import { H4Blue, Middl1H1 } from "../styled/Heading";
 import InterestsChart from "../common/InterestsChart";
 import Users from "../common/Users";
 import FacetsStats from "../common/FacetsStats";
 import StatsFilter from "../common/StatsFilter";
 import { useEffect } from "react";
+import ExpandButton from "../styled/ExpandButton";
+import { useHistory } from "react-router";
 
 export default () => {
+  const history = useHistory();
   const facets = useSelector(({ stats }) => {
     return stats.facets;
   });
   const facetsStats = useSelector(({ stats }) => {
     return stats.facetsStats;
   });
+
+  const statsCount = useSelector(({ stats }) => {
+    return stats.count;
+  });
+  if (statsCount === 0) {
+    return (
+      <>
+        <H4Blue>
+          There are currently no active users in the filter request.
+        </H4Blue>
+        <ExpandButton
+          onClick={() => {
+            history.push("/");
+          }}
+        >
+          Go back and try again
+        </ExpandButton>
+      </>
+    );
+  }
   const loading = Object.keys(facets).length === 0;
 
   return (

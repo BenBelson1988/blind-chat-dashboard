@@ -4,13 +4,13 @@ import { API } from "@aws-amplify/api";
 const initialState = {
   facets: {},
   facetsStats: {},
+  count: {},
 };
 
 export const fetchStats = createAsyncThunk(
   "stats/fetchStats",
   async (dynamcially) => {
     try {
-      debugger;
       if (!dynamcially) dynamcially = "";
       dynamcially = "?query=" + dynamcially;
       const stats = await API.get(
@@ -32,6 +32,7 @@ export const StatsSlicer = createSlice({
     [fetchStats.fulfilled]: (state, { payload: stats }) => {
       state.facets = stats.stats.facets;
       state.facetsStats = stats.stats.facetsStats;
+      state.count = stats.stats.count;
     },
   },
 });
