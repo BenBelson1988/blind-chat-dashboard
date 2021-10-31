@@ -10,8 +10,10 @@ import useQueryParams from "../../customHooks/useQueryParams";
 import { useHistory } from "react-router";
 import FormError from "../sliced/auth/common/FormError";
 import DeleteQuestion from "./DeleteQuestion";
+import { CenteredColumnDiv, ColumnDiv, RegularDiv } from "../styled/Divs";
 
 export default (props) => {
+  console.log(props);
   const history = useHistory();
   const queryParams = useQueryParams();
   const dispatch = useDispatch();
@@ -199,6 +201,16 @@ export default (props) => {
       {deleteQuestion && (
         <DeleteQuestion {...props} setDeleteQuestion={setDeleteQuestion} />
       )}
+      <CenteredColumnDiv>
+        {!props.new && (
+          <img
+            src={props.imageUrl}
+            alt={"png"}
+            style={{ width: "70px", height: "70px" }}
+          />
+        )}
+        <ExpandButton>Upload image</ExpandButton>
+      </CenteredColumnDiv>
       <label style={{ fontWeight: "bolder" }}>Question </label>
 
       <QuestionInput

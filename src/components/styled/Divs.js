@@ -95,3 +95,8 @@ export const FixedDiv = styled(ColumnDiv)`
 export const FilterStatsDiv = styled(RowDiv)`
   justify-content: center;
 `;
+
+export const CenteredColumnDiv = styled(ColumnDiv)`
+  justify-content: center;
+  align-items: center;
+`;

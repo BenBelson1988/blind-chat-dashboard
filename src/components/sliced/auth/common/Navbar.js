@@ -15,10 +15,6 @@ export default () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(useremail);
-  }, [Auth]);
-
   return (
     <div className={"Navbar_sticky"}>
       <NavbarLogo
