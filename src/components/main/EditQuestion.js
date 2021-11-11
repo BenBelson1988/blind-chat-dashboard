@@ -10,7 +10,54 @@ import useQueryParams from "../../customHooks/useQueryParams";
 import { useHistory } from "react-router";
 import FormError from "../sliced/auth/common/FormError";
 import DeleteQuestion from "./DeleteQuestion";
-import { CenteredColumnDiv, ColumnDiv, RegularDiv } from "../styled/Divs";
+import { CenteredColumnDiv } from "../styled/Divs";
+import API from "@aws-amplify/api";
+
+/*image uploading*/
+
+export const openFileDialog = (callback) => {
+  var input = document.createElement("input");
+  input.type = "file";
+  input.onchange = (e) => {
+    // getting a hold of the file reference
+    const file = e.target.files[0];
+    callback(file);
+    // setting up the reader
+  };
+  input.click();
+};
+
+function dataURItoBlob(dataURI) {
+  // convert base64/URLEncoded data component to raw binary data held in a string
+  var byteString;
+  if (dataURI.split(",")[0].indexOf("base64") >= 0)
+    byteString = atob(dataURI.split(",")[1]);
+  else byteString = unescape(dataURI.split(",")[1]);
+
+  // separate out the mime component
+  var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+
+  // write the bytes of the string to a typed array
+  var ia = new Uint8Array(byteString.length);
+  for (var i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+
+  return new Blob([ia], { type: mimeString });
+}
+
+const createFormData = (file, body) => {
+  const form = new FormData();
+  form.append("file", file, file.name);
+  // body["Content-Length"] = file.size;
+  body["type"] = file.type;
+
+  for (let key in body) {
+    form.append(key, body[key]);
+  }
+
+  return form;
+};
 
 export default (props) => {
   console.log(props);
@@ -209,7 +256,26 @@ export default (props) => {
             style={{ width: "70px", height: "70px" }}
           />
         )}
-        <ExpandButton>Upload image</ExpandButton>
+        <ExpandButton
+          onClick={(e) => {
+            openFileDialog(async (file) => {
+              API.get(
+                "BlindChatAPIGatewayAPI",
+                `/questions/${props.id}/image`,
+                {}
+              ).then((res) => {
+                const form = createFormData(file, res.fields);
+                debugger;
+                fetch(res.url, {
+                  method: "POST",
+                  body: form,
+                });
+              });
+            });
+          }}
+        >
+          Upload image
+        </ExpandButton>
       </CenteredColumnDiv>
       <label style={{ fontWeight: "bolder" }}>Question </label>
 
