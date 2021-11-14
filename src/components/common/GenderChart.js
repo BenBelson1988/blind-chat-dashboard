@@ -1,6 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import { StatsDiv } from "../styled/Divs";
-import { StatsH2 } from "../styled/Heading";
+import { RowDiv, StatsDiv, MarkDiv } from "../styled/Divs";
+import { H4Blue, H4Pink, StatsH2 } from "../styled/Heading";
 
 export default (props) => {
   const data = [
@@ -33,9 +33,7 @@ export default (props) => {
         textAnchor={x > cx ? "start" : "end"}
         dominantBaseline="central"
       >
-        {x > cx
-          ? `${"Female"} ${(percent * 100).toFixed(0)}%`
-          : `${"Male"} ${(percent * 100).toFixed(0)}%`}
+        {` ${(percent * 100).toFixed(0)}%`}
       </text>
     );
   };
@@ -43,6 +41,16 @@ export default (props) => {
   return (
     <StatsDiv>
       <StatsH2>Distribution by gender</StatsH2>
+      <div style={{ position: "absolute", top: "20%", left: "2%" }}>
+        <RowDiv style={{ justifyContent: "flex-end" }}>
+          <H4Blue>Male</H4Blue>
+          <MarkDiv style={{ backgroundColor: "#179fa6" }}></MarkDiv>
+        </RowDiv>
+        <RowDiv style={{ justifyContent: "flex-end" }}>
+          <H4Pink>Female</H4Pink>
+          <MarkDiv style={{ backgroundColor: "#f46c96" }}></MarkDiv>
+        </RowDiv>
+      </div>
       <ResponsiveContainer width={500} height={250}>
         <PieChart>
           <Pie

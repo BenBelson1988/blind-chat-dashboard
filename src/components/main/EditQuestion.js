@@ -10,8 +10,42 @@ import useQueryParams from "../../customHooks/useQueryParams";
 import { useHistory } from "react-router";
 import FormError from "../sliced/auth/common/FormError";
 import DeleteQuestion from "./DeleteQuestion";
+import { CenteredColumnDiv } from "../styled/Divs";
+import API from "@aws-amplify/api";
+
+/*image uploading*/
+
+export const openFileDialog = (callback) => {
+  var input = document.createElement("input");
+  input.type = "file";
+  input.onchange = (e) => {
+    // getting a hold of the file reference
+    const file = e.target.files[0];
+    callback(file);
+    // setting up the reader
+  };
+  input.click();
+};
+
+const createFormData = (file, body) => {
+  const form = new FormData();
+  for (const field in body) {
+    form.append(field, body[field]);
+  }
+
+  form.append("file", file, file.name);
+
+  body["type"] = file.type;
+
+  for (let key in body) {
+    form.append(key, body[key]);
+  }
+
+  return form;
+};
 
 export default (props) => {
+  console.log(props);
   const history = useHistory();
   const queryParams = useQueryParams();
   const dispatch = useDispatch();
@@ -24,6 +58,8 @@ export default (props) => {
   const [questionDomian, setQuestionDomain] = useState(props.domain);
   const [questionFeature, setQuestionfeature] = useState(props.feature);
   const [answersState, setAnswersState] = useState(props.answers);
+  const [imageState, setImageState] = useState(props.imageUrl);
+  const [file, setFile] = useState();
   const [deleteQuestion, setDeleteQuestion] = useState(false);
   if (props.new) {
     questionsType = props.type;
@@ -181,8 +217,21 @@ export default (props) => {
     console.log("feature updated", questionFeature);
   };
 
-  const test = () => {
-    setDeleteQuestion(false);
+  const fetchImage = (file) => {
+    API.get("BlindChatAPIGatewayAPI", `/questions/${props.id}/image`, {}).then(
+      (res) => {
+        const form = createFormData(file, res.fields);
+        const fileLength = file.size;
+        debugger;
+        fetch(res.url, {
+          method: "POST",
+          body: form,
+          headers: {
+            "Content-Length": fileLength,
+          },
+        });
+      }
+    );
   };
 
   var questionAfterEdit = {
@@ -199,6 +248,28 @@ export default (props) => {
       {deleteQuestion && (
         <DeleteQuestion {...props} setDeleteQuestion={setDeleteQuestion} />
       )}
+      <CenteredColumnDiv>
+        {!props.new && (
+          <>
+            <img
+              src={imageState}
+              alt={"png"}
+              style={{ width: "70px", height: "70px" }}
+            />
+
+            <ExpandButton
+              onClick={() => {
+                openFileDialog(async (file) => {
+                  setFile(file);
+                  setImageState(URL.createObjectURL(file));
+                });
+              }}
+            >
+              Upload image
+            </ExpandButton>
+          </>
+        )}
+      </CenteredColumnDiv>
       <label style={{ fontWeight: "bolder" }}>Question </label>
 
       <QuestionInput
@@ -463,7 +534,9 @@ export default (props) => {
           disabled={questionError || answerError || iceBreakerError}
           onClick={() => {
             {
-              !props.new && dispatch(putQuestionfunc(questionAfterEdit));
+              !props.new &&
+                dispatch(putQuestionfunc(questionAfterEdit)) &&
+                fetchImage(file);
             }
             {
               props.new && dispatch(addQuestionfunc(questionAfterEdit));
@@ -476,7 +549,6 @@ export default (props) => {
         {!props.new && (
           <ExpandButton
             onClick={() => {
-              debugger;
               setDeleteQuestion(true);
             }}
           >

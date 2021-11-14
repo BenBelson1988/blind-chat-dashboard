@@ -68,9 +68,7 @@ export default () => {
     } else if (enteredPass.length < 7 || enteredPass.length > 10) {
       setEnterPassisValid(false);
       setErrorMsg2("Please fill in 7-10 length password");
-      console.log("wrong pass");
     } else setEnterPassisValid(true);
-    console.log(enteredPass);
   }, [enteredPass]);
 
   const emailBlurHandler = () => {

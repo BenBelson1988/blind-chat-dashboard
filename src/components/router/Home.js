@@ -54,7 +54,7 @@ export default () => {
             Interests
           </MenuButton>
         </MenuContainer>
-        <div style={{ marginLeft: "20px", width: "100%" }}>
+        <div style={{ width: "100%" }}>
           <Switch>
             <Route exact path="/home">
               <Redirect to={"/home/stats"} />
