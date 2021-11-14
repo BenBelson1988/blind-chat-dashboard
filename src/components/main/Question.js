@@ -57,7 +57,7 @@ export default (props) => {
         width: "80%",
       }}
     >
-      {isEdit && <EditQuestion setIsEdit={setEdit} new={false} {...props} />}
+      {isEdit && <EditQuestion togleEdit={togleEdit} new={false} {...props} />}
       {!isEdit && (
         <div>
           <img

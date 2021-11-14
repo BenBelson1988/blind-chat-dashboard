@@ -27,29 +27,14 @@ export const openFileDialog = (callback) => {
   input.click();
 };
 
-function dataURItoBlob(dataURI) {
-  // convert base64/URLEncoded data component to raw binary data held in a string
-  var byteString;
-  if (dataURI.split(",")[0].indexOf("base64") >= 0)
-    byteString = atob(dataURI.split(",")[1]);
-  else byteString = unescape(dataURI.split(",")[1]);
-
-  // separate out the mime component
-  var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
-
-  // write the bytes of the string to a typed array
-  var ia = new Uint8Array(byteString.length);
-  for (var i = 0; i < byteString.length; i++) {
-    ia[i] = byteString.charCodeAt(i);
-  }
-
-  return new Blob([ia], { type: mimeString });
-}
-
 const createFormData = (file, body) => {
   const form = new FormData();
+  for (const field in body) {
+    form.append(field, body[field]);
+  }
+
   form.append("file", file, file.name);
-  // body["Content-Length"] = file.size;
+
   body["type"] = file.type;
 
   for (let key in body) {
@@ -73,6 +58,8 @@ export default (props) => {
   const [questionDomian, setQuestionDomain] = useState(props.domain);
   const [questionFeature, setQuestionfeature] = useState(props.feature);
   const [answersState, setAnswersState] = useState(props.answers);
+  const [imageState, setImageState] = useState(props.imageUrl);
+  const [file, setFile] = useState();
   const [deleteQuestion, setDeleteQuestion] = useState(false);
   if (props.new) {
     questionsType = props.type;
@@ -230,8 +217,21 @@ export default (props) => {
     console.log("feature updated", questionFeature);
   };
 
-  const test = () => {
-    setDeleteQuestion(false);
+  const fetchImage = (file) => {
+    API.get("BlindChatAPIGatewayAPI", `/questions/${props.id}/image`, {}).then(
+      (res) => {
+        const form = createFormData(file, res.fields);
+        const fileLength = file.size;
+        debugger;
+        fetch(res.url, {
+          method: "POST",
+          body: form,
+          headers: {
+            "Content-Length": fileLength,
+          },
+        });
+      }
+    );
   };
 
   var questionAfterEdit = {
@@ -250,32 +250,25 @@ export default (props) => {
       )}
       <CenteredColumnDiv>
         {!props.new && (
-          <img
-            src={props.imageUrl}
-            alt={"png"}
-            style={{ width: "70px", height: "70px" }}
-          />
-        )}
-        <ExpandButton
-          onClick={(e) => {
-            openFileDialog(async (file) => {
-              API.get(
-                "BlindChatAPIGatewayAPI",
-                `/questions/${props.id}/image`,
-                {}
-              ).then((res) => {
-                const form = createFormData(file, res.fields);
-                debugger;
-                fetch(res.url, {
-                  method: "POST",
-                  body: form,
+          <>
+            <img
+              src={imageState}
+              alt={"png"}
+              style={{ width: "70px", height: "70px" }}
+            />
+
+            <ExpandButton
+              onClick={() => {
+                openFileDialog(async (file) => {
+                  setFile(file);
+                  setImageState(URL.createObjectURL(file));
                 });
-              });
-            });
-          }}
-        >
-          Upload image
-        </ExpandButton>
+              }}
+            >
+              Upload image
+            </ExpandButton>
+          </>
+        )}
       </CenteredColumnDiv>
       <label style={{ fontWeight: "bolder" }}>Question </label>
 
@@ -541,7 +534,9 @@ export default (props) => {
           disabled={questionError || answerError || iceBreakerError}
           onClick={() => {
             {
-              !props.new && dispatch(putQuestionfunc(questionAfterEdit));
+              !props.new &&
+                dispatch(putQuestionfunc(questionAfterEdit)) &&
+                fetchImage(file);
             }
             {
               props.new && dispatch(addQuestionfunc(questionAfterEdit));
@@ -554,7 +549,6 @@ export default (props) => {
         {!props.new && (
           <ExpandButton
             onClick={() => {
-              debugger;
               setDeleteQuestion(true);
             }}
           >
