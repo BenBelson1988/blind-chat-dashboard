@@ -12,6 +12,7 @@ import StatsFilter from "../common/StatsFilter";
 import { useEffect } from "react";
 import ExpandButton from "../styled/ExpandButton";
 import { useHistory } from "react-router";
+import CityChart from "../common/CityChart";
 
 export default () => {
   const history = useHistory();
@@ -57,6 +58,9 @@ export default () => {
             <Users Users={facets.status} />
             <StatsContainer>
               <FacetsStats facetsStats={facetsStats} />
+            </StatsContainer>
+            <StatsContainer clickable onClick={(e) => console.log("test")}>
+              <CityChart city={facets.city} />
             </StatsContainer>
             <StatsContainer>
               {Object.keys(facets.gender).length === 2 && (
