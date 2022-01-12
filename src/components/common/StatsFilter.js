@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { fetchStats } from "../../stores/slices/statsSlicer";
@@ -9,7 +9,10 @@ import MultiRangeSlider from "./MultiRangeSlider/MultiRangeSlider";
 import GoogleMap from "./GoogleMap/GoogleMap";
 import Space from "../styled/Space";
 
+import CitySearch from "./CitySearch";
+
 export default (props) => {
+  console.log("stats", props);
   const history = useHistory(),
     dispatch = useDispatch(),
     [filterState, setFilterState] = useState({
@@ -148,6 +151,7 @@ export default (props) => {
   return (
     <FixedDiv>
       <H3StatsHeading>Stats Filters</H3StatsHeading>
+      <CitySearch cityList={props.cityList} />
       <FilterStatsDiv>
         <DotsButtonInterests onClick={() => menHandle()}>
           {filterState.male}

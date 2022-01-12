@@ -47,10 +47,6 @@ export const StatsContainer = styled(RegularDiv)`
   justify-content: space-evenly;
   width: 72vw;
   transition: 0.5s;
-  &:hover {
-    transform: scale(${(props) => (props.clickable ? 1.05 : 1)});
-    cursor: ${(props) => (props.clickable ? "pointer" : "")};
-  }
 `;
 
 export const ActiveusersDiv = styled(RowDiv)`

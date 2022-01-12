@@ -47,7 +47,9 @@ export default () => {
   return (
     <RowDiv>
       <BlockDiv>
-        {!loading && <StatsFilter facetsStats={facetsStats} />}
+        {!loading && (
+          <StatsFilter cityList={facets.city} facetsStats={facetsStats} />
+        )}
       </BlockDiv>
       <StatsHolder>
         <Middl1H1>Blind-chat Statistics</Middl1H1>
@@ -59,7 +61,7 @@ export default () => {
             <StatsContainer>
               <FacetsStats facetsStats={facetsStats} />
             </StatsContainer>
-            <StatsContainer clickable onClick={(e) => console.log("test")}>
+            <StatsContainer>
               <CityChart city={facets.city} />
             </StatsContainer>
             <StatsContainer>

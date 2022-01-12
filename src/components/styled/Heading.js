@@ -1,4 +1,3 @@
-import exp from "constants";
 import styled from "styled-components";
 
 export const Middl1H1 = styled.h1`
@@ -31,4 +30,20 @@ export const H5TopBottom = styled.h5`
 export const H3StatsHeading = styled.h3`
   border-bottom: 1px solid white;
   padding-bottom: 2px;
+`;
+
+export const CityList = styled.h4`
+  color: white;
+  fontsize: 20px;
+  border-radius: 15px;
+  width: 70%;
+  line-height: 4vh;
+  height: 4vh;
+  margin-bottom: 1vh;
+  background: ${(props) => (props.index % 2 === 0 ? "#173233" : "#40212d")};
+`;
+
+export const ErrorMsg = styled.h4`
+fontsize:2vw
+align-self:center;
 `;

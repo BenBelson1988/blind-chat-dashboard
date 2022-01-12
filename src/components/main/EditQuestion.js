@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import {
   putQuestionfunc,
   addQuestionfunc,
+  getQuestionListByType,
 } from "../../stores/slices/questionsSlicer";
 import useQueryParams from "../../customHooks/useQueryParams";
 import { useHistory } from "react-router";
@@ -536,12 +537,14 @@ export default (props) => {
             {
               !props.new &&
                 dispatch(putQuestionfunc(questionAfterEdit)) &&
+                file &&
                 fetchImage(file);
             }
             {
               props.new && dispatch(addQuestionfunc(questionAfterEdit));
             }
-            history.push("/home");
+            dispatch(getQuestionListByType(questionsType));
+            props.togleEdit();
           }}
         >
           Save question

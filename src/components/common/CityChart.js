@@ -9,10 +9,16 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import { useState } from "react";
+import { FullCityListButton } from "../styled/Buttons";
+import PopUp from "../styled/PopUp";
+import FullCityList from "./FullCityList";
 
 const colors = ["#116e72", "#79334e"];
 const amountOffilter = 20;
+
 export default (props) => {
+  const [expandAllCities, setExpandAllCities] = useState(false);
   const data = Object.entries(props.city).map((e, i) => ({
     City: e[0].toString(),
     "The amount of users": e[1],
@@ -47,6 +53,17 @@ export default (props) => {
         marginBottom: "50px",
       }}
     >
+      <FullCityListButton onClick={() => setExpandAllCities(true)}>
+        Full city list
+      </FullCityListButton>
+      {expandAllCities && (
+        <PopUp width={"30vw"} height={"70vh"}>
+          <FullCityList
+            setExpandAllCities={setExpandAllCities}
+            city={props.city}
+          />
+        </PopUp>
+      )}
       <StatsH2>Blind-Chat {amountOffilter} most used cities</StatsH2>
       <ResponsiveContainer width={1250} height={450}>
         <BarChart
