@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import { CenteredColumnDiv } from "../styled/Divs";
 
 export default (props) => {
-  console.log(props);
   const ref = useRef(null);
   const HandleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {

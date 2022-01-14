@@ -62,7 +62,9 @@ export default () => {
               <FacetsStats facetsStats={facetsStats} />
             </StatsContainer>
             <StatsContainer>
-              <CityChart city={facets.city} />
+              {Object.keys(facets.city).length > 2 && (
+                <CityChart city={facets.city} />
+              )}
             </StatsContainer>
             <StatsContainer>
               {Object.keys(facets.gender).length === 2 && (

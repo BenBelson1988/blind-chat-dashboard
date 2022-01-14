@@ -8,7 +8,6 @@ import { DotsButtonInterests } from "../styled/Xbutton";
 import MultiRangeSlider from "./MultiRangeSlider/MultiRangeSlider";
 import GoogleMap from "./GoogleMap/GoogleMap";
 import Space from "../styled/Space";
-
 import CitySearch from "./CitySearch";
 
 export default (props) => {
@@ -21,6 +20,7 @@ export default (props) => {
       minRange: props.facetsStats.age.min,
       maxRange: props.facetsStats.age.max,
       map: "",
+      city: "",
     });
   const [firstRender, setFirstRender] = useState(true),
     minMaxref = useRef({
@@ -28,17 +28,21 @@ export default (props) => {
       max: 0,
     });
 
+  const cityListRef = useRef();
+
   const [mapState, setMapState] = useState({
     radius: 20,
     lat: 32.109333,
     lng: 34.855499,
   });
 
-  if (firstRender)
+  if (firstRender) {
     minMaxref.current = {
       min: props.facetsStats.age.min,
       max: props.facetsStats.age.max,
     };
+    cityListRef.current = props.cityList;
+  }
 
   const setRange = (min, max) => {
     if (filterState.minRange !== min || filterState.maxRange !== max) {
@@ -67,6 +71,12 @@ export default (props) => {
         "age < " + (parseInt(filterState.maxRange) + 1).toString()
       );
     }
+
+    if (filterState.city) {
+      setFirstRender(false);
+      dynamciallyArr.push("city:" + '"' + filterState.city + '"');
+    }
+
     if (filterState.male === "✓") {
       setFirstRender(false);
       dynamciallyArr.push("gender: Male");
@@ -84,7 +94,11 @@ export default (props) => {
     });
     let historyQuery = "";
     historyQuery = dynamciallyArr.map((query, index) => {
-      if (index === 0) return query;
+      if (index === 0)
+        return query
+          .replaceAll('"', "")
+          .replaceAll(/\s+/g, "-")
+          .replaceAll("'", "");
       else return "&" + query;
     });
 
@@ -151,7 +165,11 @@ export default (props) => {
   return (
     <FixedDiv>
       <H3StatsHeading>Stats Filters</H3StatsHeading>
-      <CitySearch cityList={props.cityList} />
+      <CitySearch
+        filterState={filterState}
+        setFilterState={setFilterState}
+        cityList={cityListRef.current}
+      />
       <FilterStatsDiv>
         <DotsButtonInterests onClick={() => menHandle()}>
           {filterState.male}

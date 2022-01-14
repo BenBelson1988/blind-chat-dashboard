@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { AutoCompleteList, ListHolder, ListItem } from "../styled/AutoComplete";
 import { SearchButton } from "../styled/Buttons";
-import { FilterStatsDiv } from "../styled/Divs";
-import { ErrorMsg } from "../styled/Heading";
+import { FilterStatsDiv, RowDiv } from "../styled/Divs";
+import { ActiveCity, ErrorMsg } from "../styled/Heading";
 import { SearchCityInput } from "../styled/Inputs";
 import PopUp from "../styled/PopUp";
+import { CityXButton } from "../styled/Xbutton";
 
 export default (props) => {
   const [citySuggest, setCitySuggest] = useState([]);
   const [text, setText] = useState("");
   const [error, setError] = useState("");
+  const [activeCity, setActiveCity] = useState("");
 
   const autoCopmlite = (e) => {
     if (!e) {
@@ -32,7 +34,7 @@ export default (props) => {
     );
     setTimeout(() => {
       setError("");
-    }, 4000);
+    }, 3500);
   };
 
   const onClickList = (city) => {
@@ -40,15 +42,28 @@ export default (props) => {
       errorApear();
       return;
     }
+    setText(city);
+    setCitySuggest([]);
+    setActiveCity(city);
+    props.setFilterState({ ...props.filterState, city: city });
+  };
+
+  const cleanCity = () => {
+    setActiveCity("");
+    props.setFilterState({ ...props.filterState, city: "" });
   };
 
   return (
     <ListHolder>
       {error && (
-        <PopUp width={"20vw"} height={"20vh"}>
+        <PopUp width={"20vw"} height={"15vh"}>
           <ErrorMsg>{error}</ErrorMsg>
         </PopUp>
       )}
+      <FilterStatsDiv>
+        <ActiveCity>{activeCity}</ActiveCity>
+        {activeCity && <CityXButton onClick={() => cleanCity()}>X</CityXButton>}
+      </FilterStatsDiv>
       <FilterStatsDiv>
         <SearchCityInput
           onChange={(e) => autoCopmlite(e.target.value)}
@@ -68,9 +83,9 @@ export default (props) => {
               <ListItem
                 key={i}
                 index={i}
-                // onClick={() => {
-                //     onClickList(suggest);
-                // }}
+                onClick={() => {
+                  onClickList(suggest);
+                }}
               >
                 {suggest}
               </ListItem>

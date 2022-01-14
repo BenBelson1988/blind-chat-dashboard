@@ -47,3 +47,7 @@ export const ErrorMsg = styled.h4`
 fontsize:2vw
 align-self:center;
 `;
+
+export const ActiveCity = styled.h5`
+margin: 0;
+`

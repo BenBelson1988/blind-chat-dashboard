@@ -5,9 +5,6 @@ export default styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   position: fixed;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   left: 40vw;
   top: 25vh;
   overflow-y: auto;
