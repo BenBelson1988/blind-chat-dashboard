@@ -14,6 +14,7 @@ import useCurrentTab from "../../customHooks/useCurrentTab";
 import InterestsList from "../main/InterestsList";
 import { fetchInterests } from "../../stores/slices/interestsSlicer";
 import { fetchStats } from "../../stores/slices/statsSlicer";
+import { fetchFeatures } from "../../stores/slices/featuresSlicer";
 
 const MenuContainer = styled.div`
   width: 13vw;
@@ -28,6 +29,7 @@ export default () => {
   useEffect(() => {
     dispatch(fetchInterests());
     dispatch(fetchStats());
+    dispatch(fetchFeatures());
   }, []);
 
   const history = useHistory();

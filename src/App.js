@@ -16,6 +16,7 @@ import Main from "./components/router/Main";
 import questionsSlicer from "./stores/slices/questionsSlicer";
 import interestsSlicer from "./stores/slices/interestsSlicer";
 import statsSlicer from "./stores/slices/statsSlicer";
+import featuresSlicer from "./stores/slices/featuresSlicer";
 
 Amplify.configure(awsconfig);
 
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   questions: questionsSlicer,
   interestsState: interestsSlicer,
   stats: statsSlicer,
+  features: featuresSlicer,
 });
 const store = createStore(
   rootReducer,

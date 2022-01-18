@@ -1,7 +1,7 @@
 import QuestionInput from "../styled/QuestionInput";
 import ExpandButton from "../styled/ExpandButton";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   putQuestionfunc,
   addQuestionfunc,
@@ -46,11 +46,13 @@ const createFormData = (file, body) => {
 };
 
 export default (props) => {
-  console.log(props);
   const history = useHistory();
   const queryParams = useQueryParams();
   const dispatch = useDispatch();
   var questionsType = queryParams["type"];
+  const features = useSelector(({ features }) => {
+    return features.features;
+  });
   const [questionBody, SetquestionBody] = useState(props.body);
   const [questionError, setQuestionError] = useState(false);
   const [answerError, setAnswerError] = useState(false);
@@ -62,9 +64,34 @@ export default (props) => {
   const [imageState, setImageState] = useState(props.imageUrl);
   const [file, setFile] = useState();
   const [deleteQuestion, setDeleteQuestion] = useState(false);
+  const [subFeatures, setSubFeatures] = useState(
+    features
+      .find((feature) => feature.domain.name === props.domain)
+      .domain.subFeatures.map((subFeature) => {
+        return subFeature.name;
+      })
+  );
+
   if (props.new) {
     questionsType = props.type;
   }
+
+  const allSubFeatures = [];
+  features.map((feature) => {
+    feature.domain.subFeatures.map((subFeature) => {
+      allSubFeatures.push(subFeature.name);
+    });
+  });
+
+  const updateFeaturesByDomain = (domain) => {
+    setSubFeatures(
+      features
+        .find((feature) => feature.domain.name === domain)
+        .domain.subFeatures.map((subFeature) => {
+          return subFeature.name;
+        })
+    );
+  };
 
   const updateAnswer = (e, answerIndex, title) => {
     let flag = false;
@@ -113,7 +140,6 @@ export default (props) => {
     let newArr = answersState.filter((_, index) => {
       return index !== answerIndex;
     });
-    console.log("after delete", newArr);
     setAnswersState(newArr);
   };
   const addAnswer = () => {
@@ -156,7 +182,6 @@ export default (props) => {
           value: 0.1,
         });
         tempelement.effects = tempEffects;
-        console.log("effects after add:", tempelement.effects);
         return tempelement;
       }
       return element;
@@ -175,7 +200,6 @@ export default (props) => {
         let tempEffects = element.effects.filter((_, eindex) => {
           return eindex !== effectIndex;
         });
-        console.log("after filter effects: ", tempEffects);
         tempelement.effects = tempEffects;
         return tempelement;
       }
@@ -199,7 +223,6 @@ export default (props) => {
           }
           return effect;
         });
-        console.log("after update effects: ", tempEffects);
         tempelement.effects = tempEffects;
         return tempelement;
       }
@@ -210,12 +233,11 @@ export default (props) => {
 
   const updateDomain = (e) => {
     setQuestionDomain(e.target.value);
-    console.log("domain updated", questionDomian);
+    updateFeaturesByDomain(e.target.value);
   };
 
   const updateQuestionFeature = (e) => {
     setQuestionfeature(e.target.value);
-    console.log("feature updated", questionFeature);
   };
 
   const fetchImage = (file) => {
@@ -243,7 +265,6 @@ export default (props) => {
     feature: questionFeature,
     answers: answersState,
   };
-  console.log(questionAfterEdit);
   return (
     <div>
       {deleteQuestion && (
@@ -299,14 +320,9 @@ export default (props) => {
             width: "120px",
           }}
         >
-          <option>Openness</option>
-          <option>Conscientiousness</option>
-          <option>Extraversion</option>
-          <option>Agreeableness</option>
-          <option>Honesty</option>
-          <option>Emotionality</option>
-          <option>Details</option>
-          <option>Orientations</option>
+          {features.map((feature) => {
+            return <option>{feature.domain.name}</option>;
+          })}
         </select>
         <label style={{ fontWeight: "bolder", marginLeft: "50px" }}>
           Feature
@@ -326,16 +342,9 @@ export default (props) => {
             width: "120px",
           }}
         >
-          {" "}
-          <option>Familial</option>
-          <option>Openness</option>
-          <option>Conscientiousness</option>
-          <option>Extraversion</option>
-          <option>Agreeableness</option>
-          <option>Honesty</option>
-          <option>Emotionality</option>
-          <option>Details</option>
-          <option>Orientations</option>
+          {subFeatures.map((sub) => {
+            return <option>{sub}</option>;
+          })}
         </select>
       </div>
       <h2
@@ -459,16 +468,9 @@ export default (props) => {
                           width: "100px",
                         }}
                       >
-                        <option>Forgivingness</option>
-                        <option>Altruism</option>
-                        <option>Inquisitiveness</option>
-                        <option>Unconventionality</option>
-                        <option>Sport</option>
-                        <option>Familial</option>
-                        <option>Religion</option>
-                        <option>Diligence</option>
-                        <option>Flexibility</option>
-                        <option>Liveliness</option>
+                        {allSubFeatures.map((element) => {
+                          return <option>{element}</option>;
+                        })}
                       </select>
                       <QuestionInput
                         style={{
