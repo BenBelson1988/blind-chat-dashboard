@@ -71,6 +71,7 @@ export default (props) => {
         return subFeature.name;
       })
   );
+  console.log(questionFeature);
 
   if (props.new) {
     questionsType = props.type;
@@ -87,7 +88,8 @@ export default (props) => {
     setSubFeatures(
       features
         .find((feature) => feature.domain.name === domain)
-        .domain.subFeatures.map((subFeature) => {
+        .domain.subFeatures.map((subFeature, index) => {
+          if (index === 0) setQuestionfeature(subFeature.name);
           return subFeature.name;
         })
     );
