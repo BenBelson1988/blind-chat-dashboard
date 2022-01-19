@@ -49,5 +49,34 @@ align-self:center;
 `;
 
 export const ActiveCity = styled.h5`
-margin: 0;
-`
+  margin: 0;
+`;
+
+export const PageHeading = styled.h2`
+  font-size: 2vw;
+  background: -webkit-linear-gradient(#179fa6, #f46c96);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  flex-wrap: nowrap;
+  margin-top: 0;
+  marfin-bottom: 2vh;
+`;
+
+export const FeatureH4 = styled.h4`
+  margin-top: 0;
+  margin-bottom: 0;
+`;
+
+export const SubFHead = styled.h5`
+  background: black;
+  height: fit-content;
+  width: fit-content;
+  line-height: 3vh;
+  margin-right: 1vw;
+  border-radius: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-top: 0;
+  margin-bottom: 2vh;
+`;

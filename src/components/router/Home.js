@@ -15,6 +15,7 @@ import InterestsList from "../main/InterestsList";
 import { fetchInterests } from "../../stores/slices/interestsSlicer";
 import { fetchStats } from "../../stores/slices/statsSlicer";
 import { fetchFeatures } from "../../stores/slices/featuresSlicer";
+import FeaturesList from "../main/FeaturesList";
 
 const MenuContainer = styled.div`
   width: 13vw;
@@ -55,6 +56,12 @@ export default () => {
           >
             Interests
           </MenuButton>
+          <MenuButton
+            className={currentTab === "features" ? "active" : ""}
+            onClick={() => history.push("/home/features")}
+          >
+            Features
+          </MenuButton>
         </MenuContainer>
         <div style={{ width: "100%" }}>
           <Switch>
@@ -69,6 +76,9 @@ export default () => {
             </Route>
             <Route path="/home/interests">
               <InterestsList />
+            </Route>
+            <Route path="/home/features">
+              <FeaturesList />
             </Route>
           </Switch>
         </div>

@@ -101,3 +101,54 @@ export const CenteredColumnDiv = styled(ColumnDiv)`
   justify-content: center;
   align-items: center;
 `;
+
+export const FeaturesDiv = styled.div`
+  width: 80vw;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const FeatureContainer = styled.div`
+  cursor: pointer;
+  position: relative;
+  margin-top: 5vh;
+  margin-right: 2vw;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: ${(props) => (props.expand ? "70vw" : "30vw")};
+  height: ${(props) => (props.expand ? "60vh" : "40vh")};
+  background: rgb(17, 110, 114);
+  background: linear-gradient(
+    0deg,
+    rgba(17, 110, 114, 0.1) 0%,
+    rgba(38, 38, 38, 0.5) 100%
+  );
+  transition: 0.8s ease-in-out;
+`;
+
+export const FeatureLineDiv = styled(RowDiv)`
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+
+export const FeatureDescriptionDiv = styled.div`
+  width: 90%;
+  min-height: fit-content;
+  max-height: 12vh;
+  border-radius: 15px;
+  background-color: black;
+  border: none;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow: auto;
+  overflow-wrap: break-word;
+`;
+
+export const RowWithWrap = styled(RowDiv)`
+  flex-wrap: wrap;
+  justify-content: center;
+`;
