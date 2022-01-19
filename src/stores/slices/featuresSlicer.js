@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API } from "@aws-amplify/api";
 const initialState = {
   features: [],
+  isLoading: false,
 };
 
 export const fetchFeatures = createAsyncThunk(
@@ -40,6 +41,10 @@ export const FeaturesSlicer = createSlice({
   extraReducers: {
     [fetchFeatures.fulfilled]: (state, { payload: features }) => {
       state["features"] = features;
+      state["isLoading"] = false;
+    },
+    [fetchFeatures.pending]: (state) => {
+      state["isLoading"] = true;
     },
     // [updateInterests.fulfilled]: (state, { payload: domians }) => {
     //   state["domians"] = domians;

@@ -65,11 +65,12 @@ export const PageHeading = styled.h2`
 
 export const FeatureH4 = styled.h4`
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: 0.5vh;
 `;
 
 export const SubFHead = styled.h5`
-  background: black;
+  background: ${(props) => (props.active ? "gray" : "black")};
+  color: ${(props) => (props.active ? "black" : "white")};
   height: fit-content;
   width: fit-content;
   line-height: 3vh;

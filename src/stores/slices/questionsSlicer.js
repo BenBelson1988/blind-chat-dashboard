@@ -14,6 +14,7 @@ const initialState = {
   traits: [],
   swippable: [],
   games: [],
+  isLoading: false,
 };
 
 export const getQuestionListByType = createAsyncThunk(
@@ -84,11 +85,15 @@ export const questionsSlicer = createSlice({
     //     }
     //   });
     // },
+    [getQuestionListByType.pending]: (state) => {
+      state["isLoading"] = true;
+    },
 
     [getQuestionListByType.fulfilled]: (
       state,
       { payload: { type, questions } }
     ) => {
+      state["isLoading"] = false;
       state[type] = questions;
     },
   },

@@ -130,6 +130,10 @@ export const FeatureContainer = styled.div`
   transition: 0.8s ease-in-out;
 `;
 
+export const RowCenteredDiv = styled(RowDiv)`
+  align-items: center;
+`;
+
 export const FeatureLineDiv = styled(RowDiv)`
   flex-wrap: wrap;
   justify-content: center;
@@ -146,6 +150,11 @@ export const FeatureDescriptionDiv = styled.div`
   padding-right: 5px;
   overflow: auto;
   overflow-wrap: break-word;
+`;
+
+export const ColumnFlexOne = styled(ColumnDiv)`
+  flex: 1;
+  align-items: center;
 `;
 
 export const RowWithWrap = styled(RowDiv)`

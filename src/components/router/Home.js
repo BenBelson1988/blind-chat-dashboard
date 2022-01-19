@@ -46,7 +46,9 @@ export default () => {
           </MenuButton>
           <MenuButton
             className={currentTab === "questions" ? "active" : ""}
-            onClick={() => history.push("/home/questions")}
+            onClick={() =>
+              currentTab === "questions" ? {} : history.push("/home/questions")
+            }
           >
             Questions
           </MenuButton>
