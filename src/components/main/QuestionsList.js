@@ -14,6 +14,8 @@ export default () => {
     return questions.isLoading;
   });
 
+  const questionLength = Object.keys(questions).length === 0;
+
   return (
     <>
       {isLoading && <CustomLoader title="Fecthing questions" />}
@@ -28,6 +30,7 @@ export default () => {
         </h1>
       )}
       {!isLoading &&
+        !questionLength &&
         questions.map((question, index) => {
           return <Question index={index} {...question} />;
         })}
