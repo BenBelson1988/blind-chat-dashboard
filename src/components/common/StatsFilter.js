@@ -56,6 +56,7 @@ export default (props) => {
 
   const localFecthStats = () => {
     let dynamciallyArr = [];
+    let dynamicallyQuery = "";
 
     if (filterState.minRange !== minMaxref.current.min) {
       setFirstRender(false);
@@ -87,7 +88,6 @@ export default (props) => {
     }
 
     /////
-    let dynamicallyQuery = "";
     dynamicallyQuery = dynamciallyArr.map((query, index) => {
       if (index === 0) return query;
       else return " AND " + query;
@@ -130,13 +130,17 @@ export default (props) => {
       search: "?" + historyQuery,
     });
 
-    if (!firstRender) dispatch(fetchStats(dynamicallyQuery));
-    else setFirstRender(false);
+    // if (!firstRender) dispatch(fetchStats(dynamicallyQuery));
+    if (firstRender){
+      dispatch(fetchStats(dynamicallyQuery));
+    }
+     setFirstRender(false);
   };
 
   useEffect(() => {
     localFecthStats();
-  }, [filterState]);
+
+  }, [filterState,firstRender]);
 
   useEffect(() => {
     if (filterState.map === "✓") localFecthStats();

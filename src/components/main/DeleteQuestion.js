@@ -43,7 +43,6 @@ export default (props) => {
         <ExpandButton
           style={{ width: "100px" }}
           onClick={() => {
-            debugger;
             dispatch(deleteQuestionfunc(props.id));
             history.push("/home");
           }}

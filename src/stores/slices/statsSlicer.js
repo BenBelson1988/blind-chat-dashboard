@@ -7,15 +7,16 @@ const initialState = {
   count: {},
 };
 
+
 export const fetchStats = createAsyncThunk(
   "stats/fetchStats",
-  async (dynamcially) => {
+  async (dynamically) => {
     try {
-      if (!dynamcially) dynamcially = "";
-      dynamcially = "?query=" + dynamcially;
+      if (!dynamically) dynamically = "";
+      dynamically = "?query=" + dynamically;
       const stats = await API.get(
         "BlindChatAPIGatewayAPI",
-        "/users/stats" + dynamcially,
+        "/users/stats" + dynamically,
         {}
       );
       return { stats };

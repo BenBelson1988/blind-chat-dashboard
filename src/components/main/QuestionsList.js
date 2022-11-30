@@ -32,7 +32,7 @@ export default () => {
       {!isLoading &&
         !questionLength &&
         questions.map((question, index) => {
-          return <Question index={index} {...question} />;
+          return <Question index={index} {...question} questionsType={questionsType} />;
         })}
     </>
   );

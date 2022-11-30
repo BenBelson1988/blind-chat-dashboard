@@ -21,6 +21,7 @@ export default (props) => {
     id: "01" + getRandomString(24),
     domain: "Openness",
     feature: "feature",
+    category: undefined,
     answers: [
       {
         body: "Please enter answer",
@@ -49,7 +50,6 @@ export default (props) => {
     ],
   };
 
-  console.log(newQuestion);
   return (
     <div
       style={{
