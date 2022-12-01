@@ -1,15 +1,12 @@
-import React from "react";
+import React, {useRef} from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Questions from "../main/Questions";
-import AddQuestion from "../main/AddQuestion";
 import Stats from "../main/Stats";
 import styled from "styled-components";
 import MenuButton from "../styled/MenuButton";
 import { useHistory } from "react-router";
-import { Auth } from "aws-amplify";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import authSlicer from "../../stores/slices/authSlicer";
+import {  useDispatch } from "react-redux";
 import useCurrentTab from "../../customHooks/useCurrentTab";
 import InterestsList from "../main/InterestsList";
 import { fetchInterests } from "../../stores/slices/interestsSlicer";
@@ -23,6 +20,8 @@ const MenuContainer = styled.div`
   max-width: 13vw;
   height: 100%;
 `;
+
+
 
 export default () => {
   const dispatch = useDispatch();

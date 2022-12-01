@@ -3,11 +3,10 @@ import { API, Auth, graphqlOperation } from "aws-amplify";
 import {
   addQuestion,
   deleteQuestion,
+    getQuestionsByType,
+    putQuestion,
 } from "../graphqloperations/queries/AddDeleteQuestion";
-import {
-  getQuestionsByType,
-  putQuestion,
-} from "../graphqloperations/queries/getQuestions";
+
 
 const initialState = {
   basic: [],
@@ -26,6 +25,7 @@ export const getQuestionListByType = createAsyncThunk(
           getQuestionsByType: { items: data },
         },
       } = await API.graphql(graphqlOperation(getQuestionsByType, { type }));
+      debugger
       return { questions: data, type };
     } catch (err) {
       console.log(err);
@@ -38,8 +38,8 @@ export const putQuestionfunc = createAsyncThunk(
   async (input) => {
     try {
       const { id, body, type, domain, category } = input;
+      const q = await API.graphql(graphqlOperation(putQuestion, { input }));
       debugger
-      await API.graphql(graphqlOperation(putQuestion, { input }));
       return { id, body, type, domain,category };
     } catch (err) {
       console.log(err);
@@ -52,7 +52,8 @@ export const addQuestionfunc = createAsyncThunk(
   async (input) => {
     try {
       const { id, body, type, domain, feature, answers,category } = input;
-      API.graphql(graphqlOperation(addQuestion, { input }));
+      const q = await API.graphql(graphqlOperation(addQuestion, { input }));
+      debugger
       return { id, body, type, domain, feature, answers ,category};
     } catch (err) {
       console.log(err);

@@ -21,7 +21,7 @@ export default (props) => {
     id: "01" + getRandomString(24),
     domain: "Openness",
     feature: "feature",
-    category: undefined,
+    category: 'romance',
     answers: [
       {
         body: "Please enter answer",
@@ -96,11 +96,13 @@ export default (props) => {
           Please select type
           <option>basic</option>
           <option>traits</option>
-          <option>swippable</option>
+          <option>swippeable</option>
           <option>game</option>
         </select>
       </div>
-      <EditQuestion new={true} type={QuestionType} {...newQuestion} />
+      <EditQuestion new={true} type={QuestionType} togleEdit={() => {
+        props.setAddQuestion(false);
+      }} {...newQuestion} />
       <ExpandButton
         style={{ position: "fixed", left: "95%", top: "0" }}
         onClick={() => {

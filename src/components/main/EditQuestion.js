@@ -46,7 +46,6 @@ const createFormData = (file, body) => {
 };
 
 export default (props) => {
-    const history = useHistory();
     const queryParams = useQueryParams();
     const dispatch = useDispatch();
     var questionsType = queryParams["type"];
@@ -359,7 +358,6 @@ export default (props) => {
                         </label>
                         <select
                             onChange={(e) => {
-                                debugger
                                 setQuestionCategory(e.target.value);
                             }}
                             defaultValue={questionCategory}
@@ -568,16 +566,15 @@ export default (props) => {
             >
                 <ExpandButton
                     disabled={questionError || answerError || iceBreakerError}
-                    onClick={() => {
+                    onClick={ async () => {
                         if (!props.new) {
-                            debugger
-                            dispatch(putQuestionfunc(questionAfterEdit));
+                            await dispatch(putQuestionfunc(questionAfterEdit));
                             file && fetchImage(file);
                         } else {
-                            dispatch(addQuestionfunc(questionAfterEdit));
+                            await dispatch(addQuestionfunc(questionAfterEdit));
                         }
-                        dispatch(getQuestionListByType(questionsType));
-                        props.togleEdit();
+                        await dispatch(getQuestionListByType(questionsType));
+                        props.togleEdit && props.togleEdit();
                     }}
                 >
                     Save question
