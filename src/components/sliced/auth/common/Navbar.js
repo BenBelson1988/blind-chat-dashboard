@@ -8,16 +8,12 @@ import authSlicer, { signOut } from "../../../../stores/slices/authSlicer";
 import { useEffect, useState } from "react";
 import { StatsH2 } from "../../../styled/Heading";
 import { NavbarLogo } from "../../../styled/Logo";
+import Auth from "@aws-amplify/auth";
 
 export default () => {
-  const useremail = useSelector(({ auth }) => auth.email);
+  const useremail = useSelector(({ auth }) => auth.email) || "";
   const history = useHistory();
   const dispatch = useDispatch();
-  const [activeUser, setActiveUser] = useState("");
-
-  useEffect(() => {
-    if (useremail === "belson1988@gmail.com") setActiveUser("Ben");
-  }, [useremail]);
 
   return (
     <div className={"Navbar_sticky"}>
@@ -35,7 +31,7 @@ export default () => {
         }}
       />
       <StatsH2 style={{ position: "absolute", left: "200px" }}>
-        Hi, {activeUser}
+        Hi, {useremail}
       </StatsH2>
       <button
         className={"button_signout"}

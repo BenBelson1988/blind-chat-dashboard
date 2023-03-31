@@ -10,13 +10,16 @@ export default () => {
   const questions = useSelector(({ questions }) => {
     return questions[questionsType] || [];
   });
+  const isLoading = useSelector(({ questions }) => {
+    return questions.isLoading;
+  });
 
-  const isLoading2 = Object.keys(questions).length === 0;
+  const questionLength = Object.keys(questions).length === 0;
 
   return (
     <>
-      {isLoading2 && <CustomLoader title="Fecthing questions" />}
-      {!isLoading2 && (
+      {isLoading && <CustomLoader title="Fecthing questions" />}
+      {!isLoading && (
         <h1
           style={{
             fontSize: "30px",
@@ -26,9 +29,10 @@ export default () => {
           {questions.length} questions in type {questionsType}.
         </h1>
       )}
-      {!isLoading2 &&
+      {!isLoading &&
+        !questionLength &&
         questions.map((question, index) => {
-          return <Question index={index} {...question} />;
+          return <Question index={index} {...question} questionsType={questionsType} />;
         })}
     </>
   );

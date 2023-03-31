@@ -57,7 +57,7 @@ export default (props) => {
         width: "80%",
       }}
     >
-      {isEdit && <EditQuestion setIsEdit={setEdit} new={false} {...props} />}
+      {isEdit && <EditQuestion togleEdit={togleEdit} new={false} {...props}  />}
       {!isEdit && (
         <div>
           <img
@@ -73,6 +73,7 @@ export default (props) => {
             <div>
               <h2>Question feature - "{props.feature}"</h2>
               <h2>Domain - "{props.domain}"</h2>
+              <h2>Category - "{props.category}"</h2>
               <h3 style={{ color: "lightgray", marginBottom: "-5px" }}>
                 Answers
               </h3>

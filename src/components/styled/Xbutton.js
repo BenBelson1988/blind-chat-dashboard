@@ -43,3 +43,13 @@ export const PlusButtonInterest = styled(Xbutton)`
   width: 20px;
   margin-bottom: 15px;
 `;
+
+export const CityXButton = styled(Xbutton)`
+  height: 1.5vh;
+  width: 1vw;
+  font-size: 10px;
+  transition: 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;

@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState, Component } from "react";
+import React from "react";
 import "./App.css";
-import Amplify, { Auth, Hub, loadingLogo } from "aws-amplify";
+import Amplify from "aws-amplify";
 import awsconfig from "./aws-exports";
 import thunk from "redux-thunk";
 import authSlicer, {
@@ -16,14 +16,19 @@ import Main from "./components/router/Main";
 import questionsSlicer from "./stores/slices/questionsSlicer";
 import interestsSlicer from "./stores/slices/interestsSlicer";
 import statsSlicer from "./stores/slices/statsSlicer";
+import featuresSlicer from "./stores/slices/featuresSlicer";
+import {API} from "@aws-amplify/api";
 
 Amplify.configure(awsconfig);
+API.configure(awsconfig);
+
 
 const rootReducer = combineReducers({
   auth: authSlicer,
   questions: questionsSlicer,
   interestsState: interestsSlicer,
   stats: statsSlicer,
+  features: featuresSlicer,
 });
 const store = createStore(
   rootReducer,

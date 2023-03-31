@@ -9,13 +9,22 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import { useState } from "react";
+import { FullCityListButton } from "../styled/Buttons";
+import PopUp from "../styled/PopUp";
+import FullCityList from "./FullCityList";
 
 const colors = ["#116e72", "#79334e"];
+const amountOffilter = 20;
+
 export default (props) => {
-  const data = Object.entries(props.Interests).map((e) => ({
-    Interests: e[0].toString(),
-    "The amount of interest": e[1],
+  const [expandAllCities, setExpandAllCities] = useState(false);
+  const data = Object.entries(props.city).map((e, i) => ({
+    City: e[0].toString(),
+    "The amount of users": e[1],
   }));
+
+  let topTwentyData = data.slice(1, amountOffilter);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -44,26 +53,41 @@ export default (props) => {
         marginBottom: "50px",
       }}
     >
-      <StatsH2>Interests List by popularity</StatsH2>
+      <FullCityListButton onClick={() => setExpandAllCities(true)}>
+        Full city list
+      </FullCityListButton>
+      {expandAllCities && (
+        <PopUp width={"30vw"} height={"70vh"}>
+          <FullCityList
+            setExpandAllCities={setExpandAllCities}
+            city={props.city}
+          />
+        </PopUp>
+      )}
+      <StatsH2>Blind-Chat {amountOffilter} most used cities</StatsH2>
       <ResponsiveContainer width={1250} height={450}>
-        <BarChart data={data} barGap={1} margin={{ bottom: 50, top: 50 }}>
+        <BarChart
+          data={topTwentyData}
+          barGap={1}
+          margin={{ bottom: 50, top: 50 }}
+        >
           <Bar
-            dataKey="The amount of interest"
+            dataKey="The amount of users"
             fill="white"
-            barSize={10}
+            barSize={20}
             label={{ position: "top", fontWeight: "Bold" }}
             animationDuration={2000}
           >
-            {data.map((entry, index) => (
+            {topTwentyData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={colors[index % 2]} />
             ))}
           </Bar>
           <YAxis />
           <XAxis
-            dataKey="Interests"
-            fontSize={14}
+            dataKey="City"
+            fontSize={12}
             fontWeight="Bolder"
-            angle={50}
+            angle={35}
             interval={0}
             style={{ fill: "#c9c9c9" }}
           />

@@ -3,17 +3,17 @@ import { API, Auth, graphqlOperation } from "aws-amplify";
 import {
   addQuestion,
   deleteQuestion,
+    getQuestionsByType,
+    putQuestion,
 } from "../graphqloperations/queries/AddDeleteQuestion";
-import {
-  getQuestionsByType,
-  putQuestion,
-} from "../graphqloperations/queries/getQuestions";
+
 
 const initialState = {
   basic: [],
   traits: [],
   swippable: [],
   games: [],
+  isLoading: false,
 };
 
 export const getQuestionListByType = createAsyncThunk(
@@ -25,6 +25,7 @@ export const getQuestionListByType = createAsyncThunk(
           getQuestionsByType: { items: data },
         },
       } = await API.graphql(graphqlOperation(getQuestionsByType, { type }));
+      debugger
       return { questions: data, type };
     } catch (err) {
       console.log(err);
@@ -34,12 +35,12 @@ export const getQuestionListByType = createAsyncThunk(
 
 export const putQuestionfunc = createAsyncThunk(
   "questions/putQuestion",
-  async (ref) => {
+  async (input) => {
     try {
-      const input = ref;
-      const { id, body, type, domain, feature, answers } = ref;
-      API.graphql(graphqlOperation(putQuestion, { input }));
-      return { id, body, type, domain };
+      const { id, body, type, domain, category } = input;
+      const q = await API.graphql(graphqlOperation(putQuestion, { input }));
+      debugger
+      return { id, body, type, domain,category };
     } catch (err) {
       console.log(err);
     }
@@ -48,12 +49,12 @@ export const putQuestionfunc = createAsyncThunk(
 
 export const addQuestionfunc = createAsyncThunk(
   "questions/addQuestion",
-  async (ref) => {
+  async (input) => {
     try {
-      const input = ref;
-      const { id, body, type, domain, feature, answers } = ref;
-      API.graphql(graphqlOperation(addQuestion, { input }));
-      return { id, body, type, domain, feature, answers };
+      const { id, body, type, domain, feature, answers,category } = input;
+      const q = await API.graphql(graphqlOperation(addQuestion, { input }));
+      debugger
+      return { id, body, type, domain, feature, answers ,category};
     } catch (err) {
       console.log(err);
     }
@@ -84,11 +85,15 @@ export const questionsSlicer = createSlice({
     //     }
     //   });
     // },
+    [getQuestionListByType.pending]: (state) => {
+      state["isLoading"] = true;
+    },
 
     [getQuestionListByType.fulfilled]: (
       state,
       { payload: { type, questions } }
     ) => {
+      state["isLoading"] = false;
       state[type] = questions;
     },
   },

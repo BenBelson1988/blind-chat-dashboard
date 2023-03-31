@@ -1,19 +1,18 @@
-import React from "react";
+import React, {useRef} from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Questions from "../main/Questions";
-import AddQuestion from "../main/AddQuestion";
 import Stats from "../main/Stats";
 import styled from "styled-components";
 import MenuButton from "../styled/MenuButton";
 import { useHistory } from "react-router";
-import { Auth } from "aws-amplify";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import authSlicer from "../../stores/slices/authSlicer";
+import {  useDispatch } from "react-redux";
 import useCurrentTab from "../../customHooks/useCurrentTab";
 import InterestsList from "../main/InterestsList";
 import { fetchInterests } from "../../stores/slices/interestsSlicer";
 import { fetchStats } from "../../stores/slices/statsSlicer";
+import { fetchFeatures } from "../../stores/slices/featuresSlicer";
+import FeaturesList from "../main/FeaturesList";
 
 const MenuContainer = styled.div`
   width: 13vw;
@@ -22,12 +21,15 @@ const MenuContainer = styled.div`
   height: 100%;
 `;
 
+
+
 export default () => {
   const dispatch = useDispatch();
   const currentTab = useCurrentTab();
   useEffect(() => {
     dispatch(fetchInterests());
     dispatch(fetchStats());
+    dispatch(fetchFeatures());
   }, []);
 
   const history = useHistory();
@@ -43,7 +45,9 @@ export default () => {
           </MenuButton>
           <MenuButton
             className={currentTab === "questions" ? "active" : ""}
-            onClick={() => history.push("/home/questions")}
+            onClick={() =>
+              currentTab === "questions" ? {} : history.push("/home/questions")
+            }
           >
             Questions
           </MenuButton>
@@ -53,8 +57,14 @@ export default () => {
           >
             Interests
           </MenuButton>
+          <MenuButton
+            className={currentTab === "features" ? "active" : ""}
+            onClick={() => history.push("/home/features")}
+          >
+            Features
+          </MenuButton>
         </MenuContainer>
-        <div style={{ marginLeft: "20px", width: "100%" }}>
+        <div style={{ width: "100%" }}>
           <Switch>
             <Route exact path="/home">
               <Redirect to={"/home/stats"} />
@@ -67,6 +77,9 @@ export default () => {
             </Route>
             <Route path="/home/interests">
               <InterestsList />
+            </Route>
+            <Route path="/home/features">
+              <FeaturesList />
             </Route>
           </Switch>
         </div>

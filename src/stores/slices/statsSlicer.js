@@ -4,18 +4,19 @@ import { API } from "@aws-amplify/api";
 const initialState = {
   facets: {},
   facetsStats: {},
+  count: {},
 };
+
 
 export const fetchStats = createAsyncThunk(
   "stats/fetchStats",
-  async (dynamcially) => {
+  async (dynamically) => {
     try {
-      if (!dynamcially) dynamcially = "";
-      dynamcially = "?query=" + dynamcially;
-      debugger;
+      if (!dynamically) dynamically = "";
+      dynamically = "?query=" + dynamically;
       const stats = await API.get(
         "BlindChatAPIGatewayAPI",
-        "/users/stats" + dynamcially,
+        "/users/stats" + dynamically,
         {}
       );
       return { stats };
@@ -32,6 +33,7 @@ export const StatsSlicer = createSlice({
     [fetchStats.fulfilled]: (state, { payload: stats }) => {
       state.facets = stats.stats.facets;
       state.facetsStats = stats.stats.facetsStats;
+      state.count = stats.stats.count;
     },
   },
 });
