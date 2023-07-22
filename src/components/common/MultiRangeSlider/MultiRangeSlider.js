@@ -11,10 +11,7 @@ const MultiRangeSlider = ({ setRange, min, max, onChange }) => {
   const [ticking, setTicking] = useState(false),
     [count, setCount] = useState(0);
 
-  useEffect(() => {
-    const timer = setTimeout(() => ticking && setCount(count + 1), 1e3);
-    return () => clearTimeout(timer);
-  });
+
 
   useEffect(() => {
     if (count == 2) {
@@ -22,7 +19,7 @@ const MultiRangeSlider = ({ setRange, min, max, onChange }) => {
       setTicking(false);
       setRange(minVal, maxVal);
     }
-  });
+  },[count]);
 
   // Convert to percentage
   const getPercent = useCallback(

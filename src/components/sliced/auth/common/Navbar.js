@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import "./Navbar.css";
 import logo from "../../../../logo.svg";
 import { useDispatch, useSelector } from "react-redux";
 import "../UI/Home.css";
-import authSlicer, { signOut } from "../../../../stores/slices/authSlicer";
-import { useEffect, useState } from "react";
+import { signOut } from "../../../../stores/slices/authSlicer";
 import { StatsH2 } from "../../../styled/Heading";
 import { NavbarLogo } from "../../../styled/Logo";
-import Auth from "@aws-amplify/auth";
+
 
 export default () => {
   const useremail = useSelector(({ auth }) => auth.email) || "";

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { deleteQuestionfunc } from "../../stores/slices/questionsSlicer";
 import ExpandButton from "../styled/ExpandButton";
 import FloatingDiv from "../styled/FloatingDiv";

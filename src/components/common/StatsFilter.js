@@ -1,204 +1,182 @@
-import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
-import { fetchStats } from "../../stores/slices/statsSlicer";
-import { FilterStatsDiv, FixedDiv, MapDiv } from "../styled/Divs";
-import { H3StatsHeading, H4Blue, H4Pink, H5TopBottom } from "../styled/Heading";
-import { DotsButtonInterests } from "../styled/Xbutton";
+import {useEffect, useRef, useState} from "react";
+import {useDispatch} from "react-redux";
+import {useHistory, useLocation} from "react-router-dom";
+import RangeSlider from 'rsuite/RangeSlider';
+
+import {FilterStatsDiv, FixedDiv, MapDiv} from "../styled/Divs";
+import {H3StatsHeading, H4Blue, H4Pink, H5TopBottom} from "../styled/Heading";
+import {DotsButtonInterests} from "../styled/Xbutton";
 import MultiRangeSlider from "./MultiRangeSlider/MultiRangeSlider";
 import GoogleMap from "./GoogleMap/GoogleMap";
 import Space from "../styled/Space";
 import CitySearch from "./CitySearch";
+import Slider, {Range} from 'rc-slider';
+import 'rc-slider/assets/index.css';
+import {fetchStats} from "../../stores/slices/statsSlicer";
+import useQueryParams from "../../customHooks/useQueryParams";
 
 export default (props) => {
-  console.log("stats", props);
-  const history = useHistory(),
-    dispatch = useDispatch(),
-    [filterState, setFilterState] = useState({
-      male: "",
-      female: "",
-      minRange: props.facetsStats.age.min,
-      maxRange: props.facetsStats.age.max,
-      map: "",
-      city: "",
+    console.log("stats", props);
+
+    useEffect(()=>{
+        const q = getQuery()
+        dispatch(fetchStats(q))
+        history.push({
+            search: q,
+        });
+    },[])
+    const dispatch = useDispatch();
+    const [query, setQuery] = useState(null)
+    const history = useHistory();
+    const queryParams = useQueryParams();
+    console.log(queryParams)
+    const [ageRange, setAgeRange] = useState([20, 37]);
+
+    const [filterState, setFilterState] = useState({
+        gender: '',
+        ageRange: [
+            props.facetsStats.age?.min || (queryParams.ageRange && queryParams.ageRange[0]) || ageRange[0],
+            props.facetsStats.age?.max || (queryParams.ageRange && queryParams.ageRange[1]) || ageRange[1]
+        ],
+        geoLoc: {
+            lat: 32.109333,
+            lng: 34.855499,
+            radius: 20,
+        },
+        useMap: false,
+        city: "",
     });
-  const [firstRender, setFirstRender] = useState(true),
-    minMaxref = useRef({
-      min: 0,
-      max: 0,
-    });
 
-  const cityListRef = useRef();
+    const [firstRender, setFirstRender] = useState(true);
 
-  const [mapState, setMapState] = useState({
-    radius: 20,
-    lat: 32.109333,
-    lng: 34.855499,
-  });
+    const cityListRef = useRef();
 
-  if (firstRender) {
-    minMaxref.current = {
-      min: props.facetsStats.age.min,
-      max: props.facetsStats.age.max,
+
+    if (firstRender) {
+
+        cityListRef.current = props.cityList;
+    }
+
+    const setRange = ([min, max]) => {
+        setFilterState({
+            ...filterState,
+            ageRange: [min, max],
+        })
     };
-    cityListRef.current = props.cityList;
-  }
 
-  const setRange = (min, max) => {
-    if (filterState.minRange !== min || filterState.maxRange !== max) {
-      setFilterState({
-        ...filterState,
-        minRange: min,
-        maxRange: max,
-      });
-    } else return;
-  };
+    // const {search} = useLocation();
 
-  const localFecthStats = () => {
-    let dynamciallyArr = [];
-    let dynamicallyQuery = "";
-
-    if (filterState.minRange !== minMaxref.current.min) {
-      setFirstRender(false);
-      //not good ask for shir, need to save min max only from the first stats payload.
-      dynamciallyArr
-        .push("age > " + parseInt(filterState.minRange - 1))
-        .toString();
-    }
-    if (filterState.maxRange !== minMaxref.current.max) {
-      setFirstRender(false);
-      //not good ask for shir, need to save min max only from the first stats payload.
-      dynamciallyArr.push(
-        "age < " + (parseInt(filterState.maxRange) + 1).toString()
-      );
+    // useEffect(() => {
+    //     debugger
+    //     const qr = getQuery();
+    //     debugger
+    //     setQuery(qr)
+    //     console.log(qr)
+    //     setQuery(qr)
+    //     //     debugger
+    //     //     //dispatch(fetchStats(search.slice(1)))
+    // }, []);
+    if (props.facetsStats.length === 0){
+        return null;
     }
 
-    if (filterState.city) {
-      setFirstRender(false);
-      dynamciallyArr.push("city:" + '"' + filterState.city + '"');
+    const getQuery = () => {
+
+        try {
+            const queryParams = []
+            const {ageRange, geoLoc, useMap, gender, city, ...rest} = filterState;
+
+            const algolyaQuery = ageRange.map((val, index) => `age${index === 0 ? '>' : '<'}${val}`);
+
+            if (useMap) {
+                queryParams.push(`aroundLatLng:${geoLoc.lat},${geoLoc.lng}`);
+                queryParams.push(`aroundRadius:${geoLoc.radius}`)
+            }
+
+            if (gender) {
+                algolyaQuery.push(`gender:${gender}`)
+            }
+            if (city) {
+                algolyaQuery.push(`city:${city}`)
+            }
+            /////
+            // dynamicallyQuery = dynamciallyArr.map((query, index) => {
+            //     if (index === 0) return query;
+            //     else return " AND " + query;
+            // });
+            return `?query=${algolyaQuery.join(' AND ')}${(queryParams.length ? '&' : '') + queryParams.join('&')}`;
+        } catch (e) {
+            console.log(e)
+        }
+    };
+
+    console.log(filterState)
+
+
+    const setMapState = (geoLoc) => {
+        setFilterState({...filterState, geoLoc});
+    };
+
+    const setGender = (gender) => {
+        if (filterState.gender == gender) {
+            setFilterState({...filterState, gender: ''})
+        } else {
+            setFilterState({...filterState, gender})
+
+        }
     }
 
-    if (filterState.male === "✓") {
-      setFirstRender(false);
-      dynamciallyArr.push("gender: Male");
-    }
-    if (filterState.female === "✓") {
-      setFirstRender(false);
-      dynamciallyArr.push("gender: Female");
-    }
 
-    /////
-    dynamicallyQuery = dynamciallyArr.map((query, index) => {
-      if (index === 0) return query;
-      else return " AND " + query;
-    });
-    let historyQuery = "";
-    historyQuery = dynamciallyArr.map((query, index) => {
-      if (index === 0)
-        return query
-          .replaceAll('"', "")
-          .replaceAll(/\s+/g, "-")
-          .replaceAll("'", "");
-      else return "&" + query;
-    });
+    const locationHandler = () => {
+        setFilterState({...filterState, useMap: !filterState.useMap});
+    };
+    useEffect(() => {
+        try{
+            const q = getQuery()
+            dispatch(fetchStats(q))
+            history.push({
+                search: q,
+            });
+        } catch (e){
+            console.log(e)
+        }
 
-    dynamicallyQuery = dynamicallyQuery.toString().replaceAll(",", "");
+    }, [filterState]);
 
-    if (filterState.map === "✓") {
-      setFirstRender(false);
-      dynamicallyQuery +=
-        "&aroundRadius=" +
-        mapState.radius +
-        "&aroundLatLng=" +
-        mapState.lat +
-        ", " +
-        mapState.lng;
-      historyQuery +=
-        "&aroundRadius=" +
-        mapState.radius +
-        "&aroundLatLng=" +
-        mapState.lat +
-        "_" +
-        mapState.lng;
-    }
-    historyQuery = historyQuery
-      .toString()
-      .replaceAll(",", "")
-      .replaceAll(" ", "");
+    return (
+        <FixedDiv>
+            <H3StatsHeading>Stats Filters</H3StatsHeading>
+            <CitySearch
+                filterState={filterState}
+                setFilterState={setFilterState}
+                cityList={cityListRef.current}
+            />
+            <FilterStatsDiv>
+                <input type={"checkbox"} onInput={() => setGender('Male')}/>
 
-    history.push({
-      search: "?" + historyQuery,
-    });
+                <H4Blue>Male</H4Blue>
+                <input type={"checkbox"} onInput={() => setGender('Female')}/>
 
-    // if (!firstRender) dispatch(fetchStats(dynamicallyQuery));
-    if (firstRender){
-      dispatch(fetchStats(dynamicallyQuery));
-    }
-     setFirstRender(false);
-  };
+                <H4Pink>Female</H4Pink>
+            </FilterStatsDiv>
 
-  useEffect(() => {
-    localFecthStats();
+            <label id="slider-label">Age</label>
+            <Slider range value={ageRange} min={20} max={74}
+                    onChange={setAgeRange} onAfterChange={setRange}/>
+            <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                <div style={{color: 'white'}}>{ageRange[0]}</div>
+                <div style={{flex: 1, width: '100%'}}>
 
-  }, [filterState,firstRender]);
+                </div>
+                <div>{ageRange[1]}</div>
+            </div>
+            <Space height="20"/>
+            <FilterStatsDiv>
+                <input type={"checkbox"} onInput={() => locationHandler()}/>
 
-  useEffect(() => {
-    if (filterState.map === "✓") localFecthStats();
-    else return;
-  }, [mapState]);
-
-  const menHandle = () => {
-    if (filterState.male) {
-      setFilterState({ ...filterState, male: "", female: "" });
-    } else {
-      setFilterState({ ...filterState, male: "✓", female: "" });
-    }
-  };
-  const femaleHandle = () => {
-    if (filterState.female) {
-      setFilterState({ ...filterState, male: "", female: "" });
-    } else setFilterState({ ...filterState, male: "", female: "✓" });
-  };
-
-  const locationHandler = () => {
-    if (filterState.map) {
-      setFilterState({ ...filterState, map: "" });
-    } else setFilterState({ ...filterState, map: "✓" });
-  };
-
-  return (
-    <FixedDiv>
-      <H3StatsHeading>Stats Filters</H3StatsHeading>
-      <CitySearch
-        filterState={filterState}
-        setFilterState={setFilterState}
-        cityList={cityListRef.current}
-      />
-      <FilterStatsDiv>
-        <DotsButtonInterests onClick={() => menHandle()}>
-          {filterState.male}
-        </DotsButtonInterests>
-        <H4Blue>Male</H4Blue>
-        <DotsButtonInterests onClick={() => femaleHandle()}>
-          {filterState.female}
-        </DotsButtonInterests>
-        <H4Pink>Female</H4Pink>
-      </FilterStatsDiv>
-      <H5TopBottom>Age</H5TopBottom>
-      <MultiRangeSlider
-        setRange={setRange}
-        min={minMaxref.current.min}
-        max={minMaxref.current.max}
-        onChange={({ min, max }) => {}}
-      />
-      <Space height="20" />
-      <FilterStatsDiv>
-        <DotsButtonInterests onClick={() => locationHandler()}>
-          {filterState.map}
-        </DotsButtonInterests>
-        <H4Blue>Filter by location</H4Blue>
-      </FilterStatsDiv>
-      <GoogleMap setMapState={setMapState} />
-    </FixedDiv>
-  );
+                <H4Blue>Filter by location</H4Blue>
+            </FilterStatsDiv>
+            <GoogleMap setMapState={setMapState}/>
+        </FixedDiv>
+    );
 };

@@ -9,13 +9,15 @@ import InterestsChart from "../common/InterestsChart";
 import Users from "../common/Users";
 import FacetsStats from "../common/FacetsStats";
 import StatsFilter from "../common/StatsFilter";
-import { useEffect } from "react";
+import {useEffect, useMemo} from "react";
 import ExpandButton from "../styled/ExpandButton";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import CityChart from "../common/CityChart";
+import {fetchStats} from "../../stores/slices/statsSlicer";
 
 export default () => {
   const history = useHistory();
+
   const facets = useSelector(({ stats }) => {
     return stats.facets;
   });
@@ -42,14 +44,20 @@ export default () => {
       </>
     );
   }
-  const loading = Object.keys(facets).length === 0;
+  const loading = useMemo(()=>{
+      return Object.keys(facets).length === 0
+  },[Object.keys(facets).length]);
+
+
+    console.log('loading',loading)
+
 
   return (
     <RowDiv>
       <BlockDiv>
-        {!loading && (
+
           <StatsFilter cityList={facets.city} facetsStats={facetsStats} />
-        )}
+
       </BlockDiv>
       <StatsHolder>
         <Middl1H1>Blind-chat Statistics</Middl1H1>

@@ -25,7 +25,6 @@ export const getQuestionListByType = createAsyncThunk(
           getQuestionsByType: { items: data },
         },
       } = await API.graphql(graphqlOperation(getQuestionsByType, { type }));
-      debugger
       return { questions: data, type };
     } catch (err) {
       console.log(err);
@@ -39,7 +38,6 @@ export const putQuestionfunc = createAsyncThunk(
     try {
       const { id, body, type, domain, category } = input;
       const q = await API.graphql(graphqlOperation(putQuestion, { input }));
-      debugger
       return { id, body, type, domain,category };
     } catch (err) {
       console.log(err);
@@ -53,7 +51,6 @@ export const addQuestionfunc = createAsyncThunk(
     try {
       const { id, body, type, domain, feature, answers,category } = input;
       const q = await API.graphql(graphqlOperation(addQuestion, { input }));
-      debugger
       return { id, body, type, domain, feature, answers ,category};
     } catch (err) {
       console.log(err);

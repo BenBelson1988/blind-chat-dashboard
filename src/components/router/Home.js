@@ -4,7 +4,7 @@ import Questions from "../main/Questions";
 import Stats from "../main/Stats";
 import styled from "styled-components";
 import MenuButton from "../styled/MenuButton";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {  useDispatch } from "react-redux";
 import useCurrentTab from "../../customHooks/useCurrentTab";
@@ -28,7 +28,7 @@ export default () => {
   const currentTab = useCurrentTab();
   useEffect(() => {
     dispatch(fetchInterests());
-    dispatch(fetchStats());
+    // dispatch(fetchStats());
     dispatch(fetchFeatures());
   }, []);
 
