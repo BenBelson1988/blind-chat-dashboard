@@ -89,8 +89,8 @@ export default (props) => {
             const algolyaQuery = ageRange.map((val, index) => `age${index === 0 ? '>' : '<'}${val}`);
 
             if (useMap) {
-                queryParams.push(`aroundLatLng:${geoLoc.lat},${geoLoc.lng}`);
-                queryParams.push(`aroundRadius:${geoLoc.radius}`)
+                queryParams.push(`aroundLatLng=${geoLoc.lat},${geoLoc.lng}`);
+                queryParams.push(`aroundRadius= ${geoLoc.radius}`)
             }
 
             if (gender) {

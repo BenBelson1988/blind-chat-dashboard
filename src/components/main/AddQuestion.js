@@ -2,9 +2,12 @@ import { useState } from "react";
 import ExpandButton from "../styled/ExpandButton";
 import QuestionInput from "../styled/QuestionInput";
 import EditQuestion from "./EditQuestion";
+import useQueryParams from "../../customHooks/useQueryParams";
 
 export default (props) => {
-  const [QuestionType, setQuestionType] = useState("basic");
+  const {type} = useQueryParams();
+
+  const [QuestionType, setQuestionType] = useState(type|| "basic");
 
   function getRandomString(length) {
     var randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

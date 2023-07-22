@@ -1,7 +1,6 @@
 import {Redirect, Route, Switch, useHistory, useLocation} from "react-router-dom";
 import LoginSignUp from "../sliced/auth/LoginSignUp";
 import Navbar from "../sliced/auth/common/Navbar";
-import RouteGuard from "./RouteGuard";
 import Home from "../router/Home";
 import React, {useEffect, useRef} from "react";
 import { Auth, Hub } from "aws-amplify";
@@ -29,10 +28,12 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    if (username) {
+    debugger
+    if (username && history.location.pathname === '/auth' ) {
+
       history.push("/home");
     }
-  }, [username]);
+  }, [username,history.location.pathname]);
 
   return (
     <>
@@ -44,9 +45,9 @@ export default () => {
         <Route exact path="/auth">
           <LoginSignUp />
         </Route>
-        <RouteGuard path="/home">
+        <Route path="/home">
           <Home />
-        </RouteGuard>
+        </Route>
       </Switch>
     </>
   );

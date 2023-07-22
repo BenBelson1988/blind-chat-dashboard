@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux";
-import React from "react";
-import {Route,Redirect} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Route, Redirect, useLocation, useHistory} from "react-router-dom";
 
 export default ({children,...props})=>{
     const {username} = useSelector(({auth})=>auth);

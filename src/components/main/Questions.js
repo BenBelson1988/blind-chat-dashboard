@@ -14,14 +14,17 @@ import AddQuestion from "./AddQuestion";
 export default () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const activeQuestiontype = useQueryParams().type;
+  const params = useQueryParams();
+
+  const activeQuestiontype = params.type;
   const [addQuestion, setAddQuestion] = useState(false);
 
-  useEffect(() => {
-    history.push({
-      search: "?type=basic",
-    });
-  }, []);
+  // useEffect(() => {
+  //   debugger
+  //   history.replace({
+  //     search: `?type=${activeQuestiontype}`,
+  //   });
+  // }, [activeQuestiontype]);
   useEffect(() => {
     Promise.all([
       dispatch(getQuestionListByType("basic")),

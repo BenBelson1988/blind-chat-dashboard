@@ -296,7 +296,7 @@ export default (props) => {
                     </>
                 )}
             </CenteredColumnDiv>
-            <label style={{fontWeight: "bolder"}}>Question </label>
+            <label style={{fontWeight: "bolder"}}>Question</label>
 
             <QuestionInput
                 style={{width: "50%"}}

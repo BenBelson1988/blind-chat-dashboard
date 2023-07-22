@@ -67,7 +67,7 @@ export default () => {
         <div style={{ width: "100%" }}>
           <Switch>
             <Route exact path="/home">
-              <Redirect to={"/home/stats"} />
+                <Redirect to={"/home/stats"} />
             </Route>
             <Route path="/home/stats">
               <Stats />
