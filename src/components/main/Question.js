@@ -66,7 +66,7 @@ export default (props) => {
             style={{ width: "70px", height: "70px" }}
           />
           <h2 style={{ color: "white" }}>
-              <span style={{fontSize:'medium',fontStyle:'italic',color:'gray',margin:5}}>({props.domain})</span>
+              <span style={{fontSize:'medium',fontStyle:'italic',color:'gray',margin:5}}>({props.category})</span>
             {props.index + 1}. {props.body}
           </h2>
           <ExpandButton onClick={toggleOpendiv}>{expand}</ExpandButton>

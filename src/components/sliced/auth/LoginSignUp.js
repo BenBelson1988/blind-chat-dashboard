@@ -119,6 +119,7 @@ export default () => {
         password: enteredPass,
       })
     );
+
     setIsLoading(false);
     setEnterPassisValid(false);
     setErrorMsg2(errmsg.payload);

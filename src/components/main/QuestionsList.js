@@ -28,13 +28,13 @@ export default () => {
     });
 
     const questionStats = useMemo(() => {
-        return questions.reduce((acc, q) => ({...acc, [q.domain]: (acc[q.domain] || 0) + 1}), {})
+        return questions.reduce((acc, q) => ({...acc, [q.category]: (acc[q.category] || 0) + 1}), {})
     }, [questions])
     const questionLength = Object.keys(questions).length === 0;
 
     return (
         <>
-            {isLoading && <CustomLoader title="Fecthing questions"/>}
+            {isLoading && <CustomLoader title="Fetching questions"/>}
             {!isLoading && (
                 <h1
                     style={{
