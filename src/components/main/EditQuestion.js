@@ -177,12 +177,7 @@ export default (props) => {
         let newArr2 = newArr.map((element, index) => {
             if (index === answerIndex) {
                 let tempelement = {...element};
-                let tempEffects = [...element.effects];
-                tempEffects.push({
-                    feature: "Forgiveness",
-                    value: 0.1,
-                });
-                tempelement.effects = tempEffects;
+                tempelement.effects = [...element.effects];
                 return tempelement;
             }
             return element;
