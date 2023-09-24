@@ -99,7 +99,7 @@ export default (props) => {
           Please select type
           <option>basic</option>
           <option>traits</option>
-          <option>swippeable</option>
+          <option>swippable</option>
           <option>game</option>
         </select>
       </div>
